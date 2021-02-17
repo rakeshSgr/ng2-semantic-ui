@@ -1,7 +1,7 @@
 import { EventEmitter } from "@angular/core";
-import { ICustomValueAccessorHost, CustomValueAccessor } from "../../../misc/util/index";
+import { ICustomValueAccessorHost, CustomValueAccessor } from "../../../misc/util/internal";
 export declare class SuiCheckbox implements ICustomValueAccessorHost<boolean> {
-    private _checkboxClasses;
+    readonly hasClasses: boolean;
     name: string;
     isChecked: boolean;
     onCheckChange: EventEmitter<boolean>;
@@ -12,9 +12,9 @@ export declare class SuiCheckbox implements ICustomValueAccessorHost<boolean> {
     readonly isDisabledAttribute: string | undefined;
     private _checkboxElement;
     constructor();
-    onMouseDown(e: MouseEvent): void;
-    onClick(): void;
-    onFocusOut(): void;
+    onMouseDown(event: any): void;
+    onClick(e: any): void;
+    onFocusOut(e: any): void;
     toggle(): void;
     writeValue(value: boolean): void;
     private focusCheckbox();
