@@ -1,1 +1,1 @@
-export { SuiDimmerModule } from "./internal";
+export { SuiDimmerModule } from "./index";

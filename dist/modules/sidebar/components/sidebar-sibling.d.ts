@@ -8,7 +8,7 @@ export declare class SuiSidebarSibling {
     isDimmedWhenVisible: boolean;
     readonly isVisible: boolean;
     readonly isDimmed: boolean;
-    readonly hasClasses: boolean;
+    private _siblingClasses;
     constructor(_renderer: Renderer2, _element: ElementRef);
     private updateTransform();
     onClick(event: MouseEvent): void;

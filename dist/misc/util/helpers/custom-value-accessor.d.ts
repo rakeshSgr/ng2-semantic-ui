@@ -6,10 +6,10 @@ export interface ICustomValueAccessorHost<T> {
 export declare class CustomValueAccessor<U, T extends ICustomValueAccessorHost<U>> implements ControlValueAccessor {
     private _host;
     constructor(_host: T);
-    onChange: (e: any) => void;
+    onChange: () => void;
     onTouched: () => void;
     writeValue(value: U): void;
-    registerOnChange(fn: (e) => void): void;
+    registerOnChange(fn: () => void): void;
     registerOnTouched(fn: () => void): void;
 }
 export interface IValueAccessorProvider {

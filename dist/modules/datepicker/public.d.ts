@@ -1,1 +1,1 @@
-export { SuiDatepickerModule, DatepickerMode } from "./internal";
+export { SuiDatepickerModule, DatepickerMode } from "./index";

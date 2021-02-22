@@ -4,7 +4,7 @@ import { SuiSidebar } from "./sidebar";
 import { SuiSidebarSibling } from "./sidebar-sibling";
 export declare class SuiSidebarContainer implements AfterContentInit {
     service: SidebarService;
-    readonly hasClasses: boolean;
+    private _containerClasses;
     sidebar: SuiSidebar;
     sibling: SuiSidebarSibling;
     constructor();

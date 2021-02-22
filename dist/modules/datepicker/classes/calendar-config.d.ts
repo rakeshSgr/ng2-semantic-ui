@@ -1,6 +1,6 @@
 import { CalendarMode } from "../services/calendar.service";
 import { CalendarMappings } from "./calendar-mappings";
-import { DatePrecision } from "../../../misc/util/internal";
+import { DatePrecision } from "../../../misc/util/index";
 export declare abstract class CalendarConfig {
     mode: CalendarMode;
     precision: DatePrecision;

@@ -1,1 +1,1 @@
-export { SuiCollapseModule } from "./internal";
+export { SuiCollapseModule } from "./index";

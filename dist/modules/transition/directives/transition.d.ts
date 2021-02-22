@@ -1,8 +1,8 @@
 import { Renderer2, ElementRef, ChangeDetectorRef } from "@angular/core";
 import { TransitionController } from "../classes/transition-controller";
 export declare class SuiTransition {
-    protected _renderer: Renderer2;
-    protected _element: ElementRef;
+    private _renderer;
+    private _element;
     private _changeDetector;
     private _controller;
     suiTransition: TransitionController;

@@ -1,1 +1,1 @@
-export { SuiRatingModule } from "./internal";
+export { SuiRatingModule } from "./index";

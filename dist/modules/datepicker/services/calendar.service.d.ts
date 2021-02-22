@@ -1,5 +1,5 @@
 import { EventEmitter } from "@angular/core";
-import { IDatepickerLocaleValues } from "../../../behaviors/localization/internal";
+import { IDatepickerLocaleValues } from "../../../behaviors/localization/index";
 import { CalendarViewType } from "../views/calendar-view";
 import { CalendarConfig } from "../classes/calendar-config";
 export declare enum CalendarMode {

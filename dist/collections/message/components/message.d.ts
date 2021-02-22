@@ -1,5 +1,5 @@
 import { EventEmitter } from "@angular/core";
-import { TransitionController } from "../../../modules/transition/internal";
+import { TransitionController } from "../../../modules/transition/index";
 export interface IMessage {
     dismiss(): void;
 }
