@@ -4,7 +4,7 @@ export declare class SuiSidebar {
     private _renderer;
     private _element;
     service: SidebarService;
-    readonly hasClasses: boolean;
+    private _sidebarClasses;
     transition: SidebarTransition;
     direction: SidebarDirection;
     isVisible: boolean;

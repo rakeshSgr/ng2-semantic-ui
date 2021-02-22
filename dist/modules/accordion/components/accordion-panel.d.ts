@@ -1,6 +1,6 @@
 import { EventEmitter, ChangeDetectorRef } from "@angular/core";
 import { SuiAccordionService } from "../services/accordion.service";
-import { TransitionController } from "../../transition/internal";
+import { TransitionController } from "../../transition/index";
 export declare class SuiAccordionPanel {
     private _changeDetector;
     private _service;

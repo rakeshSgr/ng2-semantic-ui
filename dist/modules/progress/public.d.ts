@@ -1,1 +1,1 @@
-export { SuiProgressModule } from "./internal";
+export { SuiProgressModule } from "./index";

@@ -1,4 +1,4 @@
-import { PositioningPlacement } from "../../../misc/util/internal";
+import { PositioningPlacement } from "../../../misc/util/index";
 export declare class SuiPopupArrow {
     placement: PositioningPlacement;
     inverted: boolean;

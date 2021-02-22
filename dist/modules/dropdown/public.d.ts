@@ -1,1 +1,1 @@
-export { SuiDropdownModule, DropdownAutoCloseType } from "./internal";
+export { SuiDropdownModule, DropdownAutoCloseType } from "./index";

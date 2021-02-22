@@ -1,7 +1,7 @@
 import { EventEmitter, Renderer2, ElementRef, ChangeDetectorRef } from "@angular/core";
-import { SuiTransition } from "../../transition/internal";
+import { SuiTransition } from "../../transition/index";
 export declare class SuiDimmer extends SuiTransition {
-    readonly hasClasses: boolean;
+    private _dimmerClasses;
     private _transitionController;
     private _isDimmed;
     isDimmed: boolean;
@@ -11,5 +11,5 @@ export declare class SuiDimmer extends SuiTransition {
     transitionDuration: number;
     wrapContent: boolean;
     constructor(renderer: Renderer2, element: ElementRef, changeDetector: ChangeDetectorRef);
-    onClick(): void;
+    private onClick();
 }

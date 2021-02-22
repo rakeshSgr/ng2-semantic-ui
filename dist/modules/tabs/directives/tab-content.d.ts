@@ -1,5 +1,5 @@
 export declare class SuiTabContent {
-    readonly hasClasses: boolean;
+    private _contentClasses;
     id: string;
     isActive: boolean;
     constructor();

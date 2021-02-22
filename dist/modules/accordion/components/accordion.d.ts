@@ -2,7 +2,7 @@ import { QueryList, AfterContentInit } from "@angular/core";
 import { SuiAccordionPanel } from "./accordion-panel";
 import { SuiAccordionService } from "../services/accordion.service";
 export declare class SuiAccordion implements AfterContentInit {
-    readonly hasClasses: boolean;
+    accordionClasses: boolean;
     closeOthers: boolean;
     transition: string;
     transitionDuration: number;

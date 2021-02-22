@@ -1,1 +1,1 @@
-export { SuiTabsModule } from "./internal";
+export { SuiTabsModule } from "./index";

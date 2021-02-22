@@ -1,4 +1,4 @@
-import { DatePrecision } from "../../../misc/util/internal";
+import { DatePrecision } from "../../../misc/util/index";
 import { CalendarItem } from "../directives/calendar-item";
 import { CalendarService } from "./calendar.service";
 import { DateComparer } from "../classes/date-comparer";

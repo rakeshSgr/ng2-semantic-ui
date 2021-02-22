@@ -1,5 +1,5 @@
 import { EventEmitter, AfterContentInit, ElementRef } from "@angular/core";
-import { HandledEvent, IFocusEvent } from "../../../misc/util/internal";
+import { HandledEvent } from "../../../misc/util/index";
 import { DropdownService, DropdownAutoCloseType } from "../services/dropdown.service";
 export declare class SuiDropdown implements AfterContentInit {
     private _element;
@@ -18,7 +18,7 @@ export declare class SuiDropdown implements AfterContentInit {
     ngAfterContentInit(): void;
     private childrenUpdated();
     onClick(e: HandledEvent): void;
-    onFocusOut(e: IFocusEvent): void;
+    private onFocusOut(e);
     onKeypress(e: HandledEvent & KeyboardEvent): void;
     private externallyClose();
 }

@@ -1,7 +1,5 @@
-import { PositioningPlacement } from "../../../misc/util/internal";
+import { PositioningPlacement } from "../../../misc/util/index";
 export declare type PopupTrigger = "hover" | "click" | "outsideClick" | "focus" | "manual";
-export declare type PopupSize = "mini" | "tiny" | "small" | "large" | "huge";
-export declare type PopupWidth = "wide" | "very wide" | "flowing";
 export declare const PopupTrigger: {
     Hover: PopupTrigger;
     Click: PopupTrigger;
@@ -19,8 +17,6 @@ export interface IPopupConfig {
     isBasic?: boolean;
     transition?: string;
     transitionDuration?: number;
-    isFlowing?: boolean;
-    isInline?: boolean;
 }
 export declare class PopupConfig implements IPopupConfig {
     header?: string;
@@ -31,10 +27,6 @@ export declare class PopupConfig implements IPopupConfig {
     delay: number;
     isBasic: boolean;
     transition: string;
-    size: PopupSize;
-    width: PopupWidth;
     transitionDuration: number;
-    isFlowing: boolean;
-    isInline: boolean;
     constructor(defaults?: IPopupConfig);
 }
