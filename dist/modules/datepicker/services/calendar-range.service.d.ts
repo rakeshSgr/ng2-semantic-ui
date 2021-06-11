@@ -34,7 +34,7 @@ export declare abstract class CalendarRangeService {
     moveNext(): void;
     movePrevious(): void;
     calc(forwards: boolean): CalendarRange;
-    private calcRange(startDate);
+    private calcRange;
     protected calcStart(date: Date): Date;
     protected calcDates(rangeStart: Date): Date[];
     protected calcItems(dateRange: Date[], baseDate: Date): CalendarItem[];

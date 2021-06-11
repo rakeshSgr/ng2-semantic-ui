@@ -9,9 +9,9 @@ export declare class SuiTabset implements AfterContentInit {
     private _barrierCount;
     constructor();
     ngAfterContentInit(): void;
-    private internalComponentsUpdated();
-    private loadTabs();
-    private onHeaderActiveChanged(tab);
+    private internalComponentsUpdated;
+    private loadTabs;
+    private onHeaderActiveChanged;
     activateFirstTab(): void;
     activateClosestTab(tab: Tab): void;
 }

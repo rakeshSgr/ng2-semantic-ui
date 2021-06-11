@@ -10,10 +10,10 @@ export declare const SidebarTransition: {
 };
 export declare type SidebarDirection = "left" | "right" | "top" | "bottom";
 export declare const SidebarDirection: {
-    Left: "left" | "right" | "top" | "bottom";
-    Right: "left" | "right" | "top" | "bottom";
-    Top: "left" | "right" | "top" | "bottom";
-    Bottom: "left" | "right" | "top" | "bottom";
+    Left: import("popper.js").default.Position;
+    Right: import("popper.js").default.Position;
+    Top: import("popper.js").default.Position;
+    Bottom: import("popper.js").default.Position;
 };
 export declare class SidebarService {
     isVisible: boolean;

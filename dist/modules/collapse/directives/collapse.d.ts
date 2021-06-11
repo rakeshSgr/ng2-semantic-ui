@@ -14,5 +14,5 @@ export declare class SuiCollapse {
     constructor(_element: ElementRef, _renderer: Renderer2);
     hide(): void;
     show(): void;
-    private animate(startHeight, endHeight, removeOnComplete?, callback?);
+    private animate;
 }

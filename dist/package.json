@@ -29,11 +29,11 @@
     "tslib": "^1.9.0"
   },
   "peerDependencies": {
-    "@angular/common": ">= 6.0.0",
-    "@angular/compiler": ">= 6.0.0",
-    "@angular/core": ">= 6.0.0",
-    "@angular/forms": ">= 6.0.0",
-    "rxjs": "^6.0.0"
+    "@angular/common": ">= 7.2.16",
+    "@angular/compiler": ">= 7.2.16",
+    "@angular/core": ">= 7.2.16",
+    "@angular/forms": ">= 7.2.16",
+    "rxjs": "6.6.7"
   },
   "main": "bundles/ng2-semantic-ui.umd.js",
   "module": "fesm5/ng2-semantic-ui.js",

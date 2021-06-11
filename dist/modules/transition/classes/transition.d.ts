@@ -2,7 +2,7 @@ export declare enum TransitionDirection {
     In = 0,
     Out = 1,
     Either = 2,
-    Static = 3,
+    Static = 3
 }
 export declare class Transition {
     readonly type: string;

@@ -38,6 +38,6 @@ export declare class SuiDropdownMenu extends SuiTransition implements AfterConte
     updateSelection(selectedItem: SuiDropdownMenuItem, keyCode: KeyCode): SuiDropdownMenuItem;
     scrollToItem(item: SuiDropdownMenuItem): void;
     ngAfterContentInit(): void;
-    private onItemsChanged();
+    private onItemsChanged;
     ngOnDestroy(): void;
 }

@@ -26,8 +26,8 @@ export declare class SuiDatepickerDirective extends SuiPopupComponentController<
     onValidatorChange: EventEmitter<void>;
     constructor(renderer: Renderer2, element: ElementRef, componentFactory: SuiComponentFactory, localizationService: SuiLocalizationService);
     popupOnOpen(): void;
-    ngOnChanges({maxDate, minDate, mode}: SimpleChanges): void;
-    private onLocaleUpdate();
+    ngOnChanges({ maxDate, minDate, mode }: SimpleChanges): void;
+    private onLocaleUpdate;
     validate(c: AbstractControl): ValidationErrors | null;
     writeValue(value: Date | undefined): void;
     onKeyDown(e: KeyboardEvent): void;

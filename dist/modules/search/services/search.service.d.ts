@@ -21,10 +21,10 @@ export declare class SearchService<T, U> {
     constructor(allowEmptyQuery?: boolean);
     updateQueryDelayed(query: string, callback?: (err?: Error) => void): void;
     updateQuery(query: string, callback?: (err?: Error) => void): void;
-    private updateResults(results);
+    private updateResults;
     initialLookup(initial: U): LookupFnResult<T>;
     initialLookup(initial: U[]): LookupFnResult<T[]>;
-    private toRegex(query);
+    private toRegex;
     highlightMatches(text: string, query: string): string;
-    private reset();
+    private reset;
 }

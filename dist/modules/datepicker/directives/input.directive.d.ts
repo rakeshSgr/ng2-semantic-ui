@@ -20,7 +20,7 @@ export declare class SuiDatepickerInputDirective {
     readonly max: string | undefined;
     readonly min: string | undefined;
     constructor(datepicker: SuiDatepickerDirective, valueAccessor: SuiDatepickerDirectiveValueAccessor, _renderer: Renderer2, _element: ElementRef, localizationService: SuiLocalizationService);
-    private updateValue(value);
+    private updateValue;
     typeValue(value: string | undefined): void;
     onFocusOut(): void;
 }

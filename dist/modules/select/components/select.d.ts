@@ -16,7 +16,7 @@ export declare class SuiSelect<T, U> extends SuiSelectBase<T, U> implements ICus
     selectOption(option: T): void;
     writeValue(value: U): void;
     protected initialiseRenderedOption(option: SuiSelectOption<T>): void;
-    private drawSelectedOption();
+    private drawSelectedOption;
 }
 export declare class SuiSelectValueAccessor<T, U> extends CustomValueAccessor<U, SuiSelect<T, U>> {
     constructor(host: SuiSelect<T, U>);

@@ -25,7 +25,7 @@ export declare abstract class SuiPopupController implements IPopup, OnDestroy {
     onMouseEnter(): void;
     onMouseLeave(): void;
     onClick(): void;
-    private onDocumentClick(e);
+    private onDocumentClick;
     onFocusIn(): void;
     onFocusOut(e: any): void;
     protected cleanup(): void;

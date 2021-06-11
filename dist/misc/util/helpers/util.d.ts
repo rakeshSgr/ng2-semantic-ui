@@ -6,7 +6,7 @@ export declare enum KeyCode {
     Escape = 27,
     Enter = 13,
     Space = 32,
-    Backspace = 8,
+    Backspace = 8
 }
 export interface ITemplateRefContext<T> {
     $implicit: T;
@@ -36,7 +36,7 @@ export declare const Util: {
         parseBooleanAttribute(attributeValue: boolean): boolean;
     };
     Object: {
-        readValue<T, U>(object: T, path?: string | undefined): U;
+        readValue<T, U>(object: T, path?: string): U;
     };
     Math: {
         round(r: number, n: number): number;

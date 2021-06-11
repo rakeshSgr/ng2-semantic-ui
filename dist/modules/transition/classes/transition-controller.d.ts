@@ -21,8 +21,8 @@ export declare class TransitionController {
     registerElement(element: ElementRef): void;
     registerChangeDetector(changeDetector: ChangeDetectorRef): void;
     animate(transition: Transition): void;
-    private performTransition();
-    private finishTransition(transition);
+    private performTransition;
+    private finishTransition;
     stop(transition?: Transition): void;
     stopAll(): void;
     clearQueue(): void;

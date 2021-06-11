@@ -38,9 +38,9 @@ export declare class SuiModal<T, U> implements OnInit, AfterViewInit {
     ngOnInit(): void;
     ngAfterViewInit(): void;
     loadConfig<V>(config: ModalConfig<V, T, U>): void;
-    private dismiss(callback?);
+    private dismiss;
     close(): void;
-    private updateScroll();
+    private updateScroll;
     onClick(e: MouseEvent): void;
     onDocumentKeyUp(e: KeyboardEvent): void;
     onDocumentResize(): void;

@@ -21,5 +21,5 @@ export declare class DropdownService {
     registerChild(child: DropdownService): void;
     isChildRegistered(child: DropdownService): boolean;
     clearChildren(): void;
-    private delay(callback);
+    private delay;
 }

@@ -16,9 +16,9 @@ export declare class SuiDropdown implements AfterContentInit {
     autoClose: DropdownAutoCloseType;
     constructor(_element: ElementRef);
     ngAfterContentInit(): void;
-    private childrenUpdated();
+    private childrenUpdated;
     onClick(e: HandledEvent): void;
     onFocusOut(e: IFocusEvent): void;
     onKeypress(e: HandledEvent & KeyboardEvent): void;
-    private externallyClose();
+    private externallyClose;
 }

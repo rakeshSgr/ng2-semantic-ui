@@ -19,7 +19,7 @@ export declare class SuiRadio<T> implements ICustomValueAccessorHost<T> {
     onFocusOut(): void;
     update(): void;
     writeValue(value: T): void;
-    private focusRadio();
+    private focusRadio;
 }
 export declare class SuiRadioValueAccessor<T> extends CustomValueAccessor<T, SuiRadio<T>> {
     constructor(host: SuiRadio<T>);

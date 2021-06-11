@@ -7,7 +7,7 @@ export declare enum CalendarViewType {
     Month = 1,
     Date = 2,
     Hour = 3,
-    Minute = 4,
+    Minute = 4
 }
 export declare type CalendarViewResult = [Date, CalendarViewType];
 export declare abstract class CalendarView implements AfterViewInit, OnDestroy {
@@ -24,9 +24,9 @@ export declare abstract class CalendarView implements AfterViewInit, OnDestroy {
     setDate(item: CalendarItem): void;
     zoomOut(): void;
     ngAfterViewInit(): void;
-    private onRenderedItemsChanged();
-    private autoHighlight();
-    private highlightItem(item);
-    private onDocumentKeyDown(e);
+    private onRenderedItemsChanged;
+    private autoHighlight;
+    private highlightItem;
+    private onDocumentKeyDown;
     ngOnDestroy(): void;
 }

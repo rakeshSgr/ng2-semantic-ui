@@ -10,6 +10,6 @@ export declare class SuiSidebarSibling {
     readonly isDimmed: boolean;
     readonly hasClasses: boolean;
     constructor(_renderer: Renderer2, _element: ElementRef);
-    private updateTransform();
+    private updateTransform;
     onClick(event: MouseEvent): void;
 }

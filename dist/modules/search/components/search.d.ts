@@ -41,11 +41,11 @@ export declare class SuiSearch<T> implements AfterViewInit {
     transitionDuration: number;
     constructor(_element: ElementRef, renderer: Renderer2, _localizationService: SuiLocalizationService);
     ngAfterViewInit(): void;
-    private onLocaleUpdate();
+    private onLocaleUpdate;
     select(result: T): void;
     onClick(e: MouseEvent): void;
     onFocusIn(): void;
-    private open();
+    private open;
     onFocusOut(e: IFocusEvent): void;
     readValue(object: T): string;
 }

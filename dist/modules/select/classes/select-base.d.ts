@@ -52,7 +52,7 @@ export declare abstract class SuiSelectBase<T, U> implements AfterContentInit, O
     onTouched: EventEmitter<void>;
     constructor(_element: ElementRef, _localizationService: SuiLocalizationService);
     ngAfterContentInit(): void;
-    private onLocaleUpdate();
+    private onLocaleUpdate;
     protected optionsUpdateHook(): void;
     protected queryUpdateHook(): void;
     protected updateQuery(query: string): void;

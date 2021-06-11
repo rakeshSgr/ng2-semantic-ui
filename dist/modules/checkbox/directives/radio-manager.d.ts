@@ -7,6 +7,6 @@ export declare class SuiRadioManager<T> implements AfterContentInit {
     private _radioSubs;
     constructor(element: ElementRef);
     ngAfterContentInit(): void;
-    private updateNesting();
-    private updateRadios();
+    private updateNesting;
+    private updateRadios;
 }

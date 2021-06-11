@@ -40,5 +40,5 @@ export declare class PositioningService {
     init(): void;
     update(): void;
     destroy(): void;
-    private calculateOffsets();
+    private calculateOffsets;
 }

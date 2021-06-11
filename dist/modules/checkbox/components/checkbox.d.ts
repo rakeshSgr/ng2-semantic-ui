@@ -17,7 +17,7 @@ export declare class SuiCheckbox implements ICustomValueAccessorHost<boolean> {
     onFocusOut(e: any): void;
     toggle(): void;
     writeValue(value: boolean): void;
-    private focusCheckbox();
+    private focusCheckbox;
 }
 export declare class SuiCheckboxValueAccessor extends CustomValueAccessor<boolean, SuiCheckbox> {
     constructor(host: SuiCheckbox);

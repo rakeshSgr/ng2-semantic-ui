@@ -5,7 +5,7 @@ import { CalendarConfig } from "../classes/calendar-config";
 export declare enum CalendarMode {
     DateOnly = 0,
     TimeOnly = 1,
-    Both = 2,
+    Both = 2
 }
 export declare class CalendarService {
     localeValues: IDatepickerLocaleValues;
@@ -28,5 +28,5 @@ export declare class CalendarService {
     reset(): void;
     changeDate(date: Date, fromView: CalendarViewType): void;
     zoomOut(fromView: CalendarViewType): void;
-    private updateView(mappings, fromView);
+    private updateView;
 }

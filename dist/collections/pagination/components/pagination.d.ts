@@ -22,6 +22,6 @@ export declare class SuiPagination implements OnChanges {
     hasNext(): boolean;
     setPage(newPage: number): void;
     ngOnChanges(): void;
-    private updatePages();
-    private applyPagination();
+    private updatePages;
+    private applyPagination;
 }
