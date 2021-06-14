@@ -8,6 +8,6 @@ export declare class CalendarRangeMinuteService extends CalendarRangeService {
     configureItem(item: CalendarItem, baseDate: Date): void;
 }
 export declare class SuiCalendarMinuteView extends CalendarView {
-    readonly date: string;
+    get date(): string;
     constructor(renderer: Renderer2);
 }

@@ -5,7 +5,8 @@ export declare class SuiTabset implements AfterContentInit {
     private _tabContents;
     tabs: Tab[];
     private _activeTab;
-    activeTab: Tab;
+    get activeTab(): Tab;
+    set activeTab(tab: Tab);
     private _barrierCount;
     constructor();
     ngAfterContentInit(): void;

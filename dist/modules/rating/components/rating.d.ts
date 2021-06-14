@@ -5,9 +5,10 @@ export declare class SuiRating implements ICustomValueAccessorHost<number> {
     value: number;
     valueChange: EventEmitter<number>;
     private _maximum;
-    maximum: number;
+    get maximum(): number;
+    set maximum(value: number);
     isReadonly: boolean;
-    readonly icons: undefined[];
+    get icons(): undefined[];
     hoveredIndex: number;
     constructor();
     onClick(i: number): void;

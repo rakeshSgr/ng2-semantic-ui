@@ -5,12 +5,13 @@ export declare class SuiAccordionPanel {
     private _changeDetector;
     private _service;
     transitionController: TransitionController;
-    service: SuiAccordionService;
+    set service(service: SuiAccordionService);
     isDisabled: boolean;
     private _isOpen;
-    isOpen: boolean;
-    readonly transition: string;
-    readonly transitionDuration: number;
+    get isOpen(): boolean;
+    set isOpen(value: boolean);
+    get transition(): string;
+    get transitionDuration(): number;
     isOpenChange: EventEmitter<boolean>;
     constructor(_changeDetector: ChangeDetectorRef);
     toggle(): void;

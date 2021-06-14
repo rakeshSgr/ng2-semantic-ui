@@ -22,8 +22,10 @@ export declare class SidebarService {
     direction: SidebarDirection;
     private _width;
     private _height;
-    width: number;
-    height: number;
+    get width(): number;
+    set width(width: number);
+    get height(): number;
+    set height(height: number);
     isVisibleChange: EventEmitter<boolean>;
     widthChange: EventEmitter<void>;
     heightChange: EventEmitter<void>;

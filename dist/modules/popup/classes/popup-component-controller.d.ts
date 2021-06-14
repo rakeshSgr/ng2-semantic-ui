@@ -5,7 +5,7 @@ import { PopupConfig } from "./popup-config";
 export declare class SuiPopupComponentController<T> extends SuiPopupController {
     private _component;
     private _contentComponentRef?;
-    readonly componentInstance: T | undefined;
+    get componentInstance(): T | undefined;
     constructor(renderer: Renderer2, element: ElementRef, componentFactory: SuiComponentFactory, _component: Type<T>, config: PopupConfig);
     open(): void;
     protected cleanup(): void;

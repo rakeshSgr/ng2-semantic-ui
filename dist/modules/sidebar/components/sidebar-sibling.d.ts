@@ -4,10 +4,11 @@ export declare class SuiSidebarSibling {
     private _renderer;
     private _element;
     private _service;
-    service: SidebarService;
+    get service(): SidebarService;
+    set service(service: SidebarService);
     isDimmedWhenVisible: boolean;
-    readonly isVisible: boolean;
-    readonly isDimmed: boolean;
+    get isVisible(): boolean;
+    get isDimmed(): boolean;
     readonly hasClasses: boolean;
     constructor(_renderer: Renderer2, _element: ElementRef);
     private updateTransform;

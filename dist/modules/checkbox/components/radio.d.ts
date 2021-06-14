@@ -11,8 +11,8 @@ export declare class SuiRadio<T> implements ICustomValueAccessorHost<T> {
     isDisabled: boolean;
     isReadonly: boolean;
     private _radioElement;
-    readonly checkedAttribute: string | undefined;
-    readonly isDisabledAttribute: string | undefined;
+    get checkedAttribute(): string | undefined;
+    get isDisabledAttribute(): string | undefined;
     constructor();
     onMouseDown(e: MouseEvent): void;
     onClick(): void;

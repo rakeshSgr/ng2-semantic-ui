@@ -6,12 +6,13 @@ import "element-closest";
 export declare class SuiDropdownMenuItem {
     private _renderer;
     element: ElementRef;
-    readonly isDisabled: boolean;
+    get isDisabled(): boolean;
     private _isSelected;
-    isSelected: boolean;
+    get isSelected(): boolean;
+    set isSelected(value: boolean);
     selectedClass: string;
     childDropdownMenu: SuiDropdownMenu;
-    readonly hasChildDropdown: boolean;
+    get hasChildDropdown(): boolean;
     constructor(_renderer: Renderer2, element: ElementRef);
     performClick(): void;
 }
@@ -20,13 +21,14 @@ export declare class SuiDropdownMenu extends SuiTransition implements AfterConte
     private _transitionController;
     menuTransition: string;
     menuTransitionDuration: number;
-    service: DropdownService;
-    parentElement: ElementRef;
+    get service(): DropdownService;
+    set service(value: DropdownService);
+    set parentElement(value: ElementRef);
     private _itemsQueryInternal;
     private _itemsQueryOverride;
-    items: QueryList<SuiDropdownMenuItem>;
-    private readonly _itemsQuery;
-    private readonly _items;
+    set items(items: QueryList<SuiDropdownMenuItem>);
+    private get _itemsQuery();
+    private get _items();
     selectedItems: SuiDropdownMenuItem[];
     menuAutoSelectFirst: boolean;
     menuSelectedItemClass: string;

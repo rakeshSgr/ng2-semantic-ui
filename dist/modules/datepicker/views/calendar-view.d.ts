@@ -15,10 +15,11 @@ export declare abstract class CalendarView implements AfterViewInit, OnDestroy {
     private _service;
     private _renderedItems;
     private _highlightedItem?;
-    service: CalendarService;
+    set service(service: CalendarService);
+    get service(): CalendarService;
     ranges: CalendarRangeService;
-    readonly currentDate: Date;
-    readonly selectedDate: Date | undefined;
+    get currentDate(): Date;
+    get selectedDate(): Date | undefined;
     private _documentKeyDownListener;
     constructor(renderer: Renderer2, viewType: CalendarViewType, ranges: CalendarRangeService);
     setDate(item: CalendarItem): void;

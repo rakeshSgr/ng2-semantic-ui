@@ -4,7 +4,7 @@ export declare class SuiSelectSearch {
     private _element;
     readonly hasClasses: boolean;
     readonly autoComplete: string;
-    query: string;
+    set query(query: string);
     onQueryUpdated: EventEmitter<string>;
     onQueryKeyDown: EventEmitter<KeyboardEvent>;
     constructor(_renderer: Renderer2, _element: ElementRef);

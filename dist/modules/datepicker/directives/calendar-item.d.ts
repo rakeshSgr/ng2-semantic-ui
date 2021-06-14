@@ -12,9 +12,9 @@ export declare class CalendarItem {
 export declare class SuiCalendarItem {
     changeDetector: ChangeDetectorRef;
     item: CalendarItem;
-    readonly isSelectable: boolean;
-    readonly isActive: boolean;
-    readonly isToday: boolean;
+    get isSelectable(): boolean;
+    get isActive(): boolean;
+    get isToday(): boolean;
     hasFocus: boolean;
     onFocussed: EventEmitter<boolean>;
     constructor(changeDetector: ChangeDetectorRef);

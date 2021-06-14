@@ -6,6 +6,6 @@ export declare class CalendarRangeHourService extends CalendarRangeService {
     configureItem(item: CalendarItem, baseDate: Date): void;
 }
 export declare class SuiCalendarHourView extends CalendarView {
-    readonly date: string;
+    get date(): string;
     constructor(renderer: Renderer2);
 }

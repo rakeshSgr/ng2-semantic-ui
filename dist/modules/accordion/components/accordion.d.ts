@@ -3,9 +3,10 @@ import { SuiAccordionPanel } from "./accordion-panel";
 import { SuiAccordionService } from "../services/accordion.service";
 export declare class SuiAccordion implements AfterContentInit {
     readonly hasClasses: boolean;
-    closeOthers: boolean;
-    transition: string;
-    transitionDuration: number;
+    get closeOthers(): boolean;
+    set closeOthers(value: boolean);
+    set transition(transition: string);
+    set transitionDuration(duration: number);
     protected _service: SuiAccordionService;
     protected _panels: QueryList<SuiAccordionPanel>;
     constructor();

@@ -8,7 +8,7 @@ export declare class Transition {
     readonly type: string;
     readonly duration: number;
     direction: TransitionDirection;
-    readonly directionClass: string;
+    get directionClass(): string;
     readonly classes: string[];
     onComplete: () => void;
     constructor(name: string, duration?: number, direction?: TransitionDirection, onComplete?: (() => void));

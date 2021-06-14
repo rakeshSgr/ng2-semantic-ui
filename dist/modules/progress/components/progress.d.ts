@@ -6,11 +6,14 @@ export declare class SuiProgress {
     private _overrideSuccess;
     autoSuccess: boolean;
     showProgress: boolean;
-    value: number;
-    maximum: number;
-    precision: number;
-    readonly reachedMaximum: boolean;
-    readonly percentage: string;
-    classValue: string;
+    get value(): number;
+    set value(value: number);
+    get maximum(): number;
+    set maximum(value: number);
+    get precision(): number;
+    set precision(value: number);
+    get reachedMaximum(): boolean;
+    get percentage(): string;
+    set classValue(classes: string);
     constructor();
 }

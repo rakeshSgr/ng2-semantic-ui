@@ -9,7 +9,8 @@ export declare class SuiSelect<T, U> extends SuiSelectBase<T, U> implements ICus
     private _optionTemplateSibling;
     selectedOptionChange: EventEmitter<U>;
     private _placeholder;
-    placeholder: string;
+    get placeholder(): string;
+    set placeholder(placeholder: string);
     constructor(element: ElementRef, localizationService: SuiLocalizationService);
     protected optionsUpdateHook(): void;
     protected queryUpdateHook(): void;

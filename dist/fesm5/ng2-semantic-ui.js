@@ -1,7 +1,7 @@
-import { __read, __extends, __assign } from 'tslib';
-import { EventEmitter, Injectable, NgModule, Directive, Renderer2, ElementRef, ChangeDetectorRef, Input, HostBinding, Component, Output, ContentChildren, forwardRef, ReflectiveInjector, ApplicationRef, ComponentFactoryResolver, Injector, ViewChild, HostListener, ViewChildren, ViewContainerRef, TemplateRef, Host, ContentChild } from '@angular/core';
+import { __read, __decorate, __metadata, __extends, __assign, __param } from 'tslib';
+import { EventEmitter, Injectable, NgModule, Renderer2, ElementRef, ChangeDetectorRef, Input, HostBinding, Directive, Output, Component, ContentChildren, QueryList, forwardRef, ReflectiveInjector, ApplicationRef, ComponentFactoryResolver, Injector, ViewChild, HostListener, ViewChildren, ViewContainerRef, Type, TemplateRef, Host, ContentChild } from '@angular/core';
 import * as $extend from 'extend';
-import $extend__default, {  } from 'extend';
+import $extend__default from 'extend';
 import { CommonModule } from '@angular/common';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import Popper from 'popper.js';
@@ -9,14 +9,10 @@ import { format, parse } from 'date-fns';
 import * as defaultLocale from 'date-fns/locale/en-US';
 import { mobile, tablet } from 'bowser';
 import * as isUAWebView from 'is-ua-webview';
-import isUAWebView__default, {  } from 'is-ua-webview';
+import isUAWebView__default from 'is-ua-webview';
 import 'element-closest';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ enGB = {
+var enGB = {
     datepicker: {
         months: [
             "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
@@ -71,44 +67,16 @@ var /** @type {?} */ enGB = {
     }
 };
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T
- * @param {?} obj
- * @return {?}
- */
 function deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
-/**
- * @template T, U
- * @param {?} target
- * @param {?} source
- * @return {?}
- */
 function deepExtend(target, source) {
     // Rollup...
-    var /** @type {?} */ extend = $extend__default || $extend;
+    var extend = $extend__default || $extend;
     return extend(true, target, source);
 }
-/**
- * @param {?} language
- * @return {?}
- */
 function lang(language) {
     return language.toLowerCase().replace("-", "");
-}
-/**
- * @record
- */
-function ILocalizationValuesContainer() { }
-function ILocalizationValuesContainer_tsickle_Closure_declarations() {
-    /* TODO: handle strange member:
-    [name:string]:IPartialLocaleValues;
-    */
 }
 var SuiLocalizationService = /** @class */ (function () {
     function SuiLocalizationService() {
@@ -119,168 +87,70 @@ var SuiLocalizationService = /** @class */ (function () {
         this.load("en-GB", enGB);
     }
     Object.defineProperty(SuiLocalizationService.prototype, "language", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._language;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} language
-     * @return {?}
-     */
-    SuiLocalizationService.prototype.setLanguage = /**
-     * @param {?} language
-     * @return {?}
-     */
-    function (language) {
+    SuiLocalizationService.prototype.setLanguage = function (language) {
         if (lang(this._language) !== lang(language)) {
             this._language = language;
             this.onLanguageUpdate.emit();
         }
     };
-    /**
-     * @param {?=} language
-     * @return {?}
-     */
-    SuiLocalizationService.prototype.get = /**
-     * @param {?=} language
-     * @return {?}
-     */
-    function (language) {
+    SuiLocalizationService.prototype.get = function (language) {
         if (language === void 0) { language = this.language; }
-        var /** @type {?} */ values = deepClone(this._fallbackValues);
+        var values = deepClone(this._fallbackValues);
         if (!this._values[lang(language)]) {
             throw new Error("Locale " + language + " is not loaded");
         }
         deepExtend(values, this._values[lang(language)]);
         return deepClone(values);
     };
-    /**
-     * @template T
-     * @param {?} values
-     * @param {?} overrides
-     * @return {?}
-     */
-    SuiLocalizationService.prototype.override = /**
-     * @template T
-     * @param {?} values
-     * @param {?} overrides
-     * @return {?}
-     */
-    function (values, overrides) {
+    SuiLocalizationService.prototype.override = function (values, overrides) {
         return deepExtend(deepClone(values), overrides);
     };
-    /**
-     * @param {?} language
-     * @param {?} values
-     * @return {?}
-     */
-    SuiLocalizationService.prototype.load = /**
-     * @param {?} language
-     * @param {?} values
-     * @return {?}
-     */
-    function (language, values) {
+    SuiLocalizationService.prototype.load = function (language, values) {
         this._values[lang(language)] = deepClone(values);
         this.onLanguageUpdate.emit();
     };
-    /**
-     * @param {?} language
-     * @param {?} values
-     * @return {?}
-     */
-    SuiLocalizationService.prototype.patch = /**
-     * @param {?} language
-     * @param {?} values
-     * @return {?}
-     */
-    function (language, values) {
+    SuiLocalizationService.prototype.patch = function (language, values) {
         deepExtend(this._values[lang(language)], values);
     };
-    /**
-     * @param {?} value
-     * @param {?} variables
-     * @return {?}
-     */
-    SuiLocalizationService.prototype.interpolate = /**
-     * @param {?} value
-     * @param {?} variables
-     * @return {?}
-     */
-    function (value, variables) {
+    SuiLocalizationService.prototype.interpolate = function (value, variables) {
         return variables.reduce(function (s, _a) {
             var _b = __read(_a, 2), k = _b[0], v = _b[1];
             return s.replace(new RegExp("#{" + k + "}", "g"), v);
         }, value);
     };
-    SuiLocalizationService.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    SuiLocalizationService.ctorParameters = function () { return []; };
+    SuiLocalizationService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [])
+    ], SuiLocalizationService);
     return SuiLocalizationService;
 }());
-function SuiLocalizationService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiLocalizationService.prototype._language;
-    /** @type {?} */
-    SuiLocalizationService.prototype._fallbackValues;
-    /** @type {?} */
-    SuiLocalizationService.prototype._values;
-    /** @type {?} */
-    SuiLocalizationService.prototype.onLanguageUpdate;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiLocalizationModule = /** @class */ (function () {
     function SuiLocalizationModule() {
     }
-    SuiLocalizationModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [CommonModule],
-                    providers: [SuiLocalizationService]
-                },] }
-    ];
+    SuiLocalizationModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            providers: [SuiLocalizationService]
+        })
+    ], SuiLocalizationModule);
     return SuiLocalizationModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/** @enum {number} */
-var TransitionDirection = {
-    In: 0,
-    Out: 1,
-    Either: 2,
-    Static: 3,
-};
-TransitionDirection[TransitionDirection.In] = "In";
-TransitionDirection[TransitionDirection.Out] = "Out";
-TransitionDirection[TransitionDirection.Either] = "Either";
-TransitionDirection[TransitionDirection.Static] = "Static";
+// Possible directions for a transition.
+var TransitionDirection;
+(function (TransitionDirection) {
+    TransitionDirection[TransitionDirection["In"] = 0] = "In";
+    TransitionDirection[TransitionDirection["Out"] = 1] = "Out";
+    TransitionDirection[TransitionDirection["Either"] = 2] = "Either";
+    TransitionDirection[TransitionDirection["Static"] = 3] = "Static";
+})(TransitionDirection || (TransitionDirection = {}));
 var Transition = /** @class */ (function () {
     function Transition(name, duration, direction, onComplete) {
         if (duration === void 0) { duration = 250; }
@@ -295,10 +165,8 @@ var Transition = /** @class */ (function () {
         this.onComplete = onComplete;
     }
     Object.defineProperty(Transition.prototype, "directionClass", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Converts TransitionDirection to class name.
+        get: function () {
             switch (this.direction) {
                 case TransitionDirection.In: return "in";
                 case TransitionDirection.Out: return "out";
@@ -310,23 +178,7 @@ var Transition = /** @class */ (function () {
     });
     return Transition;
 }());
-function Transition_tsickle_Closure_declarations() {
-    /** @type {?} */
-    Transition.prototype.type;
-    /** @type {?} */
-    Transition.prototype.duration;
-    /** @type {?} */
-    Transition.prototype.direction;
-    /** @type {?} */
-    Transition.prototype.classes;
-    /** @type {?} */
-    Transition.prototype.onComplete;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var TransitionController = /** @class */ (function () {
     function TransitionController(isInitiallyVisible, display) {
         if (isInitiallyVisible === void 0) { isInitiallyVisible = true; }
@@ -339,113 +191,69 @@ var TransitionController = /** @class */ (function () {
         this._isAnimating = false;
     }
     Object.defineProperty(TransitionController.prototype, "_isReady", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Used to delay animations until we have an element to animate.
+        get: function () {
             return this._renderer != undefined && this._element != undefined && this._changeDetector != undefined;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(TransitionController.prototype, "isAnimating", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isAnimating;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(TransitionController.prototype, "isVisible", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isVisible;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(TransitionController.prototype, "isHidden", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isHidden;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(TransitionController.prototype, "_queueFirst", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Gets the first transition in the queue.
+        get: function () {
             return this._queue[0];
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(TransitionController.prototype, "_queueLast", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Gets the last transition in the queue.
+        get: function () {
             return this._queue[this._queue.length - 1];
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} renderer
-     * @return {?}
-     */
-    TransitionController.prototype.registerRenderer = /**
-     * @param {?} renderer
-     * @return {?}
-     */
-    function (renderer) {
+    // Sets the renderer to be used for animating.
+    TransitionController.prototype.registerRenderer = function (renderer) {
         this._renderer = renderer;
         this.performTransition();
     };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    TransitionController.prototype.registerElement = /**
-     * @param {?} element
-     * @return {?}
-     */
-    function (element) {
+    // Sets the element to perform the animations on.
+    TransitionController.prototype.registerElement = function (element) {
         this._element = element;
         this.performTransition();
     };
-    /**
-     * @param {?} changeDetector
-     * @return {?}
-     */
-    TransitionController.prototype.registerChangeDetector = /**
-     * @param {?} changeDetector
-     * @return {?}
-     */
-    function (changeDetector) {
+    // Sets the change detector to detect changes when using ChangeDetectionStrategy.OnPush.
+    TransitionController.prototype.registerChangeDetector = function (changeDetector) {
         this._changeDetector = changeDetector;
         this.performTransition();
     };
-    /**
-     * @param {?} transition
-     * @return {?}
-     */
-    TransitionController.prototype.animate = /**
-     * @param {?} transition
-     * @return {?}
-     */
-    function (transition) {
+    TransitionController.prototype.animate = function (transition) {
         // Test if transition is one of the list that doesn't change the visible state.
         // Should these eventually become classes?
-        var /** @type {?} */ isDirectionless = ["jiggle", "flash", "shake", "pulse", "tada", "bounce"].indexOf(transition.type) !== -1;
+        var isDirectionless = ["jiggle", "flash", "shake", "pulse", "tada", "bounce"].indexOf(transition.type) !== -1;
         if (isDirectionless) {
             transition.direction = TransitionDirection.Static;
         }
@@ -466,20 +274,14 @@ var TransitionController = /** @class */ (function () {
         this._queue.push(transition);
         this.performTransition();
     };
-    /**
-     * @return {?}
-     */
-    TransitionController.prototype.performTransition = /**
-     * @return {?}
-     */
-    function () {
+    TransitionController.prototype.performTransition = function () {
         var _this = this;
         if (!this._isReady || this._isAnimating || !this._queueFirst) {
             // Don't transition until we are ready, or if we are animating, or if there aren't any transitions in the queue.
             return;
         }
         this._isAnimating = true;
-        var /** @type {?} */ transition = this._queueFirst;
+        var transition = this._queueFirst;
         // Set the Semantic UI classes for transitioning.
         transition.classes.forEach(function (c) { return _this._renderer.addClass(_this._element, c); });
         this._renderer.addClass(this._element, "animating");
@@ -494,15 +296,8 @@ var TransitionController = /** @class */ (function () {
         // Wait the length of the animation before calling the complete callback.
         this._animationTimeout = window.setTimeout(function () { return _this.finishTransition(transition); }, transition.duration);
     };
-    /**
-     * @param {?} transition
-     * @return {?}
-     */
-    TransitionController.prototype.finishTransition = /**
-     * @param {?} transition
-     * @return {?}
-     */
-    function (transition) {
+    // Called when a transition has completed.
+    TransitionController.prototype.finishTransition = function (transition) {
         var _this = this;
         // Unset the Semantic UI classes & styles for transitioning.
         transition.classes.forEach(function (c) { return _this._renderer.removeClass(_this._element, c); });
@@ -530,15 +325,8 @@ var TransitionController = /** @class */ (function () {
         // Immediately attempt to perform another transition.
         this.performTransition();
     };
-    /**
-     * @param {?=} transition
-     * @return {?}
-     */
-    TransitionController.prototype.stop = /**
-     * @param {?=} transition
-     * @return {?}
-     */
-    function (transition) {
+    // Stops the current transition, leaves the rest of the queue intact.
+    TransitionController.prototype.stop = function (transition) {
         if (transition === void 0) { transition = this._queueFirst; }
         if (!transition || !this._isAnimating) {
             return;
@@ -546,23 +334,13 @@ var TransitionController = /** @class */ (function () {
         clearTimeout(this._animationTimeout);
         this.finishTransition(transition);
     };
-    /**
-     * @return {?}
-     */
-    TransitionController.prototype.stopAll = /**
-     * @return {?}
-     */
-    function () {
+    // Stops the current transition, and empties the queue.
+    TransitionController.prototype.stopAll = function () {
         this.clearQueue();
         this.stop();
     };
-    /**
-     * @return {?}
-     */
-    TransitionController.prototype.clearQueue = /**
-     * @return {?}
-     */
-    function () {
+    // Empties the transition queue but carries on with the current transition.
+    TransitionController.prototype.clearQueue = function () {
         if (this.isAnimating) {
             this._queue = [this._queueFirst];
             return;
@@ -571,31 +349,7 @@ var TransitionController = /** @class */ (function () {
     };
     return TransitionController;
 }());
-function TransitionController_tsickle_Closure_declarations() {
-    /** @type {?} */
-    TransitionController.prototype._renderer;
-    /** @type {?} */
-    TransitionController.prototype._element;
-    /** @type {?} */
-    TransitionController.prototype._changeDetector;
-    /** @type {?} */
-    TransitionController.prototype._display;
-    /** @type {?} */
-    TransitionController.prototype._queue;
-    /** @type {?} */
-    TransitionController.prototype._isAnimating;
-    /** @type {?} */
-    TransitionController.prototype._isVisible;
-    /** @type {?} */
-    TransitionController.prototype._isHidden;
-    /** @type {?} */
-    TransitionController.prototype._animationTimeout;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiTransition = /** @class */ (function () {
     function SuiTransition(_renderer, _element, _changeDetector) {
         this._renderer = _renderer;
@@ -604,11 +358,7 @@ var SuiTransition = /** @class */ (function () {
         this.transitionClass = true;
     }
     Object.defineProperty(SuiTransition.prototype, "suiTransition", {
-        set: /**
-         * @param {?} tC
-         * @return {?}
-         */
-        function (tC) {
+        set: function (tC) {
             // Set the transition controller (e.g. '<div [suiTransition]="transitionController"></div>').
             this.setTransitionController(tC);
         },
@@ -616,10 +366,7 @@ var SuiTransition = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiTransition.prototype, "isVisible", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._controller) {
                 return this._controller.isVisible;
             }
@@ -629,10 +376,7 @@ var SuiTransition = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiTransition.prototype, "isHidden", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._controller) {
                 return this._controller.isHidden;
             }
@@ -641,92 +385,65 @@ var SuiTransition = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} transitionController
-     * @return {?}
-     */
-    SuiTransition.prototype.setTransitionController = /**
-     * @param {?} transitionController
-     * @return {?}
-     */
-    function (transitionController) {
+    // Initialises the controller with the injected renderer and elementRef.
+    SuiTransition.prototype.setTransitionController = function (transitionController) {
         this._controller = transitionController;
         this._controller.registerRenderer(this._renderer);
         this._controller.registerElement(this._element.nativeElement);
         this._controller.registerChangeDetector(this._changeDetector);
     };
-    SuiTransition.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiTransition]",
-                    exportAs: "transition"
-                },] }
-    ];
-    /** @nocollapse */
     SuiTransition.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: ChangeDetectorRef }
     ]; };
-    SuiTransition.propDecorators = {
-        suiTransition: [{ type: Input }],
-        transitionClass: [{ type: HostBinding, args: ["class.transition",] }],
-        isVisible: [{ type: HostBinding, args: ["class.visible",] }],
-        isHidden: [{ type: HostBinding, args: ["class.hidden",] }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", TransitionController),
+        __metadata("design:paramtypes", [TransitionController])
+    ], SuiTransition.prototype, "suiTransition", null);
+    __decorate([
+        HostBinding("class.transition"),
+        __metadata("design:type", Boolean)
+    ], SuiTransition.prototype, "transitionClass", void 0);
+    __decorate([
+        HostBinding("class.visible"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiTransition.prototype, "isVisible", null);
+    __decorate([
+        HostBinding("class.hidden"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiTransition.prototype, "isHidden", null);
+    SuiTransition = __decorate([
+        Directive({
+            selector: "[suiTransition]",
+            exportAs: "transition"
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef, ChangeDetectorRef])
+    ], SuiTransition);
     return SuiTransition;
 }());
-function SuiTransition_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiTransition.prototype._controller;
-    /** @type {?} */
-    SuiTransition.prototype.transitionClass;
-    /** @type {?} */
-    SuiTransition.prototype._renderer;
-    /** @type {?} */
-    SuiTransition.prototype._element;
-    /** @type {?} */
-    SuiTransition.prototype._changeDetector;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiTransitionModule = /** @class */ (function () {
     function SuiTransitionModule() {
     }
-    SuiTransitionModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [CommonModule],
-                    declarations: [
-                        SuiTransition
-                    ],
-                    exports: [
-                        SuiTransition
-                    ],
-                    providers: []
-                },] }
-    ];
+    SuiTransitionModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            declarations: [
+                SuiTransition
+            ],
+            exports: [
+                SuiTransition
+            ],
+            providers: []
+        })
+    ], SuiTransitionModule);
     return SuiTransitionModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- */
-function IMessage() { }
-function IMessage_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IMessage.prototype.dismiss;
-}
 var SuiMessage = /** @class */ (function () {
     function SuiMessage() {
         this.isDismissable = true;
@@ -737,92 +454,64 @@ var SuiMessage = /** @class */ (function () {
         this.transitionDuration = 300;
         this.class = "";
     }
-    /**
-     * @return {?}
-     */
-    SuiMessage.prototype.dismiss = /**
-     * @return {?}
-     */
-    function () {
+    SuiMessage.prototype.dismiss = function () {
         var _this = this;
         this.transitionController.animate(new Transition(this.transition, this.transitionDuration, TransitionDirection.Out, function () {
             _this.isDismissed = true;
             _this.onDismiss.emit(_this);
         }));
     };
-    SuiMessage.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-message",
-                    template: "\n<div class=\"ui message {{ class }}\" *ngIf=\"!isDismissed\" [suiTransition]=\"transitionController\">\n    <i class=\"close icon\" *ngIf=\"isDismissable\" (click)=\"dismiss()\"></i>\n    <ng-content></ng-content>\n</div>\n",
-                    styles: ["\n/* Fix for CSS Bug */\n.ui.icon.visible.message {\n    display: flex !important;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiMessage.ctorParameters = function () { return []; };
-    SuiMessage.propDecorators = {
-        isDismissable: [{ type: Input }],
-        onDismiss: [{ type: Output, args: ["dismiss",] }],
-        transition: [{ type: Input }],
-        transitionDuration: [{ type: Input }],
-        class: [{ type: Input, args: ["class",] }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiMessage.prototype, "isDismissable", void 0);
+    __decorate([
+        Output("dismiss"),
+        __metadata("design:type", EventEmitter)
+    ], SuiMessage.prototype, "onDismiss", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiMessage.prototype, "transition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiMessage.prototype, "transitionDuration", void 0);
+    __decorate([
+        Input("class"),
+        __metadata("design:type", String)
+    ], SuiMessage.prototype, "class", void 0);
+    SuiMessage = __decorate([
+        Component({
+            selector: "sui-message",
+            template: "\n<div class=\"ui message {{ class }}\" *ngIf=\"!isDismissed\" [suiTransition]=\"transitionController\">\n    <i class=\"close icon\" *ngIf=\"isDismissable\" (click)=\"dismiss()\"></i>\n    <ng-content></ng-content>\n</div>\n",
+            styles: ["\n/* Fix for CSS Bug */\n.ui.icon.visible.message {\n    display: flex !important;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiMessage);
     return SuiMessage;
 }());
-function SuiMessage_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiMessage.prototype.isDismissable;
-    /** @type {?} */
-    SuiMessage.prototype.onDismiss;
-    /** @type {?} */
-    SuiMessage.prototype.isDismissed;
-    /** @type {?} */
-    SuiMessage.prototype.transitionController;
-    /** @type {?} */
-    SuiMessage.prototype.transition;
-    /** @type {?} */
-    SuiMessage.prototype.transitionDuration;
-    /** @type {?} */
-    SuiMessage.prototype.class;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiMessageModule = /** @class */ (function () {
     function SuiMessageModule() {
     }
-    SuiMessageModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        SuiTransitionModule
-                    ],
-                    declarations: [
-                        SuiMessage
-                    ],
-                    exports: [
-                        SuiMessage
-                    ]
-                },] }
-    ];
+    SuiMessageModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                SuiTransitionModule
+            ],
+            declarations: [
+                SuiMessage
+            ],
+            exports: [
+                SuiMessage
+            ]
+        })
+    ], SuiMessageModule);
     return SuiMessageModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiPagination = /** @class */ (function () {
     function SuiPagination() {
         this.hasClasses = true;
@@ -837,34 +526,20 @@ var SuiPagination = /** @class */ (function () {
         this.hasEllipses = true;
     }
     Object.defineProperty(SuiPagination.prototype, "maxSize", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._maxSize;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this._maxSize = (value != undefined) ? Math.max(value, 1) : undefined;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPagination.prototype, "collectionSize", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._collectionSize;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this._collectionSize = Math.max(value, 0);
             this.pageCount = Math.max(1, Math.ceil(this._collectionSize / this.pageSize));
         },
@@ -872,119 +547,67 @@ var SuiPagination = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiPagination.prototype, "hasNavigationLinks", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            var /** @type {?} */ maxSize = this._maxSize || this.pageCount;
+        get: function () {
+            var maxSize = this._maxSize || this.pageCount;
             return this._hasNavigationLinks || maxSize < this.pageCount;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this._hasNavigationLinks = value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPagination.prototype, "page", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._page;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this.setPage(value);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPagination.prototype, "pages", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._pages;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiPagination.prototype.hasPrevious = /**
-     * @return {?}
-     */
-    function () {
+    // Public methods
+    SuiPagination.prototype.hasPrevious = function () {
         return this.page > 1;
     };
-    /**
-     * @return {?}
-     */
-    SuiPagination.prototype.hasNext = /**
-     * @return {?}
-     */
-    function () {
+    SuiPagination.prototype.hasNext = function () {
         return this.page < this.pageCount;
     };
-    /**
-     * @param {?} newPage
-     * @return {?}
-     */
-    SuiPagination.prototype.setPage = /**
-     * @param {?} newPage
-     * @return {?}
-     */
-    function (newPage) {
-        var /** @type {?} */ value = (Number.isInteger(newPage)) ? Math.min(Math.max(newPage, 1), this.pageCount) : 1;
+    SuiPagination.prototype.setPage = function (newPage) {
+        var value = (Number.isInteger(newPage)) ? Math.min(Math.max(newPage, 1), this.pageCount) : 1;
         if (value !== this._page) {
             this._page = value;
             this.pageChange.emit(this._page);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPagination.prototype.ngOnChanges = /**
-     * @return {?}
-     */
-    function () {
+    // Lifecycle hooks
+    SuiPagination.prototype.ngOnChanges = function () {
         this.updatePages();
     };
-    /**
-     * @return {?}
-     */
-    SuiPagination.prototype.updatePages = /**
-     * @return {?}
-     */
-    function () {
+    // Private methods
+    SuiPagination.prototype.updatePages = function () {
         this.pageCount = Math.max(1, Math.ceil(this._collectionSize / this.pageSize));
         var _a = __read(this.applyPagination(), 2), start = _a[0], end = _a[1];
         this._pages = Array(end - start)
             .fill(start + 1)
             .map(function (s, i) { return s + i; });
     };
-    /**
-     * @return {?}
-     */
-    SuiPagination.prototype.applyPagination = /**
-     * @return {?}
-     */
-    function () {
-        var /** @type {?} */ maxSize = (this.maxSize != undefined) ? Math.min(this.maxSize, this.pageCount) : this.pageCount;
-        var /** @type {?} */ page = Math.ceil(this.page / maxSize) - 1;
-        var /** @type {?} */ start = 0;
-        var /** @type {?} */ end = this.pageCount;
+    SuiPagination.prototype.applyPagination = function () {
+        var maxSize = (this.maxSize != undefined) ? Math.min(this.maxSize, this.pageCount) : this.pageCount;
+        var page = Math.ceil(this.page / maxSize) - 1;
+        var start = 0;
+        var end = this.pageCount;
         if (this.canRotate) {
-            var /** @type {?} */ leftOffset = Math.floor(maxSize / 2);
-            var /** @type {?} */ rightOffset = maxSize % 2 === 0 ? leftOffset - 1 : leftOffset;
+            var leftOffset = Math.floor(maxSize / 2);
+            var rightOffset = maxSize % 2 === 0 ? leftOffset - 1 : leftOffset;
             if (this.page <= leftOffset) {
                 end = maxSize;
             }
@@ -1002,93 +625,77 @@ var SuiPagination = /** @class */ (function () {
         }
         return [start, Math.min(end, this.pageCount)];
     };
-    SuiPagination.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-pagination",
-                    template: "\n<a *ngIf=\"hasBoundaryLinks\" class=\"item\"  (click)=\"setPage(1)\" [class.disabled]=\"page===1\">\n    <span><i class=\"angle double left icon\"></i></span>\n</a>\n<a *ngIf=\"hasNavigationLinks\" class=\"item\" (click)=\"setPage(page-1)\" [class.disabled]=\"!hasPrevious()\">\n    <span><i class=\"angle left icon\"></i></span>\n</a>\n<ng-container *ngIf=\"hasEllipses\">\n    <a class=\"item\" (click)=\"setPage(1)\" *ngIf=\"pages[0] !== 1\">\n        <span>1</span>\n    </a>\n    <a class=\"disabled item\" *ngIf=\"pages[0] > 2\">...</a>\n</ng-container>\n<a *ngFor=\"let p of pages\" class=\"item\" [class.active]=\"p===page\" (click)=\"setPage(p)\">\n    {{ p }}\n</a>\n<ng-container *ngIf=\"hasEllipses\">\n    <a class=\"disabled item\" *ngIf=\"pages[pages.length - 1] < pageCount - 1\">...</a>\n    <a class=\"item\" (click)=\"setPage(pageCount)\" *ngIf=\"pages[pages.length - 1] !== pageCount\">\n        <span>{{ pageCount }}</span>\n    </a>\n</ng-container>\n<a *ngIf=\"hasNavigationLinks\" class=\"item\" (click)=\"setPage(page+1)\" [class.disabled]=\"!hasNext()\">\n    <span><i class=\"angle right icon\"></i></span>\n</a>\n<a *ngIf=\"hasBoundaryLinks\" class=\"item\"  (click)=\"setPage(pageCount)\" [class.disabled]=\"page===pageCount\">\n    <span><i class=\"angle double right icon\"></i></span>\n</a>\n",
-                    styles: ["\n:host .item {\n    transition: none;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiPagination.ctorParameters = function () { return []; };
-    SuiPagination.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.pagination",] }, { type: HostBinding, args: ["class.menu",] }],
-        pageChange: [{ type: Output }],
-        maxSize: [{ type: Input }],
-        pageSize: [{ type: Input }],
-        collectionSize: [{ type: Input }],
-        hasNavigationLinks: [{ type: Input }],
-        hasBoundaryLinks: [{ type: Input }],
-        canRotate: [{ type: Input }],
-        hasEllipses: [{ type: Input }],
-        page: [{ type: Input }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.pagination"),
+        HostBinding("class.menu"),
+        __metadata("design:type", Boolean)
+    ], SuiPagination.prototype, "hasClasses", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiPagination.prototype, "pageChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPagination.prototype, "maxSize", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiPagination.prototype, "pageSize", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPagination.prototype, "collectionSize", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPagination.prototype, "hasNavigationLinks", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiPagination.prototype, "hasBoundaryLinks", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiPagination.prototype, "canRotate", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiPagination.prototype, "hasEllipses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPagination.prototype, "page", null);
+    SuiPagination = __decorate([
+        Component({
+            selector: "sui-pagination",
+            template: "\n<a *ngIf=\"hasBoundaryLinks\" class=\"item\"  (click)=\"setPage(1)\" [class.disabled]=\"page===1\">\n    <span><i class=\"angle double left icon\"></i></span>\n</a>\n<a *ngIf=\"hasNavigationLinks\" class=\"item\" (click)=\"setPage(page-1)\" [class.disabled]=\"!hasPrevious()\">\n    <span><i class=\"angle left icon\"></i></span>\n</a>\n<ng-container *ngIf=\"hasEllipses\">\n    <a class=\"item\" (click)=\"setPage(1)\" *ngIf=\"pages[0] !== 1\">\n        <span>1</span>\n    </a>\n    <a class=\"disabled item\" *ngIf=\"pages[0] > 2\">...</a>\n</ng-container>\n<a *ngFor=\"let p of pages\" class=\"item\" [class.active]=\"p===page\" (click)=\"setPage(p)\">\n    {{ p }}\n</a>\n<ng-container *ngIf=\"hasEllipses\">\n    <a class=\"disabled item\" *ngIf=\"pages[pages.length - 1] < pageCount - 1\">...</a>\n    <a class=\"item\" (click)=\"setPage(pageCount)\" *ngIf=\"pages[pages.length - 1] !== pageCount\">\n        <span>{{ pageCount }}</span>\n    </a>\n</ng-container>\n<a *ngIf=\"hasNavigationLinks\" class=\"item\" (click)=\"setPage(page+1)\" [class.disabled]=\"!hasNext()\">\n    <span><i class=\"angle right icon\"></i></span>\n</a>\n<a *ngIf=\"hasBoundaryLinks\" class=\"item\"  (click)=\"setPage(pageCount)\" [class.disabled]=\"page===pageCount\">\n    <span><i class=\"angle double right icon\"></i></span>\n</a>\n",
+            styles: ["\n:host .item {\n    transition: none;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiPagination);
     return SuiPagination;
 }());
-function SuiPagination_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiPagination.prototype.hasClasses;
-    /** @type {?} */
-    SuiPagination.prototype.pageCount;
-    /** @type {?} */
-    SuiPagination.prototype.pageChange;
-    /** @type {?} */
-    SuiPagination.prototype._maxSize;
-    /** @type {?} */
-    SuiPagination.prototype._collectionSize;
-    /** @type {?} */
-    SuiPagination.prototype._page;
-    /** @type {?} */
-    SuiPagination.prototype._pages;
-    /** @type {?} */
-    SuiPagination.prototype._hasNavigationLinks;
-    /** @type {?} */
-    SuiPagination.prototype.pageSize;
-    /** @type {?} */
-    SuiPagination.prototype.hasBoundaryLinks;
-    /** @type {?} */
-    SuiPagination.prototype.canRotate;
-    /** @type {?} */
-    SuiPagination.prototype.hasEllipses;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiPaginationModule = /** @class */ (function () {
     function SuiPaginationModule() {
     }
-    SuiPaginationModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [CommonModule],
-                    exports: [SuiPagination],
-                    declarations: [SuiPagination],
-                    providers: []
-                },] }
-    ];
+    SuiPaginationModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            exports: [SuiPagination],
+            declarations: [SuiPagination],
+            providers: []
+        })
+    ], SuiPaginationModule);
     return SuiPaginationModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiAccordionPanel = /** @class */ (function () {
     function SuiAccordionPanel(_changeDetector) {
         this._changeDetector = _changeDetector;
@@ -1097,11 +704,7 @@ var SuiAccordionPanel = /** @class */ (function () {
         this.isOpenChange = new EventEmitter(false);
     }
     Object.defineProperty(SuiAccordionPanel.prototype, "service", {
-        set: /**
-         * @param {?} service
-         * @return {?}
-         */
-        function (service) {
+        set: function (service) {
             this._service = service;
             this._changeDetector.detectChanges();
         },
@@ -1109,19 +712,12 @@ var SuiAccordionPanel = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiAccordionPanel.prototype, "isOpen", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isOpen;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             // Convert to boolean (fixes false != undefined)
-            var /** @type {?} */ isOpen = !!value;
+            var isOpen = !!value;
             if (isOpen !== this.isOpen) {
                 // Only update if the value has changed.
                 this._isOpen = isOpen;
@@ -1139,10 +735,7 @@ var SuiAccordionPanel = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiAccordionPanel.prototype, "transition", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._service) {
                 return this._service.transition;
             }
@@ -1152,10 +745,7 @@ var SuiAccordionPanel = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiAccordionPanel.prototype, "transitionDuration", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._service) {
                 // Return the service defined transition duration.
                 return this._service.transitionDuration;
@@ -1166,55 +756,39 @@ var SuiAccordionPanel = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiAccordionPanel.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    SuiAccordionPanel.prototype.toggle = function () {
         if (!this.isDisabled) {
             this.isOpen = !this.isOpen;
         }
     };
-    SuiAccordionPanel.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-accordion-panel",
-                    exportAs: "suiAccordionPanel",
-                    template: "\n<!-- Title -->\n<div class=\"title\" [class.active]=\"isOpen\" (click)=\"toggle()\" >\n    <ng-content select=\"[title]\"></ng-content>\n</div>\n<!-- Content -->\n<div [suiCollapse]=\"!isOpen\" [collapseDuration]=\"transitionDuration\">\n    <div class=\"content\" [class.active]=\"isOpen\" [suiTransition]=\"transitionController\">\n        <ng-content select=\"[content]\"></ng-content>\n    </div>\n</div>\n",
-                    styles: ["\n/* Manual style as Semantic UI relies on > selector */\n.content {\n    padding: .5em 0 1em;\n}\n\n/* Another > selector fix */\n:host:first-child .title {\n    border-top: none;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiAccordionPanel.ctorParameters = function () { return [
         { type: ChangeDetectorRef }
     ]; };
-    SuiAccordionPanel.propDecorators = {
-        isDisabled: [{ type: Input }],
-        isOpen: [{ type: Input }],
-        isOpenChange: [{ type: Output }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiAccordionPanel.prototype, "isDisabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiAccordionPanel.prototype, "isOpen", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiAccordionPanel.prototype, "isOpenChange", void 0);
+    SuiAccordionPanel = __decorate([
+        Component({
+            selector: "sui-accordion-panel",
+            exportAs: "suiAccordionPanel",
+            template: "\n<!-- Title -->\n<div class=\"title\" [class.active]=\"isOpen\" (click)=\"toggle()\" >\n    <ng-content select=\"[title]\"></ng-content>\n</div>\n<!-- Content -->\n<div [suiCollapse]=\"!isOpen\" [collapseDuration]=\"transitionDuration\">\n    <div class=\"content\" [class.active]=\"isOpen\" [suiTransition]=\"transitionController\">\n        <ng-content select=\"[content]\"></ng-content>\n    </div>\n</div>\n",
+            styles: ["\n/* Manual style as Semantic UI relies on > selector */\n.content {\n    padding: .5em 0 1em;\n}\n\n/* Another > selector fix */\n:host:first-child .title {\n    border-top: none;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], SuiAccordionPanel);
     return SuiAccordionPanel;
 }());
-function SuiAccordionPanel_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiAccordionPanel.prototype._service;
-    /** @type {?} */
-    SuiAccordionPanel.prototype.transitionController;
-    /** @type {?} */
-    SuiAccordionPanel.prototype.isDisabled;
-    /** @type {?} */
-    SuiAccordionPanel.prototype._isOpen;
-    /** @type {?} */
-    SuiAccordionPanel.prototype.isOpenChange;
-    /** @type {?} */
-    SuiAccordionPanel.prototype._changeDetector;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiAccordionService = /** @class */ (function () {
     function SuiAccordionService() {
         this.closeOthers = true;
@@ -1222,27 +796,11 @@ var SuiAccordionService = /** @class */ (function () {
         this.transitionDuration = 350;
         this.panels = [];
     }
-    /**
-     * @param {?} panel
-     * @return {?}
-     */
-    SuiAccordionService.prototype.addPanel = /**
-     * @param {?} panel
-     * @return {?}
-     */
-    function (panel) {
+    SuiAccordionService.prototype.addPanel = function (panel) {
         panel.service = this;
         this.panels.push(panel);
     };
-    /**
-     * @param {?} panel
-     * @return {?}
-     */
-    SuiAccordionService.prototype.closeOtherPanels = /**
-     * @param {?} panel
-     * @return {?}
-     */
-    function (panel) {
+    SuiAccordionService.prototype.closeOtherPanels = function (panel) {
         if (!this.closeOthers) {
             return;
         }
@@ -1254,21 +812,7 @@ var SuiAccordionService = /** @class */ (function () {
     };
     return SuiAccordionService;
 }());
-function SuiAccordionService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiAccordionService.prototype.closeOthers;
-    /** @type {?} */
-    SuiAccordionService.prototype.transition;
-    /** @type {?} */
-    SuiAccordionService.prototype.transitionDuration;
-    /** @type {?} */
-    SuiAccordionService.prototype.panels;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiAccordion = /** @class */ (function () {
     function SuiAccordion() {
         // Accordion service is unique to each set of panels.
@@ -1276,97 +820,74 @@ var SuiAccordion = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiAccordion.prototype, "closeOthers", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._service.closeOthers;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this._service.closeOthers = value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiAccordion.prototype, "transition", {
-        set: /**
-         * @param {?} transition
-         * @return {?}
-         */
-        function (transition) {
+        set: function (transition) {
             this._service.transition = transition;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiAccordion.prototype, "transitionDuration", {
-        set: /**
-         * @param {?} duration
-         * @return {?}
-         */
-        function (duration) {
+        set: function (duration) {
             this._service.transitionDuration = duration;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiAccordion.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiAccordion.prototype.ngAfterContentInit = function () {
         var _this = this;
         this.updatePanels();
         // Reconnect panels after they have updated.
         this._panels.changes.subscribe(function () { return _this.updatePanels(); });
     };
-    /**
-     * @return {?}
-     */
-    SuiAccordion.prototype.updatePanels = /**
-     * @return {?}
-     */
-    function () {
+    SuiAccordion.prototype.updatePanels = function () {
         var _this = this;
         this._panels.forEach(function (p) { return _this._service.addPanel(p); });
     };
-    SuiAccordion.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-accordion",
-                    template: "\n<ng-content></ng-content>\n",
-                    styles: ["\n/* Fix for general styling issues */\n:host {\n    display: block;\n}\n\n/* Fix for styled border issue */\n:host.styled sui-accordion-panel:first-child .title {\n    border-top: none\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiAccordion.ctorParameters = function () { return []; };
-    SuiAccordion.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.accordion",] }],
-        closeOthers: [{ type: Input }],
-        transition: [{ type: Input }],
-        transitionDuration: [{ type: Input }],
-        _panels: [{ type: ContentChildren, args: [SuiAccordionPanel,] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.accordion"),
+        __metadata("design:type", Boolean)
+    ], SuiAccordion.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiAccordion.prototype, "closeOthers", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiAccordion.prototype, "transition", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiAccordion.prototype, "transitionDuration", null);
+    __decorate([
+        ContentChildren(SuiAccordionPanel),
+        __metadata("design:type", QueryList)
+    ], SuiAccordion.prototype, "_panels", void 0);
+    SuiAccordion = __decorate([
+        Component({
+            selector: "sui-accordion",
+            template: "\n<ng-content></ng-content>\n",
+            styles: ["\n/* Fix for general styling issues */\n:host {\n    display: block;\n}\n\n/* Fix for styled border issue */\n:host.styled sui-accordion-panel:first-child .title {\n    border-top: none\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiAccordion);
     return SuiAccordion;
 }());
-function SuiAccordion_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiAccordion.prototype.hasClasses;
-    /** @type {?} */
-    SuiAccordion.prototype._service;
-    /** @type {?} */
-    SuiAccordion.prototype._panels;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiCollapse = /** @class */ (function () {
     function SuiCollapse(_element, _renderer) {
         this._element = _element;
@@ -1379,10 +900,7 @@ var SuiCollapse = /** @class */ (function () {
     }
     Object.defineProperty(SuiCollapse.prototype, "isExpanded", {
         // Set when the collapse is open, and not animating.
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isExpanded;
         },
         enumerable: true,
@@ -1390,10 +908,7 @@ var SuiCollapse = /** @class */ (function () {
     });
     Object.defineProperty(SuiCollapse.prototype, "isCollapsed", {
         // Set when the collapse is closed, and not animating.
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return !this.isExpanded && !this.isCollapsing;
         },
         enumerable: true,
@@ -1401,27 +916,18 @@ var SuiCollapse = /** @class */ (function () {
     });
     Object.defineProperty(SuiCollapse.prototype, "isCollapsing", {
         // Set when the collapse is animating.
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isCollapsing;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiCollapse.prototype, "suiCollapse", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isExpanded;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        // Sets the state of the collapse, `true` is collapsed.
+        set: function (value) {
             if (value) {
                 this.hide();
             }
@@ -1433,22 +939,13 @@ var SuiCollapse = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiCollapse.prototype, "_animationDuration", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._pristine ? 0 : this.collapseDuration;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiCollapse.prototype.hide = /**
-     * @return {?}
-     */
-    function () {
+    SuiCollapse.prototype.hide = function () {
         var _this = this;
         this._isCollapsing = true;
         this._isExpanded = false;
@@ -1459,13 +956,7 @@ var SuiCollapse = /** @class */ (function () {
             _this._isCollapsing = false;
         });
     };
-    /**
-     * @return {?}
-     */
-    SuiCollapse.prototype.show = /**
-     * @return {?}
-     */
-    function () {
+    SuiCollapse.prototype.show = function () {
         var _this = this;
         this._isCollapsing = true;
         // Animate the host element from its offset height to its scroll height.
@@ -1476,24 +967,10 @@ var SuiCollapse = /** @class */ (function () {
             _this._isExpanded = true;
         });
     };
-    /**
-     * @param {?} startHeight
-     * @param {?} endHeight
-     * @param {?=} removeOnComplete
-     * @param {?=} callback
-     * @return {?}
-     */
-    SuiCollapse.prototype.animate = /**
-     * @param {?} startHeight
-     * @param {?} endHeight
-     * @param {?=} removeOnComplete
-     * @param {?=} callback
-     * @return {?}
-     */
-    function (startHeight, endHeight, removeOnComplete, callback) {
+    SuiCollapse.prototype.animate = function (startHeight, endHeight, removeOnComplete, callback) {
         if (removeOnComplete === void 0) { removeOnComplete = false; }
         if (callback === void 0) { callback = function () { }; }
-        var /** @type {?} */ heightFrames = [
+        var heightFrames = [
             {
                 offset: 0,
                 height: startHeight + "px"
@@ -1525,178 +1002,99 @@ var SuiCollapse = /** @class */ (function () {
         }
         setTimeout(function () { return callback(); }, this.collapseDuration);
     };
-    SuiCollapse.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiCollapse]"
-                },] }
-    ];
-    /** @nocollapse */
     SuiCollapse.ctorParameters = function () { return [
         { type: ElementRef },
         { type: Renderer2 }
     ]; };
-    SuiCollapse.propDecorators = {
-        isExpanded: [{ type: HostBinding, args: ["class.expanded",] }],
-        isCollapsed: [{ type: HostBinding, args: ["class.collapsed",] }],
-        isCollapsing: [{ type: HostBinding, args: ["class.collapsing",] }],
-        suiCollapse: [{ type: Input }],
-        collapseDuration: [{ type: Input }]
-    };
+    __decorate([
+        HostBinding("class.expanded"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiCollapse.prototype, "isExpanded", null);
+    __decorate([
+        HostBinding("class.collapsed"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiCollapse.prototype, "isCollapsed", null);
+    __decorate([
+        HostBinding("class.collapsing"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiCollapse.prototype, "isCollapsing", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiCollapse.prototype, "suiCollapse", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiCollapse.prototype, "collapseDuration", void 0);
+    SuiCollapse = __decorate([
+        Directive({
+            selector: "[suiCollapse]"
+        }),
+        __metadata("design:paramtypes", [ElementRef, Renderer2])
+    ], SuiCollapse);
     return SuiCollapse;
 }());
-function SuiCollapse_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiCollapse.prototype._isExpanded;
-    /** @type {?} */
-    SuiCollapse.prototype._isCollapsing;
-    /** @type {?} */
-    SuiCollapse.prototype._pristine;
-    /** @type {?} */
-    SuiCollapse.prototype.collapseDuration;
-    /** @type {?} */
-    SuiCollapse.prototype._element;
-    /** @type {?} */
-    SuiCollapse.prototype._renderer;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiCollapseModule = /** @class */ (function () {
     function SuiCollapseModule() {
     }
-    SuiCollapseModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule
-                    ],
-                    declarations: [
-                        SuiCollapse
-                    ],
-                    exports: [
-                        SuiCollapse
-                    ]
-                },] }
-    ];
+    SuiCollapseModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule
+            ],
+            declarations: [
+                SuiCollapse
+            ],
+            exports: [
+                SuiCollapse
+            ]
+        })
+    ], SuiCollapseModule);
     return SuiCollapseModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiAccordionModule = /** @class */ (function () {
     function SuiAccordionModule() {
     }
-    SuiAccordionModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        SuiCollapseModule,
-                        SuiTransitionModule
-                    ],
-                    declarations: [
-                        SuiAccordion,
-                        SuiAccordionPanel
-                    ],
-                    exports: [
-                        SuiAccordion,
-                        SuiAccordionPanel
-                    ],
-                    providers: []
-                },] }
-    ];
+    SuiAccordionModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                SuiCollapseModule,
+                SuiTransitionModule
+            ],
+            declarations: [
+                SuiAccordion,
+                SuiAccordionPanel
+            ],
+            exports: [
+                SuiAccordion,
+                SuiAccordionPanel
+            ],
+            providers: []
+        })
+    ], SuiAccordionModule);
     return SuiAccordionModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- */
-function ICustomValidatorHost() { }
-function ICustomValidatorHost_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ICustomValidatorHost.prototype.validate;
-}
-// unsupported: template constraints.
-/**
- * @template T
- */
-var  
-// unsupported: template constraints.
-/**
- * @template T
- */
-CustomValidator = /** @class */ (function () {
+var CustomValidator = /** @class */ (function () {
     function CustomValidator(_host) {
         this._host = _host;
         this.onValidatorChange = function () { };
     }
-    /**
-     * @param {?} c
-     * @return {?}
-     */
-    CustomValidator.prototype.validate = /**
-     * @param {?} c
-     * @return {?}
-     */
-    function (c) {
+    CustomValidator.prototype.validate = function (c) {
         return this._host.validate(c);
     };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    CustomValidator.prototype.registerOnValidatorChange = /**
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
+    CustomValidator.prototype.registerOnValidatorChange = function (fn) {
         this.onValidatorChange = fn;
     };
     return CustomValidator;
 }());
-function CustomValidator_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CustomValidator.prototype.onValidatorChange;
-    /** @type {?} */
-    CustomValidator.prototype._host;
-}
-/**
- * @record
- */
-function IValidationProvider() { }
-function IValidationProvider_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IValidationProvider.prototype.provide;
-    /** @type {?} */
-    IValidationProvider.prototype.useExisting;
-    /** @type {?} */
-    IValidationProvider.prototype.multi;
-}
-/**
- * @param {?} type
- * @return {?}
- */
 function customValidatorFactory(type) {
     return {
         provide: NG_VALIDATORS,
@@ -1705,93 +1103,23 @@ function customValidatorFactory(type) {
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- * @template T
- */
-function ICustomValueAccessorHost() { }
-function ICustomValueAccessorHost_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ICustomValueAccessorHost.prototype.writeValue;
-}
-// unsupported: template constraints.
-/**
- * @template U, T
- */
-var  
-// unsupported: template constraints.
-/**
- * @template U, T
- */
-CustomValueAccessor = /** @class */ (function () {
+var CustomValueAccessor = /** @class */ (function () {
     function CustomValueAccessor(_host) {
         this._host = _host;
         this.onChange = function (e) { };
         this.onTouched = function () { };
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    CustomValueAccessor.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    CustomValueAccessor.prototype.writeValue = function (value) {
         this._host.writeValue(value);
     };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    CustomValueAccessor.prototype.registerOnChange = /**
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
+    CustomValueAccessor.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
     };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    CustomValueAccessor.prototype.registerOnTouched = /**
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
+    CustomValueAccessor.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
     return CustomValueAccessor;
 }());
-function CustomValueAccessor_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CustomValueAccessor.prototype.onChange;
-    /** @type {?} */
-    CustomValueAccessor.prototype.onTouched;
-    /** @type {?} */
-    CustomValueAccessor.prototype._host;
-}
-/**
- * @record
- */
-function IValueAccessorProvider() { }
-function IValueAccessorProvider_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IValueAccessorProvider.prototype.provide;
-    /** @type {?} */
-    IValueAccessorProvider.prototype.useExisting;
-    /** @type {?} */
-    IValueAccessorProvider.prototype.multi;
-}
-/**
- * @param {?} type
- * @return {?}
- */
 function customValueAccessorFactory(type) {
     return {
         provide: NG_VALUE_ACCESSOR,
@@ -1800,130 +1128,52 @@ function customValueAccessorFactory(type) {
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/** @enum {number} */
-var KeyCode = {
-    Left: 37,
-    Up: 38,
-    Right: 39,
-    Down: 40,
-    Escape: 27,
-    Enter: 13,
-    Space: 32,
-    Backspace: 8,
-};
-KeyCode[KeyCode.Left] = "Left";
-KeyCode[KeyCode.Up] = "Up";
-KeyCode[KeyCode.Right] = "Right";
-KeyCode[KeyCode.Down] = "Down";
-KeyCode[KeyCode.Escape] = "Escape";
-KeyCode[KeyCode.Enter] = "Enter";
-KeyCode[KeyCode.Space] = "Space";
-KeyCode[KeyCode.Backspace] = "Backspace";
-/**
- * @record
- */
-function IRecursiveObject() { }
-function IRecursiveObject_tsickle_Closure_declarations() {
-    /* TODO: handle strange member:
-    [name:string]:IRecursiveObject;
-    */
-}
-/**
- * @record
- * @template T
- */
-function ITemplateRefContext() { }
-function ITemplateRefContext_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ITemplateRefContext.prototype.$implicit;
-}
-/**
- * @record
- */
-function IAugmentedElement() { }
-function IAugmentedElement_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IAugmentedElement.prototype.closest;
-}
+// Keyboard keycodes.
+var KeyCode;
+(function (KeyCode) {
+    KeyCode[KeyCode["Left"] = 37] = "Left";
+    KeyCode[KeyCode["Up"] = 38] = "Up";
+    KeyCode[KeyCode["Right"] = 39] = "Right";
+    KeyCode[KeyCode["Down"] = 40] = "Down";
+    KeyCode[KeyCode["Escape"] = 27] = "Escape";
+    KeyCode[KeyCode["Enter"] = 13] = "Enter";
+    KeyCode[KeyCode["Space"] = 32] = "Space";
+    KeyCode[KeyCode["Backspace"] = 8] = "Backspace";
+})(KeyCode || (KeyCode = {}));
 var HandledEvent = /** @class */ (function () {
     function HandledEvent() {
     }
     return HandledEvent;
 }());
-function HandledEvent_tsickle_Closure_declarations() {
-    /** @type {?} */
-    HandledEvent.prototype.eventHandled;
-}
-/**
- * @record
- */
-function IDynamicClasses() { }
-function IDynamicClasses_tsickle_Closure_declarations() {
-    /* TODO: handle strange member:
-    [name:string]:true;
-    */
-}
-var /** @type {?} */ Util = {
+var Util = {
     Array: {
-        range: /**
-         * @param {?} n
-         * @param {?=} offset
-         * @return {?}
-         */
-        function (n, offset) {
+        range: function (n, offset) {
             if (offset === void 0) { offset = 0; }
             return Array(n).fill(0).map(function (z, i) { return i + offset; });
         },
-        group: /**
-         * @template T
-         * @param {?} items
-         * @param {?} groupLength
-         * @return {?}
-         */
-        function (items, groupLength) {
-            var /** @type {?} */ mutable = items.slice(0);
-            var /** @type {?} */ groups = [];
+        group: function (items, groupLength) {
+            var mutable = items.slice(0);
+            var groups = [];
             while (mutable.length > 0) {
                 groups.push(mutable.splice(0, groupLength));
             }
             return groups;
         },
-        groupBy: /**
-         * @template T
-         * @param {?} items
-         * @param {?} field
-         * @return {?}
-         */
-        function (items, field) {
+        groupBy: function (items, field) {
             return items.reduce(function (groups, i) {
-                var /** @type {?} */ fieldValue = i[field].toString();
+                var fieldValue = i[field].toString();
                 groups[fieldValue] = groups[fieldValue] || [];
                 groups[fieldValue].push(i);
                 return groups;
             }, Object());
         },
-        flatten: /**
-         * @template T
-         * @param {?} items
-         * @return {?}
-         */
-        function (items) {
+        flatten: function (items) {
             return items.reduce(function (is, i) { return is.concat(i); }, []);
         }
     },
     String: {
-        padLeft: /**
-         * @param {?} str
-         * @param {?} length
-         * @param {?} padding
-         * @return {?}
-         */
-        function (str, length, padding) {
-            var /** @type {?} */ s = str;
+        padLeft: function (str, length, padding) {
+            var s = str;
             while (s.length < length) {
                 s = padding + s;
             }
@@ -1931,12 +1181,8 @@ var /** @type {?} */ Util = {
         }
     },
     DOM: {
-        parseBooleanAttribute: /**
-         * @param {?} attributeValue
-         * @return {?}
-         */
-        function (attributeValue) {
-            var /** @type {?} */ value = attributeValue;
+        parseBooleanAttribute: function (attributeValue) {
+            var value = attributeValue;
             if (typeof attributeValue === "string") {
                 value = true;
             }
@@ -1944,55 +1190,29 @@ var /** @type {?} */ Util = {
         }
     },
     Object: {
-        readValue: /**
-         * @template T, U
-         * @param {?} object
-         * @param {?=} path
-         * @return {?}
-         */
-        function (object, path) {
+        readValue: function (object, path) {
             if (!path) {
                 return object;
             }
-            var /** @type {?} */ recursed = object;
-            for (var /** @type {?} */ i = 0, /** @type {?} */ p = path.split("."), /** @type {?} */ len = p.length; i < len; i++) {
+            var recursed = object;
+            for (var i = 0, p = path.split("."), len = p.length; i < len; i++) {
                 recursed = recursed[p[i]];
             }
             return recursed;
         }
     },
     Math: {
-        round: /**
-         * @param {?} r
-         * @param {?} n
-         * @return {?}
-         */
-        function (r, n) {
+        round: function (r, n) {
             return Math.round(r / n) * n;
         },
-        roundUp: /**
-         * @param {?} r
-         * @param {?} n
-         * @return {?}
-         */
-        function (r, n) {
+        roundUp: function (r, n) {
             return Math.ceil(r / n) * n;
         },
-        roundDown: /**
-         * @param {?} r
-         * @param {?} n
-         * @return {?}
-         */
-        function (r, n) {
+        roundDown: function (r, n) {
             return Math.floor(r / n) * n;
         },
-        mod: /**
-         * @param {?} r
-         * @param {?} n
-         * @return {?}
-         */
-        function (r, n) {
-            var /** @type {?} */ rem = r % n;
+        mod: function (r, n) {
+            var rem = r % n;
             if (rem < 0) {
                 return rem + n;
             }
@@ -2001,37 +1221,21 @@ var /** @type {?} */ Util = {
     }
 };
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/** @enum {number} */
-var DatePrecision = {
-    Decade: 0,
-    Year: 1,
-    Month: 2,
-    Date: 3,
-    Hour: 4,
-    Minute: 5,
-};
-DatePrecision[DatePrecision.Decade] = "Decade";
-DatePrecision[DatePrecision.Year] = "Year";
-DatePrecision[DatePrecision.Month] = "Month";
-DatePrecision[DatePrecision.Date] = "Date";
-DatePrecision[DatePrecision.Hour] = "Hour";
-DatePrecision[DatePrecision.Minute] = "Minute";
-var /** @type {?} */ DateUtil = {
-    startOf: /**
-     * @param {?} precision
-     * @param {?} date
-     * @param {?=} resetAll
-     * @return {?}
-     */
-    function (precision, date, resetAll) {
+var DatePrecision;
+(function (DatePrecision) {
+    DatePrecision[DatePrecision["Decade"] = 0] = "Decade";
+    DatePrecision[DatePrecision["Year"] = 1] = "Year";
+    DatePrecision[DatePrecision["Month"] = 2] = "Month";
+    DatePrecision[DatePrecision["Date"] = 3] = "Date";
+    DatePrecision[DatePrecision["Hour"] = 4] = "Hour";
+    DatePrecision[DatePrecision["Minute"] = 5] = "Minute";
+})(DatePrecision || (DatePrecision = {}));
+var DateUtil = {
+    startOf: function (precision, date, resetAll) {
         if (resetAll === void 0) { resetAll = false; }
         switch (precision) {
             case DatePrecision.Decade:
-                var /** @type {?} */ start = Math.floor(date.getFullYear() / 10) * 10 + 1;
+                var start = Math.floor(date.getFullYear() / 10) * 10 + 1;
                 date.setFullYear(start);
                 if (!resetAll) {
                     break;
@@ -2066,12 +1270,7 @@ var /** @type {?} */ DateUtil = {
         }
         return date;
     },
-    endOf: /**
-     * @param {?} precision
-     * @param {?} date
-     * @return {?}
-     */
-    function (precision, date) {
+    endOf: function (precision, date) {
         switch (precision) {
             case DatePrecision.Year:
                 date.setMonth(12, 0);
@@ -2091,14 +1290,8 @@ var /** @type {?} */ DateUtil = {
         }
         return date;
     },
-    equal: /**
-     * @param {?} precision
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    function (precision, a, b) {
-        var /** @type {?} */ equal = true;
+    equal: function (precision, a, b) {
+        var equal = true;
         switch (precision) {
             case DatePrecision.Minute:
                 equal = equal && a.getMinutes() === b.getMinutes();
@@ -2117,24 +1310,13 @@ var /** @type {?} */ DateUtil = {
         }
         return equal;
     },
-    next: /**
-     * @param {?} precision
-     * @param {?} date
-     * @return {?}
-     */
-    function (precision, date) {
+    next: function (precision, date) {
         return DateUtil.add(precision, date, 1);
     },
-    add: /**
-     * @param {?} precision
-     * @param {?} date
-     * @param {?} i
-     * @return {?}
-     */
-    function (precision, date, i) {
-        var /** @type {?} */ year = date.getFullYear();
-        var /** @type {?} */ month = date.getMonth();
-        var /** @type {?} */ day = date.getDate();
+    add: function (precision, date, i) {
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDate();
         switch (precision) {
             case DatePrecision.Decade:
                 date.setFullYear(year + i * 10);
@@ -2166,15 +1348,10 @@ var /** @type {?} */ DateUtil = {
         }
         return date;
     },
-    previous: /**
-     * @param {?} precision
-     * @param {?} date
-     * @return {?}
-     */
-    function (precision, date) {
-        var /** @type {?} */ year = date.getFullYear();
-        var /** @type {?} */ month = date.getMonth();
-        var /** @type {?} */ day = date.getDate();
+    previous: function (precision, date) {
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDate();
         switch (precision) {
             case DatePrecision.Decade:
                 date.setFullYear(year - 10);
@@ -2198,196 +1375,84 @@ var /** @type {?} */ DateUtil = {
                 date.setDate(day - 1);
                 break;
             case DatePrecision.Hour:
-                var /** @type {?} */ hours = date.getHours();
+                var hours = date.getHours();
                 date.setHours(hours - 1);
                 if (date.getHours() !== Util.Math.mod(hours - 1, 24)) {
                     date.setHours(hours - 2);
                 }
                 break;
             case DatePrecision.Minute:
-                var /** @type {?} */ minutes = date.getMinutes();
+                var minutes = date.getMinutes();
                 date.setMinutes(minutes - 1);
         }
         return date;
     },
-    clone: /**
-     * @param {?} date
-     * @return {?}
-     */
-    function (date) {
+    clone: function (date) {
         return new Date(date.getTime());
     }
 };
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- * @template T
- */
-function IImplicitContext() { }
-function IImplicitContext_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
-    IImplicitContext.prototype.$implicit;
-}
 var SuiComponentFactory = /** @class */ (function () {
     function SuiComponentFactory(_applicationRef, _componentFactoryResolver, _injector) {
         this._applicationRef = _applicationRef;
         this._componentFactoryResolver = _componentFactoryResolver;
         this._injector = _injector;
     }
-    /**
-     * @template T
-     * @param {?} type
-     * @param {?=} providers
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.createComponent = /**
-     * @template T
-     * @param {?} type
-     * @param {?=} providers
-     * @return {?}
-     */
-    function (type, providers) {
+    SuiComponentFactory.prototype.createComponent = function (type, providers) {
         if (providers === void 0) { providers = []; }
         // Resolve a factory for creating components of type `type`.
-        var /** @type {?} */ factory = this._componentFactoryResolver.resolveComponentFactory(type);
+        var factory = this._componentFactoryResolver.resolveComponentFactory(type);
         // Resolve and create an injector with the specified providers.
-        var /** @type {?} */ injector = ReflectiveInjector.resolveAndCreate(providers, this._injector);
+        var injector = ReflectiveInjector.resolveAndCreate(providers, this._injector);
         // Create a component using the previously resolved factory & injector.
-        var /** @type {?} */ componentRef = factory.create(injector);
+        var componentRef = factory.create(injector);
         return componentRef;
     };
-    /**
-     * @template T, U
-     * @param {?} viewContainer
-     * @param {?} template
-     * @param {?} context
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.createView = /**
-     * @template T, U
-     * @param {?} viewContainer
-     * @param {?} template
-     * @param {?} context
-     * @return {?}
-     */
-    function (viewContainer, template, context) {
+    SuiComponentFactory.prototype.createView = function (viewContainer, template, context) {
         viewContainer.createEmbeddedView(template, context);
     };
-    /**
-     * @template T
-     * @param {?} componentRef
-     * @param {?} viewContainer
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.attachToView = /**
-     * @template T
-     * @param {?} componentRef
-     * @param {?} viewContainer
-     * @return {?}
-     */
-    function (componentRef, viewContainer) {
+    // Inserts the component into the specified view container.
+    SuiComponentFactory.prototype.attachToView = function (componentRef, viewContainer) {
         viewContainer.insert(componentRef.hostView, 0);
     };
-    /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.attachToApplication = /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    function (componentRef) {
+    // Inserts the component in the root application node.
+    SuiComponentFactory.prototype.attachToApplication = function (componentRef) {
         this._applicationRef.attachView(componentRef.hostView);
     };
-    /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.detachFromApplication = /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    function (componentRef) {
+    // Detaches the component from the root application node.
+    SuiComponentFactory.prototype.detachFromApplication = function (componentRef) {
         this._applicationRef.detachView(componentRef.hostView);
     };
-    /**
-     * @template T
-     * @param {?} componentRef
-     * @param {?} element
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.moveToElement = /**
-     * @template T
-     * @param {?} componentRef
-     * @param {?} element
-     * @return {?}
-     */
-    function (componentRef, element) {
+    // Moves the component to the specified DOM element.
+    SuiComponentFactory.prototype.moveToElement = function (componentRef, element) {
         element.appendChild(componentRef.location.nativeElement);
     };
-    /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.moveToDocumentBody = /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    function (componentRef) {
-        this.moveToElement(componentRef, /** @type {?} */ ((document.querySelector("body"))));
+    // Moves the component to the document body.
+    SuiComponentFactory.prototype.moveToDocumentBody = function (componentRef) {
+        this.moveToElement(componentRef, document.querySelector("body"));
     };
-    /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    SuiComponentFactory.prototype.detachFromDocument = /**
-     * @template T
-     * @param {?} componentRef
-     * @return {?}
-     */
-    function (componentRef) {
-        var /** @type {?} */ element = componentRef.location.nativeElement;
+    SuiComponentFactory.prototype.detachFromDocument = function (componentRef) {
+        var element = componentRef.location.nativeElement;
         // We can't use `element.remove()` due to lack of IE11 support.
         if (element.parentNode) {
             element.parentNode.removeChild(element);
         }
     };
-    SuiComponentFactory.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
     SuiComponentFactory.ctorParameters = function () { return [
         { type: ApplicationRef },
         { type: ComponentFactoryResolver },
         { type: Injector }
     ]; };
+    SuiComponentFactory = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [ApplicationRef,
+            ComponentFactoryResolver,
+            Injector])
+    ], SuiComponentFactory);
     return SuiComponentFactory;
 }());
-function SuiComponentFactory_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiComponentFactory.prototype._applicationRef;
-    /** @type {?} */
-    SuiComponentFactory.prototype._componentFactoryResolver;
-    /** @type {?} */
-    SuiComponentFactory.prototype._injector;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ PositioningPlacement = {
+var PositioningPlacement = {
     Auto: "auto",
     TopLeft: "top left",
     Top: "top",
@@ -2402,28 +1467,6 @@ var /** @type {?} */ PositioningPlacement = {
     Right: "right",
     RightBottom: "right bottom"
 };
-/**
- * @record
- */
-function IPositionBoundingBox() { }
-function IPositionBoundingBox_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IPositionBoundingBox.prototype.width;
-    /** @type {?} */
-    IPositionBoundingBox.prototype.height;
-    /** @type {?} */
-    IPositionBoundingBox.prototype.top;
-    /** @type {?} */
-    IPositionBoundingBox.prototype.left;
-    /** @type {?} */
-    IPositionBoundingBox.prototype.bottom;
-    /** @type {?} */
-    IPositionBoundingBox.prototype.right;
-}
-/**
- * @param {?} placement
- * @return {?}
- */
 function placementToPopper(placement) {
     if (!placement || placement === PositioningPlacement.Auto) {
         return "auto";
@@ -2431,7 +1474,7 @@ function placementToPopper(placement) {
     // All placements of the format: `direction alignment`, e.g. `top left`.
     var _a = __read(placement.split(" "), 2), direction = _a[0], alignment = _a[1];
     // Direction alone covers case of just `top`, `left`, `bottom`, `right`.
-    var /** @type {?} */ chosenPlacement = [direction];
+    var chosenPlacement = [direction];
     // Add `start` / `end` to placement, depending on alignment direction.
     switch (alignment) {
         case "top":
@@ -2446,16 +1489,12 @@ function placementToPopper(placement) {
     // Join with hyphen to create Popper compatible placement.
     return chosenPlacement.join("-");
 }
-/**
- * @param {?} popper
- * @return {?}
- */
 function popperToPlacement(popper) {
     if (!popper || popper === "auto") {
         return "auto";
     }
     var _a = __read(popper.split("-"), 2), direction = _a[0], alignment = _a[1];
-    var /** @type {?} */ chosenPlacement = [direction];
+    var chosenPlacement = [direction];
     switch (direction) {
         case "top":
         case "bottom":
@@ -2491,17 +1530,10 @@ var PositioningService = /** @class */ (function () {
         this.init();
     }
     Object.defineProperty(PositioningService.prototype, "placement", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._placement;
         },
-        set: /**
-         * @param {?} placement
-         * @return {?}
-         */
-        function (placement) {
+        set: function (placement) {
             this._placement = placement;
             if (this._popper) {
                 this._popper.options.placement = placementToPopper(placement);
@@ -2511,21 +1543,14 @@ var PositioningService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(PositioningService.prototype, "hasArrow", {
-        set: /**
-         * @param {?} hasArrow
-         * @return {?}
-         */
-        function (hasArrow) {
+        set: function (hasArrow) {
             this._hasArrow = hasArrow;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PositioningService.prototype, "actualPlacement", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (!this._popperState) {
                 return PositioningPlacement.Auto;
             }
@@ -2535,24 +1560,15 @@ var PositioningService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(PositioningService.prototype, "state", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._popperState;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    PositioningService.prototype.init = /**
-     * @return {?}
-     */
-    function () {
+    PositioningService.prototype.init = function () {
         var _this = this;
-        var /** @type {?} */ modifiers = {
+        var modifiers = {
             computeStyle: {
                 gpuAcceleration: false
             },
@@ -2566,7 +1582,7 @@ var PositioningService = /** @class */ (function () {
             offset: {
                 fn: function (data) {
                     if (_this._hasArrow) {
-                        var /** @type {?} */ offsets = _this.calculateOffsets();
+                        var offsets = _this.calculateOffsets();
                         data.offsets.popper.left += offsets.left;
                         data.offsets.popper.top += offsets.top;
                     }
@@ -2584,39 +1600,21 @@ var PositioningService = /** @class */ (function () {
             onUpdate: function (update) { return _this._popperState = update; }
         });
     };
-    /**
-     * @return {?}
-     */
-    PositioningService.prototype.update = /**
-     * @return {?}
-     */
-    function () {
+    PositioningService.prototype.update = function () {
         this._popper.update();
     };
-    /**
-     * @return {?}
-     */
-    PositioningService.prototype.destroy = /**
-     * @return {?}
-     */
-    function () {
+    PositioningService.prototype.destroy = function () {
         this._popper.destroy();
     };
-    /**
-     * @return {?}
-     */
-    PositioningService.prototype.calculateOffsets = /**
-     * @return {?}
-     */
-    function () {
-        var /** @type {?} */ left = 0;
-        var /** @type {?} */ top = 0;
+    PositioningService.prototype.calculateOffsets = function () {
+        var left = 0;
+        var top = 0;
         // To support correct positioning for all popup sizes we should calculate offset using em
-        var /** @type {?} */ fontSize = parseFloat(window.getComputedStyle(this.subject.nativeElement).getPropertyValue("font-size"));
+        var fontSize = parseFloat(window.getComputedStyle(this.subject.nativeElement).getPropertyValue("font-size"));
         // The Semantic UI popup arrow width and height are 0.71428571em and the margin from the popup edge is 1em
-        var /** @type {?} */ arrowCenter = (0.71428571 / 2 + 1) * fontSize;
+        var arrowCenter = (0.71428571 / 2 + 1) * fontSize;
         if (this.anchor.nativeElement.offsetWidth <= arrowCenter * 2) {
-            var /** @type {?} */ anchorCenterWidth = this.anchor.nativeElement.offsetWidth / 2;
+            var anchorCenterWidth = this.anchor.nativeElement.offsetWidth / 2;
             if (this._placement === PositioningPlacement.TopLeft || this._placement === PositioningPlacement.BottomLeft) {
                 left = anchorCenterWidth - arrowCenter;
             }
@@ -2625,7 +1623,7 @@ var PositioningService = /** @class */ (function () {
             }
         }
         if (this.anchor.nativeElement.offsetHeight <= arrowCenter * 2) {
-            var /** @type {?} */ anchorCenterHeight = this.anchor.nativeElement.offsetHeight / 2;
+            var anchorCenterHeight = this.anchor.nativeElement.offsetHeight / 2;
             if (this._placement === PositioningPlacement.LeftTop || this._placement === PositioningPlacement.RightTop) {
                 top = anchorCenterHeight - arrowCenter;
             }
@@ -2637,50 +1635,21 @@ var PositioningService = /** @class */ (function () {
     };
     return PositioningService;
 }());
-function PositioningService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    PositioningService.prototype.anchor;
-    /** @type {?} */
-    PositioningService.prototype.subject;
-    /** @type {?} */
-    PositioningService.prototype._popper;
-    /** @type {?} */
-    PositioningService.prototype._popperState;
-    /** @type {?} */
-    PositioningService.prototype._placement;
-    /** @type {?} */
-    PositioningService.prototype._hasArrow;
-    /** @type {?} */
-    PositioningService.prototype._arrowSelector;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiUtilityModule = /** @class */ (function () {
     function SuiUtilityModule() {
     }
-    SuiUtilityModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [CommonModule],
-                    providers: [
-                        SuiComponentFactory
-                    ]
-                },] }
-    ];
+    SuiUtilityModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            providers: [
+                SuiComponentFactory
+            ]
+        })
+    ], SuiUtilityModule);
     return SuiUtilityModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiCheckbox = /** @class */ (function () {
     function SuiCheckbox() {
         this.isChecked = false;
@@ -2691,162 +1660,127 @@ var SuiCheckbox = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiCheckbox.prototype, "checkedAttribute", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.isChecked ? "" : undefined;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiCheckbox.prototype, "isDisabledAttribute", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.isDisabled ? "disabled" : undefined;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    SuiCheckbox.prototype.onMouseDown = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    SuiCheckbox.prototype.onMouseDown = function (event) {
         event.preventDefault();
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiCheckbox.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiCheckbox.prototype.onClick = function (e) {
         if (!this.isDisabled && !this.isReadonly) {
             this.toggle();
             this.focusCheckbox();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiCheckbox.prototype.onFocusOut = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiCheckbox.prototype.onFocusOut = function (e) {
         this.onTouched.emit();
     };
-    /**
-     * @return {?}
-     */
-    SuiCheckbox.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    SuiCheckbox.prototype.toggle = function () {
         this.isChecked = !this.isChecked;
         this.onCheckChange.emit(this.isChecked);
     };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiCheckbox.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiCheckbox.prototype.writeValue = function (value) {
         this.isChecked = value;
     };
-    /**
-     * @return {?}
-     */
-    SuiCheckbox.prototype.focusCheckbox = /**
-     * @return {?}
-     */
-    function () {
+    SuiCheckbox.prototype.focusCheckbox = function () {
         this._checkboxElement.nativeElement.focus();
     };
-    SuiCheckbox.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-checkbox",
-                    exportAs: "suiCheckbox",
-                    template: "\n<input class=\"hidden\"\n       type=\"checkbox\"\n       [attr.name]=\"name\"\n       [attr.checked]=\"checkedAttribute\"\n       [attr.disabled]=\"isDisabledAttribute\"\n       [(ngModel)]=\"isChecked\"\n       #checkbox>\n<label>\n    <ng-content></ng-content>\n</label>\n"
-                }] }
-    ];
-    /** @nocollapse */
-    SuiCheckbox.ctorParameters = function () { return []; };
-    SuiCheckbox.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.checkbox",] }],
-        name: [{ type: Input }],
-        isChecked: [{ type: HostBinding, args: ["class.checked",] }],
-        onCheckChange: [{ type: Output, args: ["checkChange",] }],
-        onTouched: [{ type: Output, args: ["touched",] }],
-        isDisabled: [{ type: Input }],
-        isReadonly: [{ type: HostBinding, args: ["class.read-only",] }, { type: Input }],
-        _checkboxElement: [{ type: ViewChild, args: ["checkbox", { static: true },] }],
-        onMouseDown: [{ type: HostListener, args: ["mousedown", ["$event"],] }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout", ["$event"],] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.checkbox"),
+        __metadata("design:type", Boolean)
+    ], SuiCheckbox.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiCheckbox.prototype, "name", void 0);
+    __decorate([
+        HostBinding("class.checked"),
+        __metadata("design:type", Boolean)
+    ], SuiCheckbox.prototype, "isChecked", void 0);
+    __decorate([
+        Output("checkChange"),
+        __metadata("design:type", EventEmitter)
+    ], SuiCheckbox.prototype, "onCheckChange", void 0);
+    __decorate([
+        Output("touched"),
+        __metadata("design:type", EventEmitter)
+    ], SuiCheckbox.prototype, "onTouched", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiCheckbox.prototype, "isDisabled", void 0);
+    __decorate([
+        HostBinding("class.read-only"),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiCheckbox.prototype, "isReadonly", void 0);
+    __decorate([
+        ViewChild("checkbox", { static: true }),
+        __metadata("design:type", ElementRef)
+    ], SuiCheckbox.prototype, "_checkboxElement", void 0);
+    __decorate([
+        HostListener("mousedown", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiCheckbox.prototype, "onMouseDown", null);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiCheckbox.prototype, "onClick", null);
+    __decorate([
+        HostListener("focusout", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiCheckbox.prototype, "onFocusOut", null);
+    SuiCheckbox = __decorate([
+        Component({
+            selector: "sui-checkbox",
+            exportAs: "suiCheckbox",
+            template: "\n<input class=\"hidden\"\n       type=\"checkbox\"\n       [attr.name]=\"name\"\n       [attr.checked]=\"checkedAttribute\"\n       [attr.disabled]=\"isDisabledAttribute\"\n       [(ngModel)]=\"isChecked\"\n       #checkbox>\n<label>\n    <ng-content></ng-content>\n</label>\n"
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiCheckbox);
     return SuiCheckbox;
 }());
-function SuiCheckbox_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiCheckbox.prototype.hasClasses;
-    /** @type {?} */
-    SuiCheckbox.prototype.name;
-    /** @type {?} */
-    SuiCheckbox.prototype.isChecked;
-    /** @type {?} */
-    SuiCheckbox.prototype.onCheckChange;
-    /** @type {?} */
-    SuiCheckbox.prototype.onTouched;
-    /** @type {?} */
-    SuiCheckbox.prototype.isDisabled;
-    /** @type {?} */
-    SuiCheckbox.prototype.isReadonly;
-    /** @type {?} */
-    SuiCheckbox.prototype._checkboxElement;
-}
 var SuiCheckboxValueAccessor = /** @class */ (function (_super) {
     __extends(SuiCheckboxValueAccessor, _super);
     function SuiCheckboxValueAccessor(host) {
         return _super.call(this, host) || this;
     }
-    SuiCheckboxValueAccessor.decorators = [
-        { type: Directive, args: [{
-                    selector: "sui-checkbox",
-                    host: {
-                        "(checkChange)": "onChange($event)",
-                        "(touched)": "onTouched()"
-                    },
-                    providers: [customValueAccessorFactory(SuiCheckboxValueAccessor)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiCheckboxValueAccessor_1 = SuiCheckboxValueAccessor;
+    var SuiCheckboxValueAccessor_1;
     SuiCheckboxValueAccessor.ctorParameters = function () { return [
         { type: SuiCheckbox }
     ]; };
+    SuiCheckboxValueAccessor = SuiCheckboxValueAccessor_1 = __decorate([
+        Directive({
+            selector: "sui-checkbox",
+            host: {
+                "(checkChange)": "onChange($event)",
+                "(touched)": "onTouched()"
+            },
+            providers: [customValueAccessorFactory(SuiCheckboxValueAccessor_1)]
+        }),
+        __metadata("design:paramtypes", [SuiCheckbox])
+    ], SuiCheckboxValueAccessor);
     return SuiCheckboxValueAccessor;
 }(CustomValueAccessor));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T
- */
 var SuiRadio = /** @class */ (function () {
     function SuiRadio() {
         this.isChecked = false;
@@ -2857,43 +1791,23 @@ var SuiRadio = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiRadio.prototype, "checkedAttribute", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.isChecked ? "" : undefined;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiRadio.prototype, "isDisabledAttribute", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.isDisabled ? "disabled" : undefined;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiRadio.prototype.onMouseDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiRadio.prototype.onMouseDown = function (e) {
         e.preventDefault();
     };
-    /**
-     * @return {?}
-     */
-    SuiRadio.prototype.onClick = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadio.prototype.onClick = function () {
         if (!this.isDisabled && !this.isReadonly) {
             this.currentValue = this.value;
             this.onCurrentValueChange.emit(this.currentValue);
@@ -2901,165 +1815,134 @@ var SuiRadio = /** @class */ (function () {
             this.focusRadio();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiRadio.prototype.onFocusOut = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadio.prototype.onFocusOut = function () {
         this.onTouched.emit();
     };
-    /**
-     * @return {?}
-     */
-    SuiRadio.prototype.update = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadio.prototype.update = function () {
         this.isChecked = this.currentValue === this.value;
     };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiRadio.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiRadio.prototype.writeValue = function (value) {
         this.currentValue = value;
         this.update();
     };
-    /**
-     * @return {?}
-     */
-    SuiRadio.prototype.focusRadio = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadio.prototype.focusRadio = function () {
         this._radioElement.nativeElement.focus();
     };
-    SuiRadio.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-radio-button",
-                    template: "\n<input class=\"hidden\"\n       type=\"checkbox\"\n       [attr.name]=\"name\"\n       [attr.checked]=\"checkedAttribute\"\n       [attr.disabled]=\"isDisabledAttribute\"\n       [ngModel]=\"isChecked\"\n       (ngModel)=\"currentValue = value\"\n       #radio>\n<label>\n    <ng-content></ng-content>\n</label>\n"
-                }] }
-    ];
-    /** @nocollapse */
-    SuiRadio.ctorParameters = function () { return []; };
-    SuiRadio.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.radio",] }, { type: HostBinding, args: ["class.checkbox",] }],
-        name: [{ type: Input }],
-        value: [{ type: Input }],
-        isChecked: [{ type: HostBinding, args: ["class.checked",] }],
-        onCurrentValueChange: [{ type: Output, args: ["currentValueChange",] }],
-        onTouched: [{ type: Output, args: ["touched",] }],
-        isDisabled: [{ type: Input }],
-        isReadonly: [{ type: HostBinding, args: ["class.read-only",] }, { type: Input }],
-        _radioElement: [{ type: ViewChild, args: ["radio", { static: true },] }],
-        onMouseDown: [{ type: HostListener, args: ["mousedown", ["$event"],] }],
-        onClick: [{ type: HostListener, args: ["click",] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout",] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.radio"),
+        HostBinding("class.checkbox"),
+        __metadata("design:type", Boolean)
+    ], SuiRadio.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiRadio.prototype, "name", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SuiRadio.prototype, "value", void 0);
+    __decorate([
+        HostBinding("class.checked"),
+        __metadata("design:type", Boolean)
+    ], SuiRadio.prototype, "isChecked", void 0);
+    __decorate([
+        Output("currentValueChange"),
+        __metadata("design:type", EventEmitter)
+    ], SuiRadio.prototype, "onCurrentValueChange", void 0);
+    __decorate([
+        Output("touched"),
+        __metadata("design:type", EventEmitter)
+    ], SuiRadio.prototype, "onTouched", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiRadio.prototype, "isDisabled", void 0);
+    __decorate([
+        HostBinding("class.read-only"),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiRadio.prototype, "isReadonly", void 0);
+    __decorate([
+        ViewChild("radio", { static: true }),
+        __metadata("design:type", ElementRef)
+    ], SuiRadio.prototype, "_radioElement", void 0);
+    __decorate([
+        HostListener("mousedown", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiRadio.prototype, "onMouseDown", null);
+    __decorate([
+        HostListener("click"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiRadio.prototype, "onClick", null);
+    __decorate([
+        HostListener("focusout"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiRadio.prototype, "onFocusOut", null);
+    SuiRadio = __decorate([
+        Component({
+            selector: "sui-radio-button",
+            template: "\n<input class=\"hidden\"\n       type=\"checkbox\"\n       [attr.name]=\"name\"\n       [attr.checked]=\"checkedAttribute\"\n       [attr.disabled]=\"isDisabledAttribute\"\n       [ngModel]=\"isChecked\"\n       (ngModel)=\"currentValue = value\"\n       #radio>\n<label>\n    <ng-content></ng-content>\n</label>\n"
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiRadio);
     return SuiRadio;
 }());
-function SuiRadio_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiRadio.prototype.hasClasses;
-    /** @type {?} */
-    SuiRadio.prototype.name;
-    /** @type {?} */
-    SuiRadio.prototype.value;
-    /** @type {?} */
-    SuiRadio.prototype.isChecked;
-    /** @type {?} */
-    SuiRadio.prototype.currentValue;
-    /** @type {?} */
-    SuiRadio.prototype.onCurrentValueChange;
-    /** @type {?} */
-    SuiRadio.prototype.onTouched;
-    /** @type {?} */
-    SuiRadio.prototype.isDisabled;
-    /** @type {?} */
-    SuiRadio.prototype.isReadonly;
-    /** @type {?} */
-    SuiRadio.prototype._radioElement;
-}
-/**
- * @template T
- */
 var SuiRadioValueAccessor = /** @class */ (function (_super) {
     __extends(SuiRadioValueAccessor, _super);
     function SuiRadioValueAccessor(host) {
         return _super.call(this, host) || this;
     }
-    SuiRadioValueAccessor.decorators = [
-        { type: Directive, args: [{
-                    selector: "sui-radio-button",
-                    host: {
-                        "(currentValueChange)": "onChange($event)",
-                        "(touched)": "onTouched()"
-                    },
-                    providers: [customValueAccessorFactory(SuiRadioValueAccessor)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiRadioValueAccessor_1 = SuiRadioValueAccessor;
+    var SuiRadioValueAccessor_1;
     SuiRadioValueAccessor.ctorParameters = function () { return [
         { type: SuiRadio }
     ]; };
+    SuiRadioValueAccessor = SuiRadioValueAccessor_1 = __decorate([
+        Directive({
+            selector: "sui-radio-button",
+            host: {
+                "(currentValueChange)": "onChange($event)",
+                "(touched)": "onTouched()"
+            },
+            providers: [customValueAccessorFactory(SuiRadioValueAccessor_1)]
+        }),
+        __metadata("design:paramtypes", [SuiRadio])
+    ], SuiRadioValueAccessor);
     return SuiRadioValueAccessor;
 }(CustomValueAccessor));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T
- */
 var SuiRadioManager = /** @class */ (function () {
     function SuiRadioManager(element) {
         this.element = element;
         this.isNested = false;
         this._radioSubs = [];
     }
-    /**
-     * @return {?}
-     */
-    SuiRadioManager.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadioManager_1 = SuiRadioManager;
+    SuiRadioManager.prototype.ngAfterContentInit = function () {
         var _this = this;
         this.updateNesting();
         this._subManagers.changes.subscribe(function () { return _this.updateNesting(); });
         this.updateRadios();
         this._renderedRadios.changes.subscribe(function () { return _this.updateRadios(); });
     };
-    /**
-     * @return {?}
-     */
-    SuiRadioManager.prototype.updateNesting = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadioManager.prototype.updateNesting = function () {
         var _this = this;
         this._subManagers
             .filter(function (m) { return m !== _this; })
             .forEach(function (m) { return m.isNested = true; });
     };
-    /**
-     * @return {?}
-     */
-    SuiRadioManager.prototype.updateRadios = /**
-     * @return {?}
-     */
-    function () {
+    SuiRadioManager.prototype.updateRadios = function () {
         var _this = this;
         this._radioSubs.forEach(function (s) { return s.unsubscribe(); });
         this._radioSubs = [];
-        var /** @type {?} */ groups = Util.Array.groupBy(this._renderedRadios.toArray(), "name");
+        var groups = Util.Array.groupBy(this._renderedRadios.toArray(), "name");
         Object
             .keys(groups)
             .map(function (k) { return groups[k]; })
@@ -3072,94 +1955,61 @@ var SuiRadioManager = /** @class */ (function () {
             }
         })); }); });
     };
-    SuiRadioManager.decorators = [
-        { type: Directive, args: [{
-                    selector: "form:not([ngForm]):not([[ngForm]]),ngForm,[ngForm]"
-                },] }
-    ];
-    /** @nocollapse */
+    var SuiRadioManager_1;
     SuiRadioManager.ctorParameters = function () { return [
         { type: ElementRef }
     ]; };
-    SuiRadioManager.propDecorators = {
-        _subManagers: [{ type: ContentChildren, args: [SuiRadioManager, { descendants: true },] }],
-        _renderedRadios: [{ type: ContentChildren, args: [SuiRadio, { descendants: true },] }]
-    };
+    __decorate([
+        ContentChildren(SuiRadioManager_1, { descendants: true }),
+        __metadata("design:type", QueryList)
+    ], SuiRadioManager.prototype, "_subManagers", void 0);
+    __decorate([
+        ContentChildren(SuiRadio, { descendants: true }),
+        __metadata("design:type", QueryList)
+    ], SuiRadioManager.prototype, "_renderedRadios", void 0);
+    SuiRadioManager = SuiRadioManager_1 = __decorate([
+        Directive({
+            selector: "form:not([ngForm]):not([[ngForm]]),ngForm,[ngForm]"
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], SuiRadioManager);
     return SuiRadioManager;
 }());
-function SuiRadioManager_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiRadioManager.prototype.isNested;
-    /** @type {?} */
-    SuiRadioManager.prototype._subManagers;
-    /** @type {?} */
-    SuiRadioManager.prototype._renderedRadios;
-    /** @type {?} */
-    SuiRadioManager.prototype._radioSubs;
-    /** @type {?} */
-    SuiRadioManager.prototype.element;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiCheckboxModule = /** @class */ (function () {
     function SuiCheckboxModule() {
     }
-    SuiCheckboxModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        FormsModule
-                    ],
-                    declarations: [
-                        SuiCheckbox,
-                        SuiCheckboxValueAccessor,
-                        SuiRadio,
-                        SuiRadioValueAccessor,
-                        SuiRadioManager
-                    ],
-                    exports: [
-                        SuiCheckbox,
-                        SuiCheckboxValueAccessor,
-                        SuiRadio,
-                        SuiRadioValueAccessor,
-                        SuiRadioManager
-                    ]
-                },] }
-    ];
+    SuiCheckboxModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule
+            ],
+            declarations: [
+                SuiCheckbox,
+                SuiCheckboxValueAccessor,
+                SuiRadio,
+                SuiRadioValueAccessor,
+                SuiRadioManager
+            ],
+            exports: [
+                SuiCheckbox,
+                SuiCheckboxValueAccessor,
+                SuiRadio,
+                SuiRadioValueAccessor,
+                SuiRadioManager
+            ]
+        })
+    ], SuiCheckboxModule);
     return SuiCheckboxModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/** @enum {number} */
-var CalendarMode = {
-    DateOnly: 0,
-    TimeOnly: 1,
-    Both: 2,
-};
-CalendarMode[CalendarMode.DateOnly] = "DateOnly";
-CalendarMode[CalendarMode.TimeOnly] = "TimeOnly";
-CalendarMode[CalendarMode.Both] = "Both";
+var CalendarMode;
+(function (CalendarMode) {
+    CalendarMode[CalendarMode["DateOnly"] = 0] = "DateOnly";
+    CalendarMode[CalendarMode["TimeOnly"] = 1] = "TimeOnly";
+    CalendarMode[CalendarMode["Both"] = 2] = "Both";
+})(CalendarMode || (CalendarMode = {}));
 var CalendarService = /** @class */ (function () {
     function CalendarService(config, localeValues) {
         this.localeValues = localeValues;
@@ -3171,17 +2021,10 @@ var CalendarService = /** @class */ (function () {
         this.reset();
     }
     Object.defineProperty(CalendarService.prototype, "config", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._config;
         },
-        set: /**
-         * @param {?} config
-         * @return {?}
-         */
-        function (config) {
+        set: function (config) {
             this._config = config;
             config.updateBounds(this._selectedDate || this.currentDate);
         },
@@ -3189,27 +2032,17 @@ var CalendarService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(CalendarService.prototype, "inFinalView", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.currentView === this.config.mappings.finalView;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CalendarService.prototype, "selectedDate", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._selectedDate;
         },
-        set: /**
-         * @param {?} date
-         * @return {?}
-         */
-        function (date) {
+        set: function (date) {
             if (date) {
                 this._selectedDate = DateUtil.clone(date);
                 this.currentDate = DateUtil.clone(date);
@@ -3224,57 +2057,36 @@ var CalendarService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(CalendarService.prototype, "minDate", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._minDate && this.config.dateMinBound) {
                 return this._minDate > this.config.dateMinBound ? this._minDate : this.config.dateMinBound;
             }
             return this._minDate || this.config.dateMinBound;
         },
-        set: /**
-         * @param {?} min
-         * @return {?}
-         */
-        function (min) {
+        set: function (min) {
             this._minDate = min;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CalendarService.prototype, "maxDate", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._maxDate && this.config.dateMaxBound) {
                 return this._maxDate < this.config.dateMaxBound ? this._maxDate : this.config.dateMaxBound;
             }
             return this._maxDate || this.config.dateMaxBound;
         },
-        set: /**
-         * @param {?} max
-         * @return {?}
-         */
-        function (max) {
+        set: function (max) {
             this._maxDate = max;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CalendarService.prototype, "firstDayOfWeek", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._firstDayOfWeek;
         },
-        set: /**
-         * @param {?} firstDayOfWeek
-         * @return {?}
-         */
-        function (firstDayOfWeek) {
+        set: function (firstDayOfWeek) {
             if (firstDayOfWeek != undefined) {
                 this._firstDayOfWeek = Math.max(0, Math.min(6, firstDayOfWeek));
             }
@@ -3282,16 +2094,10 @@ var CalendarService = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    CalendarService.prototype.reset = /**
-     * @return {?}
-     */
-    function () {
+    CalendarService.prototype.reset = function () {
         this.currentView = this.config.mappings.finalView;
         if (!this._selectedDate) {
-            var /** @type {?} */ current = this.currentDate.getTime();
+            var current = this.currentDate.getTime();
             if (this._minDate) {
                 current = Math.max(current, this._minDate.getTime());
             }
@@ -3303,17 +2109,7 @@ var CalendarService = /** @class */ (function () {
             this.currentView = this.config.mappings.initialView;
         }
     };
-    /**
-     * @param {?} date
-     * @param {?} fromView
-     * @return {?}
-     */
-    CalendarService.prototype.changeDate = /**
-     * @param {?} date
-     * @param {?} fromView
-     * @return {?}
-     */
-    function (date, fromView) {
+    CalendarService.prototype.changeDate = function (date, fromView) {
         this.currentDate = date;
         if (fromView === this.config.mappings.finalView) {
             this.selectedDate = date;
@@ -3321,29 +2117,11 @@ var CalendarService = /** @class */ (function () {
         }
         this.updateView(this.config.mappings.changed, fromView);
     };
-    /**
-     * @param {?} fromView
-     * @return {?}
-     */
-    CalendarService.prototype.zoomOut = /**
-     * @param {?} fromView
-     * @return {?}
-     */
-    function (fromView) {
+    CalendarService.prototype.zoomOut = function (fromView) {
         this.updateView(this.config.mappings.zoom, fromView);
     };
-    /**
-     * @param {?} mappings
-     * @param {?} fromView
-     * @return {?}
-     */
-    CalendarService.prototype.updateView = /**
-     * @param {?} mappings
-     * @param {?} fromView
-     * @return {?}
-     */
-    function (mappings, fromView) {
-        var /** @type {?} */ mapping = mappings.get(fromView);
+    CalendarService.prototype.updateView = function (mappings, fromView) {
+        var mapping = mappings.get(fromView);
         if (mapping == undefined) {
             throw new Error("Unknown view type.");
         }
@@ -3351,55 +2129,13 @@ var CalendarService = /** @class */ (function () {
     };
     return CalendarService;
 }());
-function CalendarService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarService.prototype._config;
-    /** @type {?} */
-    CalendarService.prototype.currentView;
-    /** @type {?} */
-    CalendarService.prototype.currentDate;
-    /** @type {?} */
-    CalendarService.prototype._selectedDate;
-    /** @type {?} */
-    CalendarService.prototype._minDate;
-    /** @type {?} */
-    CalendarService.prototype._maxDate;
-    /** @type {?} */
-    CalendarService.prototype._firstDayOfWeek;
-    /** @type {?} */
-    CalendarService.prototype.onDateChange;
-    /** @type {?} */
-    CalendarService.prototype.onManualUpdate;
-    /** @type {?} */
-    CalendarService.prototype.localeValues;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarItem = /** @class */ (function () {
     function CalendarItem(date) {
         this.date = date;
     }
     return CalendarItem;
 }());
-function CalendarItem_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarItem.prototype.date;
-    /** @type {?} */
-    CalendarItem.prototype.humanReadable;
-    /** @type {?} */
-    CalendarItem.prototype.isDisabled;
-    /** @type {?} */
-    CalendarItem.prototype.isActive;
-    /** @type {?} */
-    CalendarItem.prototype.isOutsideRange;
-    /** @type {?} */
-    CalendarItem.prototype.isToday;
-    /** @type {?} */
-    CalendarItem.prototype.isSelectable;
-}
 var SuiCalendarItem = /** @class */ (function () {
     function SuiCalendarItem(changeDetector) {
         this.changeDetector = changeDetector;
@@ -3407,108 +2143,91 @@ var SuiCalendarItem = /** @class */ (function () {
         this.onFocussed = new EventEmitter();
     }
     Object.defineProperty(SuiCalendarItem.prototype, "isSelectable", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.item.isSelectable;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiCalendarItem.prototype, "isActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.item.isActive;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiCalendarItem.prototype, "isToday", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.item.isToday;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiCalendarItem.prototype.onMouseMove = /**
-     * @return {?}
-     */
-    function () {
+    SuiCalendarItem.prototype.onMouseMove = function () {
         if (!this.hasFocus) {
             this.hasFocus = true;
             this.onFocussed.emit(this.hasFocus);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiCalendarItem.prototype.onMouseLeave = /**
-     * @return {?}
-     */
-    function () {
+    SuiCalendarItem.prototype.onMouseLeave = function () {
         this.hasFocus = false;
         this.onFocussed.emit(this.hasFocus);
     };
-    SuiCalendarItem.decorators = [
-        { type: Directive, args: [{
-                    selector: "[calendarItem]"
-                },] }
-    ];
-    /** @nocollapse */
     SuiCalendarItem.ctorParameters = function () { return [
         { type: ChangeDetectorRef }
     ]; };
-    SuiCalendarItem.propDecorators = {
-        item: [{ type: Input, args: ["calendarItem",] }],
-        isSelectable: [{ type: HostBinding, args: ["class.disabled",] }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }],
-        isToday: [{ type: HostBinding, args: ["class.today",] }],
-        hasFocus: [{ type: HostBinding, args: ["class.focus",] }],
-        onMouseMove: [{ type: HostListener, args: ["mousemove",] }],
-        onMouseLeave: [{ type: HostListener, args: ["mouseleave",] }]
-    };
+    __decorate([
+        Input("calendarItem"),
+        __metadata("design:type", CalendarItem)
+    ], SuiCalendarItem.prototype, "item", void 0);
+    __decorate([
+        HostBinding("class.disabled"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiCalendarItem.prototype, "isSelectable", null);
+    __decorate([
+        HostBinding("class.active"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiCalendarItem.prototype, "isActive", null);
+    __decorate([
+        HostBinding("class.today"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiCalendarItem.prototype, "isToday", null);
+    __decorate([
+        HostBinding("class.focus"),
+        __metadata("design:type", Boolean)
+    ], SuiCalendarItem.prototype, "hasFocus", void 0);
+    __decorate([
+        HostListener("mousemove"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiCalendarItem.prototype, "onMouseMove", null);
+    __decorate([
+        HostListener("mouseleave"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiCalendarItem.prototype, "onMouseLeave", null);
+    SuiCalendarItem = __decorate([
+        Directive({
+            selector: "[calendarItem]"
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], SuiCalendarItem);
     return SuiCalendarItem;
 }());
-function SuiCalendarItem_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiCalendarItem.prototype.item;
-    /** @type {?} */
-    SuiCalendarItem.prototype.hasFocus;
-    /** @type {?} */
-    SuiCalendarItem.prototype.onFocussed;
-    /** @type {?} */
-    SuiCalendarItem.prototype.changeDetector;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/** @enum {number} */
-var CalendarViewType = {
-    Year: 0,
-    Month: 1,
-    Date: 2,
-    Hour: 3,
-    Minute: 4,
-};
-CalendarViewType[CalendarViewType.Year] = "Year";
-CalendarViewType[CalendarViewType.Month] = "Month";
-CalendarViewType[CalendarViewType.Date] = "Date";
-CalendarViewType[CalendarViewType.Hour] = "Hour";
-CalendarViewType[CalendarViewType.Minute] = "Minute";
-/**
- * @abstract
- */
+var CalendarViewType;
+(function (CalendarViewType) {
+    CalendarViewType[CalendarViewType["Year"] = 0] = "Year";
+    CalendarViewType[CalendarViewType["Month"] = 1] = "Month";
+    CalendarViewType[CalendarViewType["Date"] = 2] = "Date";
+    CalendarViewType[CalendarViewType["Hour"] = 3] = "Hour";
+    CalendarViewType[CalendarViewType["Minute"] = 4] = "Minute";
+})(CalendarViewType || (CalendarViewType = {}));
 var CalendarView = /** @class */ (function () {
     function CalendarView(renderer, viewType, ranges) {
         var _this = this;
@@ -3517,17 +2236,10 @@ var CalendarView = /** @class */ (function () {
         this._documentKeyDownListener = renderer.listen("document", "keydown", function (e) { return _this.onDocumentKeyDown(e); });
     }
     Object.defineProperty(CalendarView.prototype, "service", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._service;
         },
-        set: /**
-         * @param {?} service
-         * @return {?}
-         */
-        function (service) {
+        set: function (service) {
             var _this = this;
             this._service = service;
             this.ranges.loadService(service);
@@ -3541,63 +2253,33 @@ var CalendarView = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(CalendarView.prototype, "currentDate", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.currentDate;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CalendarView.prototype, "selectedDate", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.selectedDate;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} item
-     * @return {?}
-     */
-    CalendarView.prototype.setDate = /**
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
+    // Template Methods
+    CalendarView.prototype.setDate = function (item) {
         this.service.changeDate(item.date, this._type);
     };
-    /**
-     * @return {?}
-     */
-    CalendarView.prototype.zoomOut = /**
-     * @return {?}
-     */
-    function () {
+    CalendarView.prototype.zoomOut = function () {
         this.service.zoomOut(this._type);
     };
-    /**
-     * @return {?}
-     */
-    CalendarView.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
+    // Keyboard Control
+    CalendarView.prototype.ngAfterViewInit = function () {
         var _this = this;
         this._renderedItems.changes.subscribe(function () { return _this.onRenderedItemsChanged(); });
         this.onRenderedItemsChanged();
     };
-    /**
-     * @return {?}
-     */
-    CalendarView.prototype.onRenderedItemsChanged = /**
-     * @return {?}
-     */
-    function () {
+    CalendarView.prototype.onRenderedItemsChanged = function () {
         var _this = this;
         this._renderedItems.forEach(function (i) {
             return i.onFocussed.subscribe(function (hasFocus) {
@@ -3609,35 +2291,21 @@ var CalendarView = /** @class */ (function () {
         this.autoHighlight();
         this.highlightItem(this._highlightedItem);
     };
-    /**
-     * @return {?}
-     */
-    CalendarView.prototype.autoHighlight = /**
-     * @return {?}
-     */
-    function () {
+    CalendarView.prototype.autoHighlight = function () {
         var _this = this;
-        var /** @type {?} */ date = this.selectedDate && this.ranges.current.containsDate(this.selectedDate) ? this.selectedDate : this.currentDate;
+        var date = this.selectedDate && this.ranges.current.containsDate(this.selectedDate) ? this.selectedDate : this.currentDate;
         if (this._highlightedItem && this.ranges.current.containsDate(this._highlightedItem.date)) {
             date = this._highlightedItem.date;
         }
-        var /** @type {?} */ initiallyHighlighted = this.ranges.current.items.find(function (i) { return _this.ranges.dateComparer.equal(i.date, date); });
+        var initiallyHighlighted = this.ranges.current.items.find(function (i) { return _this.ranges.dateComparer.equal(i.date, date); });
         if (initiallyHighlighted && !initiallyHighlighted.isDisabled) {
             this._highlightedItem = initiallyHighlighted;
         }
     };
-    /**
-     * @param {?} item
-     * @return {?}
-     */
-    CalendarView.prototype.highlightItem = /**
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
+    CalendarView.prototype.highlightItem = function (item) {
         if (item) {
             this._renderedItems.forEach(function (i) { return i.hasFocus = false; });
-            var /** @type {?} */ rendered = this._renderedItems.find(function (ri) { return ri.item === item; });
+            var rendered = this._renderedItems.find(function (ri) { return ri.item === item; });
             if (rendered && !rendered.hasFocus) {
                 rendered.hasFocus = true;
                 rendered.changeDetector.detectChanges();
@@ -3645,15 +2313,7 @@ var CalendarView = /** @class */ (function () {
             this._highlightedItem = item;
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    CalendarView.prototype.onDocumentKeyDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    CalendarView.prototype.onDocumentKeyDown = function (e) {
         if (this._highlightedItem && e.keyCode === KeyCode.Enter) {
             this.setDate(this._highlightedItem);
             return;
@@ -3661,9 +2321,9 @@ var CalendarView = /** @class */ (function () {
         if (!this._highlightedItem) {
             this.autoHighlight();
         }
-        var /** @type {?} */ index = this.ranges.current.findIndex(this._highlightedItem);
-        var /** @type {?} */ isMovingForward = true;
-        var /** @type {?} */ delta = 0;
+        var index = this.ranges.current.findIndex(this._highlightedItem);
+        var isMovingForward = true;
+        var delta = 0;
         switch (e.keyCode) {
             case KeyCode.Right:
                 delta += 1;
@@ -3684,7 +2344,7 @@ var CalendarView = /** @class */ (function () {
         }
         // Stop these keypresses being captured elsewhere.
         e.preventDefault();
-        var /** @type {?} */ nextItem = this.ranges.current.items[index + delta];
+        var nextItem = this.ranges.current.items[index + delta];
         if (nextItem && nextItem.isDisabled) {
             return;
         }
@@ -3697,8 +2357,8 @@ var CalendarView = /** @class */ (function () {
             }
         }
         if (!nextItem) {
-            var /** @type {?} */ adjustedIndex = this.ranges.current.findIndex(this._highlightedItem);
-            var /** @type {?} */ nextItems = this.ranges.calc(isMovingForward).inRange;
+            var adjustedIndex = this.ranges.current.findIndex(this._highlightedItem);
+            var nextItems = this.ranges.calc(isMovingForward).inRange;
             if (isMovingForward) {
                 adjustedIndex -= this.ranges.current.inRange.length;
             }
@@ -3713,61 +2373,26 @@ var CalendarView = /** @class */ (function () {
         this.ranges.move(isMovingForward);
         this._highlightedItem = this.ranges.current.find(nextItem);
     };
-    /**
-     * @return {?}
-     */
-    CalendarView.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    CalendarView.prototype.ngOnDestroy = function () {
         this._documentKeyDownListener();
     };
-    CalendarView.propDecorators = {
-        _renderedItems: [{ type: ViewChildren, args: [SuiCalendarItem,] }],
-        service: [{ type: Input }]
-    };
+    __decorate([
+        ViewChildren(SuiCalendarItem),
+        __metadata("design:type", QueryList)
+    ], CalendarView.prototype, "_renderedItems", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", CalendarService),
+        __metadata("design:paramtypes", [CalendarService])
+    ], CalendarView.prototype, "service", null);
     return CalendarView;
 }());
-function CalendarView_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarView.prototype._type;
-    /** @type {?} */
-    CalendarView.prototype._service;
-    /** @type {?} */
-    CalendarView.prototype._renderedItems;
-    /** @type {?} */
-    CalendarView.prototype._highlightedItem;
-    /** @type {?} */
-    CalendarView.prototype.ranges;
-    /** @type {?} */
-    CalendarView.prototype._documentKeyDownListener;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @abstract
- */
-var /**
- * @abstract
- */
-CalendarMappings = /** @class */ (function () {
+var CalendarMappings = /** @class */ (function () {
     function CalendarMappings() {
     }
     return CalendarMappings;
 }());
-function CalendarMappings_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarMappings.prototype.initialView;
-    /** @type {?} */
-    CalendarMappings.prototype.finalView;
-    /** @type {?} */
-    CalendarMappings.prototype.changed;
-    /** @type {?} */
-    CalendarMappings.prototype.zoom;
-}
 var DateMappings = /** @class */ (function (_super) {
     __extends(DateMappings, _super);
     function DateMappings() {
@@ -3865,51 +2490,19 @@ var YearMappings = /** @class */ (function (_super) {
     return YearMappings;
 }(CalendarMappings));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @abstract
- */
-var /**
- * @abstract
- */
-CalendarConfig = /** @class */ (function () {
+var CalendarConfig = /** @class */ (function () {
     function CalendarConfig(mode, precision, mappings, fallback) {
         this.mode = mode;
         this.precision = precision;
         this.mappings = mappings;
         this.fallback = fallback;
     }
-    /**
-     * @param {?} providedDate
-     * @return {?}
-     */
-    CalendarConfig.prototype.updateBounds = /**
-     * @param {?} providedDate
-     * @return {?}
-     */
-    function (providedDate) {
+    CalendarConfig.prototype.updateBounds = function (providedDate) {
         this.dateMinBound = DateUtil.startOf(DatePrecision.Year, new Date(), true);
         this.dateMinBound.setFullYear(0);
     };
     return CalendarConfig;
 }());
-function CalendarConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarConfig.prototype.mode;
-    /** @type {?} */
-    CalendarConfig.prototype.precision;
-    /** @type {?} */
-    CalendarConfig.prototype.mappings;
-    /** @type {?} */
-    CalendarConfig.prototype.fallback;
-    /** @type {?} */
-    CalendarConfig.prototype.dateMinBound;
-    /** @type {?} */
-    CalendarConfig.prototype.dateMaxBound;
-}
 var DateConfigBase = /** @class */ (function (_super) {
     __extends(DateConfigBase, _super);
     function DateConfigBase(precision, mappings, fallback) {
@@ -3950,41 +2543,19 @@ var TimeConfig = /** @class */ (function (_super) {
     function TimeConfig() {
         return _super.call(this, CalendarMode.TimeOnly, DatePrecision.Minute, new TimeMappings(), "time") || this;
     }
-    /**
-     * @param {?} providedDate
-     * @return {?}
-     */
-    TimeConfig.prototype.updateBounds = /**
-     * @param {?} providedDate
-     * @return {?}
-     */
-    function (providedDate) {
+    TimeConfig.prototype.updateBounds = function (providedDate) {
         this.dateMaxBound = DateUtil.endOf(DatePrecision.Date, DateUtil.clone(providedDate));
         this.dateMinBound = DateUtil.previous(DatePrecision.Date, DateUtil.clone(this.dateMaxBound));
     };
     return TimeConfig;
 }(CalendarConfig));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var DateComparer = /** @class */ (function () {
     function DateComparer(precision, isSmallest) {
         this._precision = precision;
         this._isSmallest = isSmallest;
     }
-    /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    DateComparer.prototype.equal = /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    function (a, b) {
+    DateComparer.prototype.equal = function (a, b) {
         if (this._precision === DatePrecision.Minute) {
             return !!b &&
                 DateUtil.equal(DatePrecision.Hour, b, a) &&
@@ -3992,135 +2563,43 @@ var DateComparer = /** @class */ (function () {
         }
         return !!b && DateUtil.equal(this._precision, a, b);
     };
-    /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    DateComparer.prototype.lessThan = /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    function (a, b) {
+    DateComparer.prototype.lessThan = function (a, b) {
         if (this._isSmallest) {
             return !b || (b >= a);
         }
         return !b || (DateUtil.endOf(this._precision, DateUtil.clone(b)) >= a);
     };
-    /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    DateComparer.prototype.greaterThan = /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
-    function (a, b) {
+    DateComparer.prototype.greaterThan = function (a, b) {
         if (this._isSmallest) {
             return !b || (b <= a);
         }
         return !b || (DateUtil.startOf(this._precision, DateUtil.clone(b)) <= a);
     };
-    /**
-     * @param {?} date
-     * @param {?} left
-     * @param {?} right
-     * @return {?}
-     */
-    DateComparer.prototype.between = /**
-     * @param {?} date
-     * @param {?} left
-     * @param {?} right
-     * @return {?}
-     */
-    function (date, left, right) {
+    DateComparer.prototype.between = function (date, left, right) {
         return this.greaterThan(date, left) && this.lessThan(date, right);
     };
     return DateComparer;
 }());
-function DateComparer_tsickle_Closure_declarations() {
-    /** @type {?} */
-    DateComparer.prototype._precision;
-    /** @type {?} */
-    DateComparer.prototype._isSmallest;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- */
-function IDateFnsLocaleValues() { }
-function IDateFnsLocaleValues_tsickle_Closure_declarations() {
-    /* TODO: handle strange member:
-    [name:string]:string[];
-    */
-}
-/**
- * @record
- */
-function IDateFnsHelperOptions() { }
-function IDateFnsHelperOptions_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
-    IDateFnsHelperOptions.prototype.type;
-}
-/**
- * @record
- */
-function IDateFnsCustomLocale() { }
-function IDateFnsCustomLocale_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IDateFnsCustomLocale.prototype.localize;
-    /** @type {?} */
-    IDateFnsCustomLocale.prototype.match;
-    /** @type {?|undefined} */
-    IDateFnsCustomLocale.prototype.options;
-}
-/**
- * @param {?} values
- * @param {?} defaultType
- * @param {?=} indexCallback
- * @return {?}
- */
 function buildLocalizeFn(values, defaultType, indexCallback) {
     return function (dirtyIndex, _a) {
         var type = (_a === void 0 ? { type: defaultType } : _a).type;
-        var /** @type {?} */ index = indexCallback ? indexCallback(dirtyIndex) : dirtyIndex;
+        var index = indexCallback ? indexCallback(dirtyIndex) : dirtyIndex;
         return values[type][index];
     };
 }
-/**
- * @param {?} values
- * @param {?} defaultType
- * @return {?}
- */
 function buildLocalizeArrayFn(values, defaultType) {
     return function (_a) {
         var type = (_a === void 0 ? { type: defaultType } : _a).type;
         return values[type];
     };
 }
-/**
- * @param {?} patterns
- * @param {?} defaultType
- * @return {?}
- */
 function buildMatchFn(patterns, defaultType) {
     return function (dirtyString, _a) {
         var type = (_a === void 0 ? { type: defaultType } : _a).type;
         return dirtyString.match("^(" + patterns[type].join("|") + ")");
     };
 }
-/**
- * @param {?} patterns
- * @param {?} defaultType
- * @return {?}
- */
 function buildParseFn(patterns, defaultType) {
     return function (_a, _b) {
         var _c = __read(_a, 2), result = _c[1];
@@ -4133,26 +2612,26 @@ function buildParseFn(patterns, defaultType) {
 var DateFnsParser = /** @class */ (function () {
     function DateFnsParser(locale) {
         this._weekStartsOn = locale.firstDayOfWeek;
-        var /** @type {?} */ weekdayValues = {
+        var weekdayValues = {
             long: locale.weekdays,
             short: locale.weekdaysShort,
             narrow: locale.weekdaysNarrow
         };
-        var /** @type {?} */ monthValues = {
+        var monthValues = {
             long: locale.months,
             short: locale.monthsShort
         };
-        var /** @type {?} */ timeOfDayValues = {
+        var timeOfDayValues = {
             long: locale.timesOfDay,
             uppercase: locale.timesOfDayUppercase,
             lowercase: locale.timesOfDayLowercase
         };
-        var /** @type {?} */ timeOfDayMatchValues = {
+        var timeOfDayMatchValues = {
             long: locale.timesOfDay,
             short: locale.timesOfDayUppercase.concat(locale.timesOfDayLowercase)
         };
         this._locale = defaultLocale;
-        this._locale.localize = __assign({}, this._locale.localize, {
+        this._locale.localize = __assign(__assign({}, this._locale.localize), {
             weekday: buildLocalizeFn(weekdayValues, "long"),
             weekdays: buildLocalizeArrayFn(weekdayValues, "long"),
             month: buildLocalizeFn(monthValues, "long"),
@@ -4162,7 +2641,7 @@ var DateFnsParser = /** @class */ (function () {
             }),
             timesOfDay: buildLocalizeArrayFn(timeOfDayValues, "long")
         });
-        this._locale.match = __assign({}, this._locale.match, {
+        this._locale.match = __assign(__assign({}, this._locale.match), {
             weekdays: buildMatchFn(weekdayValues, "long"),
             weekday: buildParseFn(weekdayValues, "long"),
             months: buildMatchFn(monthValues, "long"),
@@ -4172,10 +2651,7 @@ var DateFnsParser = /** @class */ (function () {
         });
     }
     Object.defineProperty(DateFnsParser.prototype, "_config", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return {
                 weekStartsOn: this._weekStartsOn,
                 locale: this._locale
@@ -4184,90 +2660,34 @@ var DateFnsParser = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} d
-     * @param {?} f
-     * @return {?}
-     */
-    DateFnsParser.prototype.format = /**
-     * @param {?} d
-     * @param {?} f
-     * @return {?}
-     */
-    function (d, f) {
+    DateFnsParser.prototype.format = function (d, f) {
         return format(d, f, this._config);
     };
-    /**
-     * @param {?} dS
-     * @param {?} f
-     * @param {?} bD
-     * @return {?}
-     */
-    DateFnsParser.prototype.parse = /**
-     * @param {?} dS
-     * @param {?} f
-     * @param {?} bD
-     * @return {?}
-     */
-    function (dS, f, bD) {
+    DateFnsParser.prototype.parse = function (dS, f, bD) {
         return parse(dS, f, bD, this._config);
     };
     return DateFnsParser;
 }());
-function DateFnsParser_tsickle_Closure_declarations() {
-    /** @type {?} */
-    DateFnsParser.prototype._weekStartsOn;
-    /** @type {?} */
-    DateFnsParser.prototype._locale;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var DateParser = /** @class */ (function () {
     function DateParser(format, locale) {
         this._format = format;
         this._parser = new DateFnsParser(locale);
     }
-    /**
-     * @param {?} date
-     * @return {?}
-     */
-    DateParser.prototype.format = /**
-     * @param {?} date
-     * @return {?}
-     */
-    function (date) {
+    DateParser.prototype.format = function (date) {
         return this._parser.format(date, this._format);
     };
-    /**
-     * @param {?} dateString
-     * @param {?=} baseDate
-     * @return {?}
-     */
-    DateParser.prototype.parse = /**
-     * @param {?} dateString
-     * @param {?=} baseDate
-     * @return {?}
-     */
-    function (dateString, baseDate) {
+    DateParser.prototype.parse = function (dateString, baseDate) {
         if (baseDate === void 0) { baseDate = new Date(); }
         return this._parser.parse(dateString, this._format, baseDate);
     };
     return DateParser;
 }());
-function DateParser_tsickle_Closure_declarations() {
-    /** @type {?} */
-    DateParser.prototype._format;
-    /** @type {?} */
-    DateParser.prototype._parser;
-}
 var InternalDateParser = /** @class */ (function (_super) {
     __extends(InternalDateParser, _super);
     function InternalDateParser(mode, locale) {
         var _this = this;
-        var /** @type {?} */ internalFormats = {
+        var internalFormats = {
             time: "HH:mm",
             datetime: "YYYY-MM-DDTHH:mm",
             date: "YYYY-MM-DD",
@@ -4280,10 +2700,6 @@ var InternalDateParser = /** @class */ (function (_super) {
     return InternalDateParser;
 }(DateParser));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarRange = /** @class */ (function () {
     function CalendarRange(start, dates, items, grouped, comparer) {
         this.start = start;
@@ -4293,107 +2709,53 @@ var CalendarRange = /** @class */ (function () {
         this._comparer = comparer;
     }
     Object.defineProperty(CalendarRange.prototype, "inRange", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.items.filter(function (i) { return !i.isOutsideRange; });
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} item
-     * @return {?}
-     */
-    CalendarRange.prototype.find = /**
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
+    CalendarRange.prototype.find = function (item) {
         var _this = this;
         return this.items.find(function (i) { return _this._comparer.equal(i.date, item.date); });
     };
-    /**
-     * @param {?} item
-     * @return {?}
-     */
-    CalendarRange.prototype.findIndex = /**
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
+    CalendarRange.prototype.findIndex = function (item) {
         var _this = this;
         if (!item) {
             return -1;
         }
         return this.items.findIndex(function (i) { return _this._comparer.equal(i.date, item.date); });
     };
-    /**
-     * @param {?} date
-     * @return {?}
-     */
-    CalendarRange.prototype.containsDate = /**
-     * @param {?} date
-     * @return {?}
-     */
-    function (date) {
+    CalendarRange.prototype.containsDate = function (date) {
         var _this = this;
         return !!this.inRange.find(function (i) { return _this._comparer.equal(i.date, date); });
     };
     return CalendarRange;
 }());
-function CalendarRange_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarRange.prototype.start;
-    /** @type {?} */
-    CalendarRange.prototype.dates;
-    /** @type {?} */
-    CalendarRange.prototype.items;
-    /** @type {?} */
-    CalendarRange.prototype.groupedItems;
-    /** @type {?} */
-    CalendarRange.prototype._comparer;
-}
-/**
- * @abstract
- */
-var  /**
- * @abstract
- */
-CalendarRangeService = /** @class */ (function () {
+var CalendarRangeService = /** @class */ (function () {
     function CalendarRangeService(interval, rows, columns) {
         this.interval = interval;
-        this.marginal = /** @type {?} */ interval + 1;
+        this.marginal = interval + 1;
         this.rows = rows;
         this.columns = columns;
     }
     Object.defineProperty(CalendarRangeService.prototype, "dateComparer", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return new DateComparer(this.marginal, this.service.inFinalView);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CalendarRangeService.prototype, "length", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.rows * this.columns;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CalendarRangeService.prototype, "canMoveNext", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            var /** @type {?} */ firstItem = this.next.inRange[0];
+        get: function () {
+            var firstItem = this.next.inRange[0];
             if (firstItem && this.service.maxDate) {
                 return firstItem.date <= this.service.maxDate;
             }
@@ -4403,11 +2765,8 @@ CalendarRangeService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(CalendarRangeService.prototype, "canMovePrevious", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            var /** @type {?} */ lastItem = this.previous.inRange.slice(-1).pop();
+        get: function () {
+            var lastItem = this.previous.inRange.slice(-1).pop();
             if (lastItem && this.service.minDate) {
                 return lastItem.date >= this.service.minDate;
             }
@@ -4416,137 +2775,61 @@ CalendarRangeService = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} service
-     * @return {?}
-     */
-    CalendarRangeService.prototype.loadService = /**
-     * @param {?} service
-     * @return {?}
-     */
-    function (service) {
+    CalendarRangeService.prototype.loadService = function (service) {
         this.service = service;
         this.refresh();
     };
-    /**
-     * @return {?}
-     */
-    CalendarRangeService.prototype.refresh = /**
-     * @return {?}
-     */
-    function () {
+    CalendarRangeService.prototype.refresh = function () {
         this.current = this.calcRange(this.service.currentDate);
         this.next = this.calcRange(DateUtil.next(this.interval, DateUtil.clone(this.service.currentDate)));
         this.previous = this.calcRange(DateUtil.previous(this.interval, DateUtil.clone(this.service.currentDate)));
     };
-    /**
-     * @param {?} forwards
-     * @return {?}
-     */
-    CalendarRangeService.prototype.move = /**
-     * @param {?} forwards
-     * @return {?}
-     */
-    function (forwards) {
+    CalendarRangeService.prototype.move = function (forwards) {
         if (forwards) {
             return this.moveNext();
         }
         return this.movePrevious();
     };
-    /**
-     * @return {?}
-     */
-    CalendarRangeService.prototype.moveNext = /**
-     * @return {?}
-     */
-    function () {
+    CalendarRangeService.prototype.moveNext = function () {
         DateUtil.next(this.interval, this.service.currentDate);
         this.previous = this.current;
         this.current = this.next;
         this.next = this.calcRange(DateUtil.next(this.interval, DateUtil.clone(this.service.currentDate)));
     };
-    /**
-     * @return {?}
-     */
-    CalendarRangeService.prototype.movePrevious = /**
-     * @return {?}
-     */
-    function () {
+    CalendarRangeService.prototype.movePrevious = function () {
         DateUtil.previous(this.interval, this.service.currentDate);
         this.next = this.current;
         this.current = this.previous;
         this.previous = this.calcRange(DateUtil.previous(this.interval, DateUtil.clone(this.service.currentDate)));
     };
-    /**
-     * @param {?} forwards
-     * @return {?}
-     */
-    CalendarRangeService.prototype.calc = /**
-     * @param {?} forwards
-     * @return {?}
-     */
-    function (forwards) {
+    CalendarRangeService.prototype.calc = function (forwards) {
         if (forwards) {
             return this.next;
         }
         return this.previous;
     };
-    /**
-     * @param {?} startDate
-     * @return {?}
-     */
-    CalendarRangeService.prototype.calcRange = /**
-     * @param {?} startDate
-     * @return {?}
-     */
-    function (startDate) {
-        var /** @type {?} */ start = this.calcStart(startDate);
+    CalendarRangeService.prototype.calcRange = function (startDate) {
+        var start = this.calcStart(startDate);
         if (this.service.inFinalView) {
             DateUtil.startOf(this.marginal, start, true);
         }
-        var /** @type {?} */ dates = this.calcDates(start);
-        var /** @type {?} */ items = this.calcItems(dates, startDate);
+        var dates = this.calcDates(start);
+        var items = this.calcItems(dates, startDate);
         return new CalendarRange(start, dates, items, Util.Array.group(items, this.columns), this.dateComparer);
     };
-    /**
-     * @param {?} date
-     * @return {?}
-     */
-    CalendarRangeService.prototype.calcStart = /**
-     * @param {?} date
-     * @return {?}
-     */
-    function (date) {
+    CalendarRangeService.prototype.calcStart = function (date) {
         return DateUtil.startOf(this.interval, DateUtil.clone(date));
     };
-    /**
-     * @param {?} rangeStart
-     * @return {?}
-     */
-    CalendarRangeService.prototype.calcDates = /**
-     * @param {?} rangeStart
-     * @return {?}
-     */
-    function (rangeStart) {
+    CalendarRangeService.prototype.calcDates = function (rangeStart) {
         var _this = this;
         return Util.Array
             .range(this.length)
             .map(function (i) { return DateUtil.add(_this.marginal, DateUtil.clone(rangeStart), i); });
     };
-    /**
-     * @param {?} dateRange
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeService.prototype.calcItems = /**
-     * @param {?} dateRange
-     * @param {?} baseDate
-     * @return {?}
-     */
-    function (dateRange, baseDate) {
+    CalendarRangeService.prototype.calcItems = function (dateRange, baseDate) {
         var _this = this;
         return dateRange.map(function (date) {
-            var /** @type {?} */ item = new CalendarItem(date);
+            var item = new CalendarItem(date);
             item.isDisabled = !_this.dateComparer.between(item.date, _this.service.minDate, _this.service.maxDate);
             item.isActive = _this.dateComparer.equal(item.date, _this.service.selectedDate);
             item.isToday = _this.dateComparer.equal(item.date, new Date());
@@ -4557,67 +2840,31 @@ CalendarRangeService = /** @class */ (function () {
     };
     return CalendarRangeService;
 }());
-function CalendarRangeService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    CalendarRangeService.prototype.previous;
-    /** @type {?} */
-    CalendarRangeService.prototype.current;
-    /** @type {?} */
-    CalendarRangeService.prototype.next;
-    /** @type {?} */
-    CalendarRangeService.prototype.service;
-    /** @type {?} */
-    CalendarRangeService.prototype.interval;
-    /** @type {?} */
-    CalendarRangeService.prototype.marginal;
-    /** @type {?} */
-    CalendarRangeService.prototype.rows;
-    /** @type {?} */
-    CalendarRangeService.prototype.columns;
-    /**
-     * @abstract
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeService.prototype.configureItem = function (item, baseDate) { };
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiCalendarViewTitle = /** @class */ (function () {
     function SuiCalendarViewTitle() {
         this.onZoomOut = new EventEmitter();
     }
-    SuiCalendarViewTitle.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-calendar-view-title",
-                    template: "\n<span class=\"title link\" (click)=\"onZoomOut.emit()\">\n    <ng-content></ng-content>\n</span>\n<span class=\"prev link\" [class.disabled]=\"!ranges?.canMovePrevious\" (click)=\"ranges?.movePrevious()\">\n    <i class=\"chevron left icon\"></i>\n</span>\n<span class=\"next link\" [class.disabled]=\"!ranges?.canMoveNext\" (click)=\"ranges?.moveNext()\">\n    <i class=\"chevron right icon\"></i>\n</span>\n",
-                    styles: ["\n.title.link {\n    display: inline-block;\n    margin-left: 2rem;\n    margin-right: 2rem;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiCalendarViewTitle.ctorParameters = function () { return []; };
-    SuiCalendarViewTitle.propDecorators = {
-        ranges: [{ type: Input }],
-        onZoomOut: [{ type: Output, args: ["zoomOut",] }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", CalendarRangeService)
+    ], SuiCalendarViewTitle.prototype, "ranges", void 0);
+    __decorate([
+        Output("zoomOut"),
+        __metadata("design:type", EventEmitter)
+    ], SuiCalendarViewTitle.prototype, "onZoomOut", void 0);
+    SuiCalendarViewTitle = __decorate([
+        Component({
+            selector: "sui-calendar-view-title",
+            template: "\n<span class=\"title link\" (click)=\"onZoomOut.emit()\">\n    <ng-content></ng-content>\n</span>\n<span class=\"prev link\" [class.disabled]=\"!ranges?.canMovePrevious\" (click)=\"ranges?.movePrevious()\">\n    <i class=\"chevron left icon\"></i>\n</span>\n<span class=\"next link\" [class.disabled]=\"!ranges?.canMoveNext\" (click)=\"ranges?.moveNext()\">\n    <i class=\"chevron right icon\"></i>\n</span>\n",
+            styles: ["\n.title.link {\n    display: inline-block;\n    margin-left: 2rem;\n    margin-right: 2rem;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiCalendarViewTitle);
     return SuiCalendarViewTitle;
 }());
-function SuiCalendarViewTitle_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiCalendarViewTitle.prototype.ranges;
-    /** @type {?} */
-    SuiCalendarViewTitle.prototype.onZoomOut;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ DatepickerMode = {
+var DatepickerMode = {
     Year: "year",
     Month: "month",
     Date: "date",
@@ -4629,80 +2876,42 @@ var SuiDatepicker = /** @class */ (function () {
         this.service = new CalendarService(new DatetimeConfig(), localizationService.get().datepicker);
         this.hasClasses = true;
     }
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDatepicker.prototype.onMouseDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDatepicker.prototype.onMouseDown = function (e) {
         e.preventDefault();
     };
-    SuiDatepicker.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-datepicker",
-                    template: "\n<ng-container [ngSwitch]=\"service.currentView\">\n    <sui-calendar-year-view [service]=\"service\" *ngSwitchCase=\"0\"></sui-calendar-year-view>\n    <sui-calendar-month-view [service]=\"service\" *ngSwitchCase=\"1\"></sui-calendar-month-view>    \n    <sui-calendar-date-view [service]=\"service\" *ngSwitchCase=\"2\"></sui-calendar-date-view>    \n    <sui-calendar-hour-view [service]=\"service\" *ngSwitchCase=\"3\"></sui-calendar-hour-view>    \n    <sui-calendar-minute-view [service]=\"service\" *ngSwitchCase=\"4\"></sui-calendar-minute-view>    \n</ng-container>\n",
-                    styles: ["\n:host {\n    user-select: none;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiDatepicker.ctorParameters = function () { return [
         { type: SuiLocalizationService }
     ]; };
-    SuiDatepicker.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.active",] }, { type: HostBinding, args: ["class.calendar",] }],
-        onMouseDown: [{ type: HostListener, args: ["mousedown", ["$event"],] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.active"),
+        HostBinding("class.calendar"),
+        __metadata("design:type", Boolean)
+    ], SuiDatepicker.prototype, "hasClasses", void 0);
+    __decorate([
+        HostListener("mousedown", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiDatepicker.prototype, "onMouseDown", null);
+    SuiDatepicker = __decorate([
+        Component({
+            selector: "sui-datepicker",
+            template: "\n<ng-container [ngSwitch]=\"service.currentView\">\n    <sui-calendar-year-view [service]=\"service\" *ngSwitchCase=\"0\"></sui-calendar-year-view>\n    <sui-calendar-month-view [service]=\"service\" *ngSwitchCase=\"1\"></sui-calendar-month-view>    \n    <sui-calendar-date-view [service]=\"service\" *ngSwitchCase=\"2\"></sui-calendar-date-view>    \n    <sui-calendar-hour-view [service]=\"service\" *ngSwitchCase=\"3\"></sui-calendar-hour-view>    \n    <sui-calendar-minute-view [service]=\"service\" *ngSwitchCase=\"4\"></sui-calendar-minute-view>    \n</ng-container>\n",
+            styles: ["\n:host {\n    user-select: none;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [SuiLocalizationService])
+    ], SuiDatepicker);
     return SuiDatepicker;
 }());
-function SuiDatepicker_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDatepicker.prototype.hasClasses;
-    /** @type {?} */
-    SuiDatepicker.prototype.service;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ PopupTrigger = {
+var PopupTrigger = {
     Hover: "hover",
     Click: "click",
     OutsideClick: "outsideClick",
     Focus: "focus",
     Manual: "manual"
 };
-/**
- * @record
- */
-function IPopupConfig() { }
-function IPopupConfig_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.header;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.text;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.placement;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.trigger;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.isInverted;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.delay;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.isBasic;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.transition;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.transitionDuration;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.isFlowing;
-    /** @type {?|undefined} */
-    IPopupConfig.prototype.isInline;
-}
 var PopupConfig = /** @class */ (function () {
     function PopupConfig(defaults) {
         if (defaults === void 0) { defaults = {}; }
@@ -4719,39 +2928,7 @@ var PopupConfig = /** @class */ (function () {
     }
     return PopupConfig;
 }());
-function PopupConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    PopupConfig.prototype.header;
-    /** @type {?} */
-    PopupConfig.prototype.text;
-    /** @type {?} */
-    PopupConfig.prototype.placement;
-    /** @type {?} */
-    PopupConfig.prototype.trigger;
-    /** @type {?} */
-    PopupConfig.prototype.isInverted;
-    /** @type {?} */
-    PopupConfig.prototype.delay;
-    /** @type {?} */
-    PopupConfig.prototype.isBasic;
-    /** @type {?} */
-    PopupConfig.prototype.transition;
-    /** @type {?} */
-    PopupConfig.prototype.size;
-    /** @type {?} */
-    PopupConfig.prototype.width;
-    /** @type {?} */
-    PopupConfig.prototype.transitionDuration;
-    /** @type {?} */
-    PopupConfig.prototype.isFlowing;
-    /** @type {?} */
-    PopupConfig.prototype.isInline;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiPopup = /** @class */ (function () {
     function SuiPopup(elementRef) {
         this.elementRef = elementRef;
@@ -4762,31 +2939,22 @@ var SuiPopup = /** @class */ (function () {
         this.tabindex = 0;
     }
     Object.defineProperty(SuiPopup.prototype, "isOpen", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isOpen;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopup.prototype, "anchor", {
-        set: /**
-         * @param {?} anchor
-         * @return {?}
-         */
-        function (anchor) {
+        set: function (anchor) {
             this._anchor = anchor;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopup.prototype, "direction", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Returns the direction (`top`, `left`, `right`, `bottom`) of the current placement.
+        get: function () {
             // We need to set direction attribute before popper init to allow correct positioning
             return this.config.placement.split(" ").shift();
         },
@@ -4794,21 +2962,16 @@ var SuiPopup = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiPopup.prototype, "alignment", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Returns the alignment (`top`, `left`, `right`, `bottom`) of the current placement.
+        get: function () {
             return this.config.placement.split(" ").pop();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopup.prototype, "dynamicClasses", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            var /** @type {?} */ classes = {};
+        get: function () {
+            var classes = {};
             if (this.direction) {
                 classes[this.direction] = true;
             }
@@ -4816,13 +2979,13 @@ var SuiPopup = /** @class */ (function () {
                 classes[this.alignment] = true;
             }
             if (this.config.isInverted) {
-                classes["inverted"] = true;
+                classes.inverted = true;
             }
             if (this.config.isBasic) {
-                classes["basic"] = true;
+                classes.basic = true;
             }
             if (this.config.isFlowing) {
-                classes["flowing"] = true;
+                classes.flowing = true;
             }
             if (this.config.size) {
                 classes[this.config.size] = true;
@@ -4835,13 +2998,7 @@ var SuiPopup = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiPopup.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopup.prototype.open = function () {
         var _this = this;
         // Only attempt to open if currently closed.
         if (!this.isOpen) {
@@ -4856,7 +3013,7 @@ var SuiPopup = /** @class */ (function () {
             this.transitionController.stopAll();
             this.transitionController.animate(new Transition(this.config.transition, this.config.transitionDuration, TransitionDirection.In, function () {
                 // Focus any element with [autofocus] attribute.
-                var /** @type {?} */ autoFocus = _this.elementRef.nativeElement.querySelector("[autofocus]");
+                var autoFocus = _this.elementRef.nativeElement.querySelector("[autofocus]");
                 if (autoFocus) {
                     // Autofocus after the browser has had time to process other event handlers.
                     setTimeout(function () { return autoFocus.focus(); }, 10);
@@ -4869,25 +3026,13 @@ var SuiPopup = /** @class */ (function () {
             this.onOpen.emit();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopup.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopup.prototype.toggle = function () {
         if (!this.isOpen) {
             return this.open();
         }
         return this.close();
     };
-    /**
-     * @return {?}
-     */
-    SuiPopup.prototype.close = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopup.prototype.close = function () {
         var _this = this;
         // Only attempt to close if currently open.
         if (this.isOpen) {
@@ -4902,83 +3047,42 @@ var SuiPopup = /** @class */ (function () {
             this._isOpen = false;
         }
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    SuiPopup.prototype.onClick = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    SuiPopup.prototype.onClick = function (event) {
         // Makes sense here, as the popup shouldn't be attached to any DOM element.
         event.stopPropagation();
     };
-    SuiPopup.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-popup",
-                    template: "\n<div class=\"ui popup\"\n     [ngClass]=\"dynamicClasses\"\n     [suiTransition]=\"transitionController\"\n     [attr.direction]=\"direction\"\n     #container>\n\n    <ng-container *ngIf=\"!config.template && (!!config.header || !!config.text)\">\n        <div class=\"header\" *ngIf=\"config.header\">{{ config.header }}</div>\n        <div class=\"content\">{{ config.text }}</div>\n    </ng-container>\n    <div #templateSibling></div>\n\n    <sui-popup-arrow *ngIf=\"!config.isBasic\"\n                     [placement]=\"config.placement\"\n                     [inverted]=\"config.isInverted\"></sui-popup-arrow>\n</div>\n",
-                    styles: ["\n.ui.popup {\n    /* Autofit popup to the contents. */\n    right: auto;\n    margin: 0;\n}\n\n.ui.animating.popup {\n    /* When the popup is animating, it may not initially be in the correct position.\n       This fires a mouse event, causing the anchor's mouseleave to fire - making the popup flicker.\n       Setting pointer-events to none while animating fixes this bug. */\n    pointer-events: none;\n}\n\n.ui.popup::before {\n    /* Hide the Semantic UI CSS arrow. */\n    display: none;\n}\n\n/* Offset popup by 0.75em above and below when placed 'vertically'. */\n.ui.popup[direction=\"top\"],\n.ui.popup[direction=\"bottom\"] {\n    margin-top: 0.75em;\n    margin-bottom: 0.75em;\n}\n\n/* Offset popup by 0.75em either side when placed 'horizontally'. */\n.ui.popup[direction=\"left\"],\n.ui.popup[direction=\"right\"] {\n    margin-left: 0.75em;\n    margin-right: 0.75em;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiPopup.ctorParameters = function () { return [
         { type: ElementRef }
     ]; };
-    SuiPopup.propDecorators = {
-        _container: [{ type: ViewChild, args: ["container", { read: ViewContainerRef, static: true },] }],
-        templateSibling: [{ type: ViewChild, args: ["templateSibling", { read: ViewContainerRef, static: true },] }],
-        tabindex: [{ type: HostBinding, args: ["attr.tabindex",] }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }]
-    };
+    __decorate([
+        ViewChild("container", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiPopup.prototype, "_container", void 0);
+    __decorate([
+        ViewChild("templateSibling", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiPopup.prototype, "templateSibling", void 0);
+    __decorate([
+        HostBinding("attr.tabindex"),
+        __metadata("design:type", Number)
+    ], SuiPopup.prototype, "tabindex", void 0);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiPopup.prototype, "onClick", null);
+    SuiPopup = __decorate([
+        Component({
+            selector: "sui-popup",
+            template: "\n<div class=\"ui popup\"\n     [ngClass]=\"dynamicClasses\"\n     [suiTransition]=\"transitionController\"\n     [attr.direction]=\"direction\"\n     #container>\n\n    <ng-container *ngIf=\"!config.template && (!!config.header || !!config.text)\">\n        <div class=\"header\" *ngIf=\"config.header\">{{ config.header }}</div>\n        <div class=\"content\">{{ config.text }}</div>\n    </ng-container>\n    <div #templateSibling></div>\n\n    <sui-popup-arrow *ngIf=\"!config.isBasic\"\n                     [placement]=\"config.placement\"\n                     [inverted]=\"config.isInverted\"></sui-popup-arrow>\n</div>\n",
+            styles: ["\n.ui.popup {\n    /* Autofit popup to the contents. */\n    right: auto;\n    margin: 0;\n}\n\n.ui.animating.popup {\n    /* When the popup is animating, it may not initially be in the correct position.\n       This fires a mouse event, causing the anchor's mouseleave to fire - making the popup flicker.\n       Setting pointer-events to none while animating fixes this bug. */\n    pointer-events: none;\n}\n\n.ui.popup::before {\n    /* Hide the Semantic UI CSS arrow. */\n    display: none;\n}\n\n/* Offset popup by 0.75em above and below when placed 'vertically'. */\n.ui.popup[direction=\"top\"],\n.ui.popup[direction=\"bottom\"] {\n    margin-top: 0.75em;\n    margin-bottom: 0.75em;\n}\n\n/* Offset popup by 0.75em either side when placed 'horizontally'. */\n.ui.popup[direction=\"left\"],\n.ui.popup[direction=\"right\"] {\n    margin-left: 0.75em;\n    margin-right: 0.75em;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], SuiPopup);
     return SuiPopup;
 }());
-function SuiPopup_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiPopup.prototype.config;
-    /** @type {?} */
-    SuiPopup.prototype.transitionController;
-    /** @type {?} */
-    SuiPopup.prototype.positioningService;
-    /** @type {?} */
-    SuiPopup.prototype._anchor;
-    /** @type {?} */
-    SuiPopup.prototype._isOpen;
-    /** @type {?} */
-    SuiPopup.prototype.closingTimeout;
-    /** @type {?} */
-    SuiPopup.prototype.onOpen;
-    /** @type {?} */
-    SuiPopup.prototype.onClose;
-    /** @type {?} */
-    SuiPopup.prototype._container;
-    /** @type {?} */
-    SuiPopup.prototype.templateSibling;
-    /** @type {?} */
-    SuiPopup.prototype.tabindex;
-    /** @type {?} */
-    SuiPopup.prototype.elementRef;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- */
-function IPopup() { }
-function IPopup_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IPopup.prototype.open;
-    /** @type {?} */
-    IPopup.prototype.close;
-    /** @type {?} */
-    IPopup.prototype.toggle;
-}
-/**
- * @abstract
- */
 var SuiPopupController = /** @class */ (function () {
     function SuiPopupController(_renderer, _element, _componentFactory, config) {
         var _this = this;
@@ -4993,49 +3097,27 @@ var SuiPopupController = /** @class */ (function () {
         this.popup.onClose.subscribe(function () { return _this.cleanup(); });
     }
     Object.defineProperty(SuiPopupController.prototype, "popup", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Returns generated popup instance.
+        get: function () {
             // Use non-null assertion as we only access this when a popup exists.
             return this._componentRef.instance;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?=} config
-     * @return {?}
-     */
-    SuiPopupController.prototype.configure = /**
-     * @param {?=} config
-     * @return {?}
-     */
-    function (config) {
+    SuiPopupController.prototype.configure = function (config) {
         if (config) {
             Object.assign(this.popup.config, config);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.openDelayed = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.openDelayed = function () {
         var _this = this;
         // Cancel the opening timer.
         clearTimeout(this._openingTimeout);
         // Start the popup opening after the specified delay interval.
         this._openingTimeout = window.setTimeout(function () { return _this.open(); }, this.popup.config.delay);
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.open = function () {
         var _this = this;
         // Attach the generated component to the current application.
         this._componentFactory.attachToApplication(this._componentRef);
@@ -5056,18 +3138,12 @@ var SuiPopupController = /** @class */ (function () {
         // Start popup open transition.
         this.popup.open();
         // Call lifecyle hook
-        var /** @type {?} */ lifecycle = this.popupOnOpen;
+        var lifecycle = this.popupOnOpen;
         if (lifecycle) {
             lifecycle.call(this);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.close = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.close = function () {
         // Cancel the opening timer to stop the popup opening after close has been called.
         clearTimeout(this._openingTimeout);
         if (this._componentRef) {
@@ -5075,18 +3151,12 @@ var SuiPopupController = /** @class */ (function () {
             this.popup.close();
         }
         // Call lifecyle hook
-        var /** @type {?} */ lifecycle = this.popupOnClose;
+        var lifecycle = this.popupOnClose;
         if (lifecycle) {
             lifecycle.call(this);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.toggleDelayed = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.toggleDelayed = function () {
         // If the popup hasn't been created, or it has but it isn't currently open, open the popup.
         if (!this._componentRef || (this._componentRef && !this.popup.isOpen)) {
             return this.openDelayed();
@@ -5094,13 +3164,7 @@ var SuiPopupController = /** @class */ (function () {
         // O'wise, close it.
         return this.close();
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.toggle = function () {
         // If the popup hasn't been created, or it has but it isn't currently open, open the popup.
         if (!this._componentRef || (this._componentRef && !this.popup.isOpen)) {
             return this.open();
@@ -5108,35 +3172,17 @@ var SuiPopupController = /** @class */ (function () {
         // O'wise, close it.
         return this.close();
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.onMouseEnter = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.onMouseEnter = function () {
         if (this.popup.config.trigger === PopupTrigger.Hover) {
             this.openDelayed();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.onMouseLeave = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.onMouseLeave = function () {
         if (this.popup.config.trigger === PopupTrigger.Hover) {
             this.close();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.onClick = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.onClick = function () {
         if (this.popup.config.trigger === PopupTrigger.Click ||
             this.popup.config.trigger === PopupTrigger.OutsideClick) {
             // Repeated clicks require a toggle, rather than just opening the popup each time.
@@ -5148,57 +3194,29 @@ var SuiPopupController = /** @class */ (function () {
             this.openDelayed();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiPopupController.prototype.onDocumentClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiPopupController.prototype.onDocumentClick = function (e) {
         // If the popup trigger is outside click,
         if (this._componentRef && this.popup.config.trigger === PopupTrigger.OutsideClick) {
-            var /** @type {?} */ target = e.target;
+            var target = e.target;
             // Close the popup if the click is outside of the popup element.
             if (!this._element.nativeElement.contains(target)) {
                 this.close();
             }
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.onFocusIn = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.onFocusIn = function () {
         if (this.popup.config.trigger === PopupTrigger.Focus) {
             this.openDelayed();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiPopupController.prototype.onFocusOut = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiPopupController.prototype.onFocusOut = function (e) {
         if (!this._element.nativeElement.contains(e.relatedTarget) &&
             !this.popup.elementRef.nativeElement.contains(e.relatedTarget) &&
             this.popup.config.trigger === PopupTrigger.Focus) {
             this.close();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.cleanup = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.cleanup = function () {
         clearTimeout(this._openingTimeout);
         if (this._componentRef.instance && this._componentRef.instance.positioningService) {
             this._componentRef.instance.positioningService.destroy();
@@ -5208,50 +3226,56 @@ var SuiPopupController = /** @class */ (function () {
             this._documentListener();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupController.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupController.prototype.ngOnDestroy = function () {
         this.cleanup();
     };
-    SuiPopupController.propDecorators = {
-        onMouseEnter: [{ type: HostListener, args: ["mouseenter",] }],
-        onMouseLeave: [{ type: HostListener, args: ["mouseleave",] }],
-        onClick: [{ type: HostListener, args: ["click",] }],
-        onFocusIn: [{ type: HostListener, args: ["focusin",] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout", ["$event"],] }]
-    };
+    SuiPopupController.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: SuiComponentFactory },
+        { type: PopupConfig }
+    ]; };
+    __decorate([
+        HostListener("mouseenter"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiPopupController.prototype, "onMouseEnter", null);
+    __decorate([
+        HostListener("mouseleave"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiPopupController.prototype, "onMouseLeave", null);
+    __decorate([
+        HostListener("click"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiPopupController.prototype, "onClick", null);
+    __decorate([
+        HostListener("focusin"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiPopupController.prototype, "onFocusIn", null);
+    __decorate([
+        HostListener("focusout", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiPopupController.prototype, "onFocusOut", null);
+    SuiPopupController = __decorate([
+        Directive(),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            SuiComponentFactory,
+            PopupConfig])
+    ], SuiPopupController);
     return SuiPopupController;
 }());
-function SuiPopupController_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiPopupController.prototype._componentRef;
-    /** @type {?} */
-    SuiPopupController.prototype._openingTimeout;
-    /** @type {?} */
-    SuiPopupController.prototype._documentListener;
-    /** @type {?} */
-    SuiPopupController.prototype._renderer;
-    /** @type {?} */
-    SuiPopupController.prototype._element;
-    /** @type {?} */
-    SuiPopupController.prototype._componentFactory;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T
- */
-var  /**
- * @template T
- */
-SuiPopupComponentController = /** @class */ (function (_super) {
+var SuiPopupComponentController = /** @class */ (function (_super) {
     __extends(SuiPopupComponentController, _super);
     function SuiPopupComponentController(renderer, element, componentFactory, _component, config) {
         var _this = _super.call(this, renderer, element, componentFactory, config) || this;
@@ -5259,10 +3283,7 @@ SuiPopupComponentController = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiPopupComponentController.prototype, "componentInstance", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._contentComponentRef) {
                 return this._contentComponentRef.instance;
             }
@@ -5270,118 +3291,59 @@ SuiPopupComponentController = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiPopupComponentController.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupComponentController.prototype.open = function () {
         if (!this._contentComponentRef) {
             this._contentComponentRef = this._componentFactory.createComponent(this._component);
             this._componentFactory.attachToView(this._contentComponentRef, this.popup.templateSibling);
         }
         _super.prototype.open.call(this);
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupComponentController.prototype.cleanup = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupComponentController.prototype.cleanup = function () {
         _super.prototype.cleanup.call(this);
         if (this._contentComponentRef) {
             this._contentComponentRef.destroy();
             this._contentComponentRef = undefined;
         }
     };
+    SuiPopupComponentController.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: SuiComponentFactory },
+        { type: Type },
+        { type: PopupConfig }
+    ]; };
+    SuiPopupComponentController = __decorate([
+        Directive(),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            SuiComponentFactory,
+            Type,
+            PopupConfig])
+    ], SuiPopupComponentController);
     return SuiPopupComponentController;
 }(SuiPopupController));
-function SuiPopupComponentController_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiPopupComponentController.prototype._contentComponentRef;
-    /** @type {?} */
-    SuiPopupComponentController.prototype._component;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ templateRef = TemplateRef;
-/**
- * @record
- * @template T
- */
-function ITemplatePopupContext() { }
-function ITemplatePopupContext_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
-    ITemplatePopupContext.prototype.context;
-}
-/**
- * @record
- * @template T
- */
-function ITemplatePopupConfig() { }
-function ITemplatePopupConfig_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
-    ITemplatePopupConfig.prototype.template;
-    /** @type {?|undefined} */
-    ITemplatePopupConfig.prototype.context;
-}
-/**
- * @template T
- */
-var /**
- * @template T
- */
-TemplatePopupConfig = /** @class */ (function (_super) {
+var templateRef = TemplateRef;
+var TemplatePopupConfig = /** @class */ (function (_super) {
     __extends(TemplatePopupConfig, _super);
     function TemplatePopupConfig() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return TemplatePopupConfig;
 }(PopupConfig));
-function TemplatePopupConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    TemplatePopupConfig.prototype.template;
-    /** @type {?} */
-    TemplatePopupConfig.prototype.context;
-}
-/**
- * @template T
- */
-var  /**
- * @template T
- */
-SuiPopupTemplateController = /** @class */ (function (_super) {
+var SuiPopupTemplateController = /** @class */ (function (_super) {
     __extends(SuiPopupTemplateController, _super);
     function SuiPopupTemplateController(renderer, element, componentFactory, config) {
         return _super.call(this, renderer, element, componentFactory, config) || this;
     }
-    /**
-     * @param {?=} config
-     * @return {?}
-     */
-    SuiPopupTemplateController.prototype.configure = /**
-     * @param {?=} config
-     * @return {?}
-     */
-    function (config) {
+    SuiPopupTemplateController.prototype.configure = function (config) {
         _super.prototype.configure.call(this, config);
         if (config) {
             this.template = config.template;
             this.context = config.context;
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiPopupTemplateController.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    SuiPopupTemplateController.prototype.open = function () {
         // If there is a template, inject it into the view.
         if (this.template) {
             this.popup.templateSibling.clear();
@@ -5392,27 +3354,27 @@ SuiPopupTemplateController = /** @class */ (function (_super) {
         }
         _super.prototype.open.call(this);
     };
+    SuiPopupTemplateController.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: SuiComponentFactory },
+        { type: PopupConfig }
+    ]; };
+    SuiPopupTemplateController = __decorate([
+        Directive(),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            SuiComponentFactory,
+            PopupConfig])
+    ], SuiPopupTemplateController);
     return SuiPopupTemplateController;
 }(SuiPopupController));
-function SuiPopupTemplateController_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiPopupTemplateController.prototype.template;
-    /** @type {?} */
-    SuiPopupTemplateController.prototype.context;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiPopupArrow = /** @class */ (function () {
     function SuiPopupArrow() {
     }
     Object.defineProperty(SuiPopupArrow.prototype, "direction", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.placement) {
                 return this.placement.split(" ").shift();
             }
@@ -5421,12 +3383,9 @@ var SuiPopupArrow = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiPopupArrow.prototype, "alignment", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.placement) {
-                var /** @type {?} */ alignment = this.placement.split(" ").pop();
+                var alignment = this.placement.split(" ").pop();
                 if (alignment === this.direction) {
                     return "center";
                 }
@@ -5436,316 +3395,288 @@ var SuiPopupArrow = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    SuiPopupArrow.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-popup-arrow",
-                    template: "\n<div class=\"dynamic arrow\" [attr.direction]=\"direction\" *ngIf=\"alignment == 'center'\"></div>\n<div class=\"static arrow\" [attr.direction]=\"direction\" [attr.alignment]=\"alignment\" *ngIf=\"alignment != 'center'\"></div>\n",
-                    styles: ["\n.arrow {\n    position: absolute;\n    width: 0.71428571em;\n    height: 0.71428571em;\n    background: #ffffff;\n    -webkit-transform: rotate(45deg);\n    -ms-transform: rotate(45deg);\n    transform: rotate(45deg);\n    z-index: 2;\n}\n\n:host.inverted .arrow {\n    background: #1b1c1d;\n}\n\n.arrow[direction=\"top\"] {\n    bottom: -0.30714286em;\n    box-shadow: 1px 1px 0 0 #bababc;\n}\n\n.arrow[direction=\"left\"] {\n    right: -0.30714286em;\n    box-shadow: 1px -1px 1px 0 #bababc;\n}\n\n.arrow[direction=\"bottom\"] {\n    top: -0.30714286em;\n    box-shadow: -1px -1px 0 0 #bababc;\n}\n\n.arrow[direction=\"right\"] {\n    left: -0.30714286em;\n    box-shadow: -1px 1px 1px 0 #bababc;\n}\n\n.static.arrow[direction=\"bottom\"][alignment=\"left\"],\n.static.arrow[direction=\"top\"][alignment=\"left\"] {\n    left: 1em;\n    right: auto;\n}\n\n.static.arrow[direction=\"left\"][alignment=\"top\"],\n.static.arrow[direction=\"right\"][alignment=\"top\"] {\n    top: 1em;\n    bottom: auto;\n}\n\n.static.arrow[direction=\"bottom\"][alignment=\"right\"],\n.static.arrow[direction=\"top\"][alignment=\"right\"] {\n    left: auto;\n    right: 1em;\n}\n\n.static.arrow[direction=\"left\"][alignment=\"bottom\"],\n.static.arrow[direction=\"right\"][alignment=\"bottom\"] {\n    top: auto;\n    bottom: 1em;\n}\n"]
-                }] }
-    ];
-    SuiPopupArrow.propDecorators = {
-        placement: [{ type: Input }],
-        inverted: [{ type: HostBinding, args: ["class.inverted",] }, { type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiPopupArrow.prototype, "placement", void 0);
+    __decorate([
+        HostBinding("class.inverted"),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiPopupArrow.prototype, "inverted", void 0);
+    SuiPopupArrow = __decorate([
+        Component({
+            selector: "sui-popup-arrow",
+            template: "\n<div class=\"dynamic arrow\" [attr.direction]=\"direction\" *ngIf=\"alignment == 'center'\"></div>\n<div class=\"static arrow\" [attr.direction]=\"direction\" [attr.alignment]=\"alignment\" *ngIf=\"alignment != 'center'\"></div>\n",
+            styles: ["\n.arrow {\n    position: absolute;\n    width: 0.71428571em;\n    height: 0.71428571em;\n    background: #ffffff;\n    -webkit-transform: rotate(45deg);\n    -ms-transform: rotate(45deg);\n    transform: rotate(45deg);\n    z-index: 2;\n}\n\n:host.inverted .arrow {\n    background: #1b1c1d;\n}\n\n.arrow[direction=\"top\"] {\n    bottom: -0.30714286em;\n    box-shadow: 1px 1px 0 0 #bababc;\n}\n\n.arrow[direction=\"left\"] {\n    right: -0.30714286em;\n    box-shadow: 1px -1px 1px 0 #bababc;\n}\n\n.arrow[direction=\"bottom\"] {\n    top: -0.30714286em;\n    box-shadow: -1px -1px 0 0 #bababc;\n}\n\n.arrow[direction=\"right\"] {\n    left: -0.30714286em;\n    box-shadow: -1px 1px 1px 0 #bababc;\n}\n\n.static.arrow[direction=\"bottom\"][alignment=\"left\"],\n.static.arrow[direction=\"top\"][alignment=\"left\"] {\n    left: 1em;\n    right: auto;\n}\n\n.static.arrow[direction=\"left\"][alignment=\"top\"],\n.static.arrow[direction=\"right\"][alignment=\"top\"] {\n    top: 1em;\n    bottom: auto;\n}\n\n.static.arrow[direction=\"bottom\"][alignment=\"right\"],\n.static.arrow[direction=\"top\"][alignment=\"right\"] {\n    left: auto;\n    right: 1em;\n}\n\n.static.arrow[direction=\"left\"][alignment=\"bottom\"],\n.static.arrow[direction=\"right\"][alignment=\"bottom\"] {\n    top: auto;\n    bottom: 1em;\n}\n"]
+        })
+    ], SuiPopupArrow);
     return SuiPopupArrow;
 }());
-function SuiPopupArrow_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiPopupArrow.prototype.placement;
-    /** @type {?} */
-    SuiPopupArrow.prototype.inverted;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiPopupConfig = /** @class */ (function (_super) {
     __extends(SuiPopupConfig, _super);
     function SuiPopupConfig() {
         // We use an empty constructor to ensure Angular DI works correctly.
         return _super.call(this) || this;
     }
-    SuiPopupConfig.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    SuiPopupConfig.ctorParameters = function () { return []; };
+    SuiPopupConfig = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [])
+    ], SuiPopupConfig);
     return SuiPopupConfig;
 }(PopupConfig));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ templateRef$1 = TemplateRef;
-/**
- * @template T
- */
+var templateRef$1 = TemplateRef;
 var SuiPopupDirective = /** @class */ (function (_super) {
     __extends(SuiPopupDirective, _super);
     function SuiPopupDirective(renderer, element, componentFactory, popupDefaults) {
         return _super.call(this, renderer, element, componentFactory, new PopupConfig(popupDefaults)) || this;
     }
     Object.defineProperty(SuiPopupDirective.prototype, "popupHeader", {
-        set: /**
-         * @param {?} header
-         * @return {?}
-         */
-        function (header) {
+        set: function (header) {
             this.popup.config.header = header;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupText", {
-        set: /**
-         * @param {?} text
-         * @return {?}
-         */
-        function (text) {
+        set: function (text) {
             this.popup.config.text = text;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupInverted", {
-        set: /**
-         * @param {?} inverted
-         * @return {?}
-         */
-        function (inverted) {
+        set: function (inverted) {
             this.popup.config.isInverted = Util.DOM.parseBooleanAttribute(inverted);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupBasic", {
-        set: /**
-         * @param {?} basic
-         * @return {?}
-         */
-        function (basic) {
+        set: function (basic) {
             this.popup.config.isBasic = Util.DOM.parseBooleanAttribute(basic);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupInline", {
-        set: /**
-         * @param {?} inline
-         * @return {?}
-         */
-        function (inline) {
+        set: function (inline) {
             this.popup.config.isInline = Util.DOM.parseBooleanAttribute(inline);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupFlowing", {
-        set: /**
-         * @param {?} flowing
-         * @return {?}
-         */
-        function (flowing) {
+        set: function (flowing) {
             this.popup.config.isFlowing = Util.DOM.parseBooleanAttribute(flowing);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTransition", {
-        set: /**
-         * @param {?} transition
-         * @return {?}
-         */
-        function (transition) {
+        set: function (transition) {
             this.popup.config.transition = transition;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTransitionDuration", {
-        set: /**
-         * @param {?} duration
-         * @return {?}
-         */
-        function (duration) {
+        set: function (duration) {
             this.popup.config.transitionDuration = duration;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupPlacement", {
-        set: /**
-         * @param {?} placement
-         * @return {?}
-         */
-        function (placement) {
+        set: function (placement) {
             this.popup.config.placement = placement;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupWidth", {
-        set: /**
-         * @param {?} width
-         * @return {?}
-         */
-        function (width) {
+        set: function (width) {
             this.popup.config.width = width;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupSize", {
-        set: /**
-         * @param {?} size
-         * @return {?}
-         */
-        function (size) {
+        set: function (size) {
             this.popup.config.size = size;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupDelay", {
-        set: /**
-         * @param {?} delay
-         * @return {?}
-         */
-        function (delay) {
+        set: function (delay) {
             this.popup.config.delay = delay;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTrigger", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.popup.config.trigger;
         },
-        set: /**
-         * @param {?} trigger
-         * @return {?}
-         */
-        function (trigger) {
+        set: function (trigger) {
             this.popup.config.trigger = trigger;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTemplate", {
-        set: /**
-         * @param {?} template
-         * @return {?}
-         */
-        function (template) {
+        set: function (template) {
             this.template = template;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTemplateContext", {
-        set: /**
-         * @param {?} context
-         * @return {?}
-         */
-        function (context) {
+        set: function (context) {
             this.context = context;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupConfig", {
-        set: /**
-         * @param {?} config
-         * @return {?}
-         */
-        function (config) {
+        set: function (config) {
             this.configure(config);
         },
         enumerable: true,
         configurable: true
     });
-    SuiPopupDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiPopup]",
-                    exportAs: "suiPopup"
-                },] }
-    ];
-    /** @nocollapse */
     SuiPopupDirective.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: SuiComponentFactory },
         { type: SuiPopupConfig }
     ]; };
-    SuiPopupDirective.propDecorators = {
-        popupHeader: [{ type: Input }],
-        popupText: [{ type: Input }],
-        popupInverted: [{ type: Input }],
-        popupBasic: [{ type: Input }],
-        popupInline: [{ type: Input }],
-        popupFlowing: [{ type: Input }],
-        popupTransition: [{ type: Input }],
-        popupTransitionDuration: [{ type: Input }],
-        popupPlacement: [{ type: Input }],
-        popupWidth: [{ type: Input }],
-        popupSize: [{ type: Input }],
-        popupDelay: [{ type: Input }],
-        popupTrigger: [{ type: Input }],
-        popupTemplate: [{ type: Input }],
-        popupTemplateContext: [{ type: Input }],
-        popupConfig: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupHeader", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupText", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupInverted", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupBasic", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupInline", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupFlowing", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupTransition", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPopupDirective.prototype, "popupTransitionDuration", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupPlacement", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupWidth", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupSize", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPopupDirective.prototype, "popupDelay", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupTrigger", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef),
+        __metadata("design:paramtypes", [TemplateRef])
+    ], SuiPopupDirective.prototype, "popupTemplate", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], SuiPopupDirective.prototype, "popupTemplateContext", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], SuiPopupDirective.prototype, "popupConfig", null);
+    SuiPopupDirective = __decorate([
+        Directive({
+            selector: "[suiPopup]",
+            exportAs: "suiPopup"
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            SuiComponentFactory,
+            SuiPopupConfig])
+    ], SuiPopupDirective);
     return SuiPopupDirective;
 }(SuiPopupTemplateController));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiPopupModule = /** @class */ (function () {
     function SuiPopupModule() {
     }
-    SuiPopupModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        SuiTransitionModule,
-                        SuiUtilityModule
-                    ],
-                    declarations: [
-                        SuiPopupDirective,
-                        SuiPopupArrow,
-                        SuiPopup
-                    ],
-                    exports: [
-                        SuiPopupDirective,
-                        SuiPopup
-                    ],
-                    providers: [
-                        SuiPopupConfig
-                    ],
-                    entryComponents: [
-                        SuiPopup
-                    ]
-                },] }
-    ];
+    SuiPopupModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                SuiTransitionModule,
+                SuiUtilityModule
+            ],
+            declarations: [
+                SuiPopupDirective,
+                SuiPopupArrow,
+                SuiPopup
+            ],
+            exports: [
+                SuiPopupDirective,
+                SuiPopup
+            ],
+            providers: [
+                SuiPopupConfig
+            ],
+            entryComponents: [
+                SuiPopup
+            ]
+        })
+    ], SuiPopupModule);
     return SuiPopupModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDatepickerDirective = /** @class */ (function (_super) {
     __extends(SuiDatepickerDirective, _super);
     function SuiDatepickerDirective(renderer, element, componentFactory, localizationService) {
@@ -5766,18 +3697,12 @@ var SuiDatepickerDirective = /** @class */ (function (_super) {
         _this.mode = DatepickerMode.Datetime;
         return _this;
     }
+    SuiDatepickerDirective_1 = SuiDatepickerDirective;
     Object.defineProperty(SuiDatepickerDirective.prototype, "selectedDate", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._selectedDate;
         },
-        set: /**
-         * @param {?} date
-         * @return {?}
-         */
-        function (date) {
+        set: function (date) {
             this._selectedDate = date;
             this.onSelectedDateChange.emit(date);
         },
@@ -5785,17 +3710,10 @@ var SuiDatepickerDirective = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerDirective.prototype, "mode", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._mode;
         },
-        set: /**
-         * @param {?} mode
-         * @return {?}
-         */
-        function (mode) {
+        set: function (mode) {
             this._mode = mode || DatepickerMode.Datetime;
             switch (this._mode) {
                 case DatepickerMode.Year:
@@ -5821,55 +3739,34 @@ var SuiDatepickerDirective = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerDirective.prototype, "localeValues", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.localizationService.override(this._localeValues, this.localeOverrides);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDatepickerDirective.prototype, "placement", {
-        set: /**
-         * @param {?} placement
-         * @return {?}
-         */
-        function (placement) {
+        set: function (placement) {
             this.popup.config.placement = placement;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDatepickerDirective.prototype, "transition", {
-        set: /**
-         * @param {?} transition
-         * @return {?}
-         */
-        function (transition) {
+        set: function (transition) {
             this.popup.config.transition = transition;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDatepickerDirective.prototype, "transitionDuration", {
-        set: /**
-         * @param {?} duration
-         * @return {?}
-         */
-        function (duration) {
+        set: function (duration) {
             this.popup.config.transitionDuration = duration;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiDatepickerDirective.prototype.popupOnOpen = /**
-     * @return {?}
-     */
-    function () {
+    SuiDatepickerDirective.prototype.popupOnOpen = function () {
         var _this = this;
         if (this.componentInstance) {
             this.componentInstance.service.config = this.config;
@@ -5888,39 +3785,17 @@ var SuiDatepickerDirective = /** @class */ (function (_super) {
             });
         }
     };
-    /**
-     * @param {?} __0
-     * @return {?}
-     */
-    SuiDatepickerDirective.prototype.ngOnChanges = /**
-     * @param {?} __0
-     * @return {?}
-     */
-    function (_a) {
+    SuiDatepickerDirective.prototype.ngOnChanges = function (_a) {
         var maxDate = _a.maxDate, minDate = _a.minDate, mode = _a.mode;
         if (maxDate || minDate || mode) {
             this.onValidatorChange.emit();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiDatepickerDirective.prototype.onLocaleUpdate = /**
-     * @return {?}
-     */
-    function () {
+    SuiDatepickerDirective.prototype.onLocaleUpdate = function () {
         this._localeValues = this.localizationService.get().datepicker;
     };
-    /**
-     * @param {?} c
-     * @return {?}
-     */
-    SuiDatepickerDirective.prototype.validate = /**
-     * @param {?} c
-     * @return {?}
-     */
-    function (c) {
-        var /** @type {?} */ value = c.value;
+    SuiDatepickerDirective.prototype.validate = function (c) {
+        var value = c.value;
         if (value != undefined) {
             // We post process the min & max date because sometimes this puts the date outside of the allowed range.
             if (this.minDate && value < this.minDate) {
@@ -5934,88 +3809,90 @@ var SuiDatepickerDirective = /** @class */ (function (_super) {
         // tslint:disable-next-line:no-null-keyword
         return null;
     };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiDatepickerDirective.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiDatepickerDirective.prototype.writeValue = function (value) {
         this.selectedDate = value;
         if (this.componentInstance) {
             this.componentInstance.service.selectedDate = value;
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDatepickerDirective.prototype.onKeyDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDatepickerDirective.prototype.onKeyDown = function (e) {
         if (e.keyCode === KeyCode.Escape) {
             this.close();
         }
     };
-    SuiDatepickerDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiDatepicker]",
-                    providers: [customValidatorFactory(SuiDatepickerDirective)]
-                },] }
-    ];
-    /** @nocollapse */
+    var SuiDatepickerDirective_1;
     SuiDatepickerDirective.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: SuiComponentFactory },
         { type: SuiLocalizationService }
     ]; };
-    SuiDatepickerDirective.propDecorators = {
-        mode: [{ type: Input, args: ["pickerMode",] }],
-        initialDate: [{ type: Input, args: ["pickerInitialDate",] }],
-        maxDate: [{ type: Input, args: ["pickerMaxDate",] }],
-        minDate: [{ type: Input, args: ["pickerMinDate",] }],
-        firstDayOfWeek: [{ type: Input, args: ["pickerFirstDayOfWeek",] }],
-        localeOverrides: [{ type: Input, args: ["pickerLocaleOverrides",] }],
-        placement: [{ type: Input, args: ["pickerPlacement",] }],
-        transition: [{ type: Input, args: ["pickerTransition",] }],
-        transitionDuration: [{ type: Input, args: ["pickerTransitionDuration",] }],
-        onSelectedDateChange: [{ type: Output, args: ["pickerSelectedDateChange",] }],
-        onValidatorChange: [{ type: Output, args: ["pickerValidatorChange",] }],
-        onKeyDown: [{ type: HostListener, args: ["keydown", ["$event"],] }]
-    };
+    __decorate([
+        Input("pickerMode"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiDatepickerDirective.prototype, "mode", null);
+    __decorate([
+        Input("pickerInitialDate"),
+        __metadata("design:type", Date)
+    ], SuiDatepickerDirective.prototype, "initialDate", void 0);
+    __decorate([
+        Input("pickerMaxDate"),
+        __metadata("design:type", Date)
+    ], SuiDatepickerDirective.prototype, "maxDate", void 0);
+    __decorate([
+        Input("pickerMinDate"),
+        __metadata("design:type", Date)
+    ], SuiDatepickerDirective.prototype, "minDate", void 0);
+    __decorate([
+        Input("pickerFirstDayOfWeek"),
+        __metadata("design:type", Number)
+    ], SuiDatepickerDirective.prototype, "firstDayOfWeek", void 0);
+    __decorate([
+        Input("pickerLocaleOverrides"),
+        __metadata("design:type", Object)
+    ], SuiDatepickerDirective.prototype, "localeOverrides", void 0);
+    __decorate([
+        Input("pickerPlacement"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiDatepickerDirective.prototype, "placement", null);
+    __decorate([
+        Input("pickerTransition"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiDatepickerDirective.prototype, "transition", null);
+    __decorate([
+        Input("pickerTransitionDuration"),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiDatepickerDirective.prototype, "transitionDuration", null);
+    __decorate([
+        Output("pickerSelectedDateChange"),
+        __metadata("design:type", EventEmitter)
+    ], SuiDatepickerDirective.prototype, "onSelectedDateChange", void 0);
+    __decorate([
+        Output("pickerValidatorChange"),
+        __metadata("design:type", EventEmitter)
+    ], SuiDatepickerDirective.prototype, "onValidatorChange", void 0);
+    __decorate([
+        HostListener("keydown", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiDatepickerDirective.prototype, "onKeyDown", null);
+    SuiDatepickerDirective = SuiDatepickerDirective_1 = __decorate([
+        Directive({
+            selector: "[suiDatepicker]",
+            providers: [customValidatorFactory(SuiDatepickerDirective_1)]
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            SuiComponentFactory,
+            SuiLocalizationService])
+    ], SuiDatepickerDirective);
     return SuiDatepickerDirective;
 }(SuiPopupComponentController));
-function SuiDatepickerDirective_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDatepickerDirective.prototype._selectedDate;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype._mode;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.config;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.initialDate;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.maxDate;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.minDate;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.firstDayOfWeek;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype._localeValues;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.localeOverrides;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.onSelectedDateChange;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.onValidatorChange;
-    /** @type {?} */
-    SuiDatepickerDirective.prototype.localizationService;
-}
 var SuiDatepickerDirectiveValueAccessor = /** @class */ (function (_super) {
     __extends(SuiDatepickerDirectiveValueAccessor, _super);
     function SuiDatepickerDirectiveValueAccessor(host) {
@@ -6023,23 +3900,21 @@ var SuiDatepickerDirectiveValueAccessor = /** @class */ (function (_super) {
         _this.host = host;
         return _this;
     }
-    SuiDatepickerDirectiveValueAccessor.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiDatepicker]",
-                    host: { "(pickerSelectedDateChange)": "onChange($event)" },
-                    providers: [customValueAccessorFactory(SuiDatepickerDirectiveValueAccessor)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiDatepickerDirectiveValueAccessor_1 = SuiDatepickerDirectiveValueAccessor;
+    var SuiDatepickerDirectiveValueAccessor_1;
     SuiDatepickerDirectiveValueAccessor.ctorParameters = function () { return [
         { type: SuiDatepickerDirective }
     ]; };
+    SuiDatepickerDirectiveValueAccessor = SuiDatepickerDirectiveValueAccessor_1 = __decorate([
+        Directive({
+            selector: "[suiDatepicker]",
+            host: { "(pickerSelectedDateChange)": "onChange($event)" },
+            providers: [customValueAccessorFactory(SuiDatepickerDirectiveValueAccessor_1)]
+        }),
+        __metadata("design:paramtypes", [SuiDatepickerDirective])
+    ], SuiDatepickerDirectiveValueAccessor);
     return SuiDatepickerDirectiveValueAccessor;
 }(CustomValueAccessor));
-function SuiDatepickerDirectiveValueAccessor_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDatepickerDirectiveValueAccessor.prototype.host;
-}
 var SuiDatepickerDirectiveValidator = /** @class */ (function (_super) {
     __extends(SuiDatepickerDirectiveValidator, _super);
     function SuiDatepickerDirectiveValidator(host) {
@@ -6047,34 +3922,23 @@ var SuiDatepickerDirectiveValidator = /** @class */ (function (_super) {
         _this.host = host;
         return _this;
     }
-    SuiDatepickerDirectiveValidator.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiDatepicker]",
-                    host: { "(pickerValidatorChange)": "onValidatorChange()" },
-                    providers: [customValidatorFactory(SuiDatepickerDirectiveValidator)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiDatepickerDirectiveValidator_1 = SuiDatepickerDirectiveValidator;
+    var SuiDatepickerDirectiveValidator_1;
     SuiDatepickerDirectiveValidator.ctorParameters = function () { return [
         { type: SuiDatepickerDirective }
     ]; };
+    SuiDatepickerDirectiveValidator = SuiDatepickerDirectiveValidator_1 = __decorate([
+        Directive({
+            selector: "[suiDatepicker]",
+            host: { "(pickerValidatorChange)": "onValidatorChange()" },
+            providers: [customValidatorFactory(SuiDatepickerDirectiveValidator_1)]
+        }),
+        __metadata("design:paramtypes", [SuiDatepickerDirective])
+    ], SuiDatepickerDirectiveValidator);
     return SuiDatepickerDirectiveValidator;
 }(CustomValidator));
-function SuiDatepickerDirectiveValidator_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDatepickerDirectiveValidator.prototype.host;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ isWebView = isUAWebView__default || isUAWebView;
+var isWebView = isUAWebView__default || isUAWebView;
 var SuiDatepickerInputDirective = /** @class */ (function () {
     function SuiDatepickerInputDirective(datepicker, valueAccessor, _renderer, _element, localizationService) {
         var _this = this;
@@ -6093,36 +3957,22 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         });
     }
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "useNativeOnMobile", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._useNativeOnMobile;
         },
-        set: /**
-         * @param {?} fallback
-         * @return {?}
-         */
-        function (fallback) {
+        set: function (fallback) {
             this._useNativeOnMobile = fallback;
-            var /** @type {?} */ isOnMobile = mobile || tablet || isWebView(navigator.userAgent);
+            var isOnMobile = mobile || tablet || isWebView(navigator.userAgent);
             this.fallbackActive = this.useNativeOnMobile && isOnMobile;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "fallbackActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._fallbackActive;
         },
-        set: /**
-         * @param {?} active
-         * @return {?}
-         */
-        function (active) {
+        set: function (active) {
             this._fallbackActive = active;
             // If the fallback is active, then the trigger must be manual so the datepicker never opens.
             this.datepicker.popup.config.trigger = this.fallbackActive ? PopupTrigger.Manual : PopupTrigger.Focus;
@@ -6133,10 +3983,7 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "parser", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.fallbackActive) {
                 return new InternalDateParser(this.datepicker.mode, this.datepicker.localeValues);
             }
@@ -6146,10 +3993,7 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "selectedDateString", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.datepicker.selectedDate) {
                 return this.parser.format(this.datepicker.selectedDate);
             }
@@ -6158,10 +4002,7 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "type", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.fallbackActive) {
                 return this.datepicker.config.fallback;
             }
@@ -6171,15 +4012,12 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "max", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.fallbackActive && this.datepicker.maxDate) {
                 // Since HTML doesn't use a date object max is somewhat tricky.
                 // Our Datepicker will always choose the 1st date on the provided precision,
                 // meaning anything below the maxDate will work, hence endOf.
-                var /** @type {?} */ max = DateUtil.endOf(this.datepicker.config.precision, DateUtil.clone(this.datepicker.maxDate));
+                var max = DateUtil.endOf(this.datepicker.config.precision, DateUtil.clone(this.datepicker.maxDate));
                 return this.parser.format(max);
             }
         },
@@ -6187,30 +4025,19 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDatepickerInputDirective.prototype, "min", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.fallbackActive && this.datepicker.minDate) {
                 // Since HTML doesn't use a date object min is somewhat tricky.
                 // We use 1 minute before the next date at the configured precision since
                 // our Datepicker picks the first available date at that precision.
-                var /** @type {?} */ min = DateUtil.clone(this.datepicker.minDate);
+                var min = DateUtil.clone(this.datepicker.minDate);
                 return this.parser.format(min);
             }
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiDatepickerInputDirective.prototype.updateValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiDatepickerInputDirective.prototype.updateValue = function (value) {
         // Only update the current value if it is different to what it's being updated to.
         // This is so that the editing position isn't changed when manually typing the date.
         if (!this._lastUpdateTyped) {
@@ -6218,42 +4045,22 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         }
         this._lastUpdateTyped = false;
     };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiDatepickerInputDirective.prototype.typeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiDatepickerInputDirective.prototype.typeValue = function (value) {
         this._lastUpdateTyped = true;
         this._currentInputValue = value;
         if (!value) {
             // Delete the selected date if no date was entered manually.
             return this.datepicker.writeValue(undefined);
         }
-        var /** @type {?} */ parsed = this.parser.parse(value, this.datepicker.selectedDate);
+        var parsed = this.parser.parse(value, this.datepicker.selectedDate);
         if (!isNaN(parsed.getTime()) && value === this.parser.format(parsed)) {
             return this.datepicker.writeValue(parsed);
         }
         return this.datepicker.writeValue(undefined);
     };
-    /**
-     * @return {?}
-     */
-    SuiDatepickerInputDirective.prototype.onFocusOut = /**
-     * @return {?}
-     */
-    function () {
+    SuiDatepickerInputDirective.prototype.onFocusOut = function () {
         this.valueAccessor.onTouched();
     };
-    SuiDatepickerInputDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: "input[suiDatepicker]"
-                },] }
-    ];
-    /** @nocollapse */
     SuiDatepickerInputDirective.ctorParameters = function () { return [
         { type: SuiDatepickerDirective, decorators: [{ type: Host }] },
         { type: SuiDatepickerDirectiveValueAccessor, decorators: [{ type: Host }] },
@@ -6261,68 +4068,64 @@ var SuiDatepickerInputDirective = /** @class */ (function () {
         { type: ElementRef },
         { type: SuiLocalizationService }
     ]; };
-    SuiDatepickerInputDirective.propDecorators = {
-        useNativeOnMobile: [{ type: Input, args: ["pickerUseNativeOnMobile",] }],
-        type: [{ type: HostBinding, args: ["attr.type",] }],
-        max: [{ type: HostBinding, args: ["attr.max",] }],
-        min: [{ type: HostBinding, args: ["attr.min",] }],
-        typeValue: [{ type: HostListener, args: ["input", ["$event.target.value"],] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout",] }]
-    };
+    __decorate([
+        Input("pickerUseNativeOnMobile"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiDatepickerInputDirective.prototype, "useNativeOnMobile", null);
+    __decorate([
+        HostBinding("attr.type"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], SuiDatepickerInputDirective.prototype, "type", null);
+    __decorate([
+        HostBinding("attr.max"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], SuiDatepickerInputDirective.prototype, "max", null);
+    __decorate([
+        HostBinding("attr.min"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], SuiDatepickerInputDirective.prototype, "min", null);
+    __decorate([
+        HostListener("input", ["$event.target.value"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String]),
+        __metadata("design:returntype", void 0)
+    ], SuiDatepickerInputDirective.prototype, "typeValue", null);
+    __decorate([
+        HostListener("focusout"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiDatepickerInputDirective.prototype, "onFocusOut", null);
+    SuiDatepickerInputDirective = __decorate([
+        Directive({
+            selector: "input[suiDatepicker]"
+        }),
+        __param(0, Host()),
+        __param(1, Host()),
+        __metadata("design:paramtypes", [SuiDatepickerDirective,
+            SuiDatepickerDirectiveValueAccessor,
+            Renderer2,
+            ElementRef,
+            SuiLocalizationService])
+    ], SuiDatepickerInputDirective);
     return SuiDatepickerInputDirective;
 }());
-function SuiDatepickerInputDirective_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype._useNativeOnMobile;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype._fallbackActive;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype._currentInputValue;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype._lastUpdateTyped;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype.datepicker;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype.valueAccessor;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype._renderer;
-    /** @type {?} */
-    SuiDatepickerInputDirective.prototype._element;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarRangeDateService = /** @class */ (function (_super) {
     __extends(CalendarRangeDateService, _super);
     function CalendarRangeDateService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * @param {?} start
-     * @return {?}
-     */
-    CalendarRangeDateService.prototype.calcStart = /**
-     * @param {?} start
-     * @return {?}
-     */
-    function (start) {
-        var /** @type {?} */ monthStart = DateUtil.startOf(DatePrecision.Month, DateUtil.clone(start));
+    CalendarRangeDateService.prototype.calcStart = function (start) {
+        var monthStart = DateUtil.startOf(DatePrecision.Month, DateUtil.clone(start));
         monthStart.setDate((1 - monthStart.getDay() + this.service.firstDayOfWeek - 7) % 7);
         return monthStart;
     };
-    /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeDateService.prototype.configureItem = /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    function (item, baseDate) {
+    CalendarRangeDateService.prototype.configureItem = function (item, baseDate) {
         item.humanReadable = item.date.getDate().toString();
         item.isOutsideRange = item.date.getMonth() !== baseDate.getMonth();
         item.isSelectable = item.isDisabled;
@@ -6335,62 +4138,42 @@ var SuiCalendarDateView = /** @class */ (function (_super) {
         return _super.call(this, renderer, CalendarViewType.Date, new CalendarRangeDateService(DatePrecision.Month, 6, 7)) || this;
     }
     Object.defineProperty(SuiCalendarDateView.prototype, "days", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
-            var /** @type {?} */ days = this.service.localeValues.weekdaysNarrow;
+            var days = this.service.localeValues.weekdaysNarrow;
             return days.map(function (d, i) { return days[(i + _this.service.firstDayOfWeek) % days.length]; });
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiCalendarDateView.prototype, "date", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return new DateParser(this.service.localeValues.formats.month, this.service.localeValues).format(this.currentDate);
         },
         enumerable: true,
         configurable: true
     });
-    SuiCalendarDateView.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-calendar-date-view",
-                    template: "\n<table class=\"ui celled center aligned unstackable table seven column day\">\n<thead>\n    <tr>\n        <th colspan=\"7\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ date }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n    <tr>\n        <th *ngFor=\"let day of days\">{{ day }}</th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiCalendarDateView.ctorParameters = function () { return [
         { type: Renderer2 }
     ]; };
+    SuiCalendarDateView = __decorate([
+        Component({
+            selector: "sui-calendar-date-view",
+            template: "\n<table class=\"ui celled center aligned unstackable table seven column day\">\n<thead>\n    <tr>\n        <th colspan=\"7\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ date }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n    <tr>\n        <th *ngFor=\"let day of days\">{{ day }}</th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2])
+    ], SuiCalendarDateView);
     return SuiCalendarDateView;
 }(CalendarView));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarRangeHourService = /** @class */ (function (_super) {
     __extends(CalendarRangeHourService, _super);
     function CalendarRangeHourService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeHourService.prototype.configureItem = /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    function (item, baseDate) {
+    CalendarRangeHourService.prototype.configureItem = function (item, baseDate) {
         // Set minutes and seconds to 0
-        var /** @type {?} */ customFormat = this.service.localeValues.formats.time.replace(/[ms]/g, "0");
+        var customFormat = this.service.localeValues.formats.time.replace(/[ms]/g, "0");
         item.humanReadable = new DateParser(customFormat, this.service.localeValues).format(item.date);
         item.isOutsideRange = false;
     };
@@ -6402,72 +4185,39 @@ var SuiCalendarHourView = /** @class */ (function (_super) {
         return _super.call(this, renderer, CalendarViewType.Hour, new CalendarRangeHourService(DatePrecision.Date, 6, 4)) || this;
     }
     Object.defineProperty(SuiCalendarHourView.prototype, "date", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return new DateParser(this.service.localeValues.formats.date, this.service.localeValues).format(this.currentDate);
         },
         enumerable: true,
         configurable: true
     });
-    SuiCalendarHourView.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-calendar-hour-view",
-                    template: "\n<table class=\"ui celled center aligned unstackable table four column hour\">\n<thead *ngIf=\"service.config.mode != 1\">\n    <tr>\n        <th colspan=\"4\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ date }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiCalendarHourView.ctorParameters = function () { return [
         { type: Renderer2 }
     ]; };
+    SuiCalendarHourView = __decorate([
+        Component({
+            selector: "sui-calendar-hour-view",
+            template: "\n<table class=\"ui celled center aligned unstackable table four column hour\">\n<thead *ngIf=\"service.config.mode != 1\">\n    <tr>\n        <th colspan=\"4\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ date }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2])
+    ], SuiCalendarHourView);
     return SuiCalendarHourView;
 }(CalendarView));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarRangeMinuteService = /** @class */ (function (_super) {
     __extends(CalendarRangeMinuteService, _super);
     function CalendarRangeMinuteService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * @param {?} start
-     * @return {?}
-     */
-    CalendarRangeMinuteService.prototype.calcStart = /**
-     * @param {?} start
-     * @return {?}
-     */
-    function (start) {
+    CalendarRangeMinuteService.prototype.calcStart = function (start) {
         return DateUtil.startOf(DatePrecision.Hour, DateUtil.clone(start), true);
     };
-    /**
-     * @param {?} start
-     * @return {?}
-     */
-    CalendarRangeMinuteService.prototype.calcDates = /**
-     * @param {?} start
-     * @return {?}
-     */
-    function (start) {
+    CalendarRangeMinuteService.prototype.calcDates = function (start) {
         return Util.Array
             .range(this.length)
             .map(function (i) { return DateUtil.add(DatePrecision.Minute, DateUtil.clone(start), i * 5); });
     };
-    /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeMinuteService.prototype.configureItem = /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    function (item, baseDate) {
+    CalendarRangeMinuteService.prototype.configureItem = function (item, baseDate) {
         item.humanReadable = new DateParser(this.service.localeValues.formats.time, this.service.localeValues).format(item.date);
         item.isOutsideRange = false;
     };
@@ -6479,57 +4229,40 @@ var SuiCalendarMinuteView = /** @class */ (function (_super) {
         return _super.call(this, renderer, CalendarViewType.Minute, new CalendarRangeMinuteService(DatePrecision.Hour, 4, 3)) || this;
     }
     Object.defineProperty(SuiCalendarMinuteView.prototype, "date", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.service.config.mode !== CalendarMode.TimeOnly) {
                 // Set minutes and seconds to 0
-                var /** @type {?} */ dateTimeFormat = this.service.localeValues.formats.datetime.replace(/[ms]/g, "0");
+                var dateTimeFormat = this.service.localeValues.formats.datetime.replace(/[ms]/g, "0");
                 return new DateParser(dateTimeFormat, this.service.localeValues).format(this.currentDate);
             }
             else {
                 // Set minutes and seconds to 0
-                var /** @type {?} */ timeFormat = this.service.localeValues.formats.time.replace(/[ms]/g, "0");
+                var timeFormat = this.service.localeValues.formats.time.replace(/[ms]/g, "0");
                 return new DateParser(timeFormat, this.service.localeValues).format(this.currentDate);
             }
         },
         enumerable: true,
         configurable: true
     });
-    SuiCalendarMinuteView.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-calendar-minute-view",
-                    template: "\n<table class=\"ui celled center aligned unstackable table three column minute\">\n<thead>\n    <tr>\n        <th colspan=\"4\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ date }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiCalendarMinuteView.ctorParameters = function () { return [
         { type: Renderer2 }
     ]; };
+    SuiCalendarMinuteView = __decorate([
+        Component({
+            selector: "sui-calendar-minute-view",
+            template: "\n<table class=\"ui celled center aligned unstackable table three column minute\">\n<thead>\n    <tr>\n        <th colspan=\"4\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ date }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2])
+    ], SuiCalendarMinuteView);
     return SuiCalendarMinuteView;
 }(CalendarView));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarRangeMonthService = /** @class */ (function (_super) {
     __extends(CalendarRangeMonthService, _super);
     function CalendarRangeMonthService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeMonthService.prototype.configureItem = /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    function (item, baseDate) {
+    CalendarRangeMonthService.prototype.configureItem = function (item, baseDate) {
         item.humanReadable = this.service.localeValues.monthsShort[item.date.getMonth()];
         item.isOutsideRange = false;
     };
@@ -6541,48 +4274,31 @@ var SuiCalendarMonthView = /** @class */ (function (_super) {
         return _super.call(this, renderer, CalendarViewType.Month, new CalendarRangeMonthService(DatePrecision.Year, 4, 3)) || this;
     }
     Object.defineProperty(SuiCalendarMonthView.prototype, "year", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return new DateParser(this.service.localeValues.formats.year, this.service.localeValues).format(this.currentDate);
         },
         enumerable: true,
         configurable: true
     });
-    SuiCalendarMonthView.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-calendar-month-view",
-                    template: "\n<table class=\"ui celled center aligned unstackable table three column month\">\n<thead>\n    <tr>\n        <th colspan=\"3\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ year }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiCalendarMonthView.ctorParameters = function () { return [
         { type: Renderer2 }
     ]; };
+    SuiCalendarMonthView = __decorate([
+        Component({
+            selector: "sui-calendar-month-view",
+            template: "\n<table class=\"ui celled center aligned unstackable table three column month\">\n<thead>\n    <tr>\n        <th colspan=\"3\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ year }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2])
+    ], SuiCalendarMonthView);
     return SuiCalendarMonthView;
 }(CalendarView));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var CalendarRangeYearService = /** @class */ (function (_super) {
     __extends(CalendarRangeYearService, _super);
     function CalendarRangeYearService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    CalendarRangeYearService.prototype.configureItem = /**
-     * @param {?} item
-     * @param {?} baseDate
-     * @return {?}
-     */
-    function (item, baseDate) {
+    CalendarRangeYearService.prototype.configureItem = function (item, baseDate) {
         item.humanReadable = Util.String.padLeft(item.date.getFullYear().toString(), 4, "0");
         item.isOutsideRange = item.date.getFullYear() >= this.calcStart(baseDate).getFullYear() + 10;
     };
@@ -6594,10 +4310,7 @@ var SuiCalendarYearView = /** @class */ (function (_super) {
         return _super.call(this, renderer, CalendarViewType.Year, new CalendarRangeYearService(DatePrecision.Decade, 4, 3)) || this;
     }
     Object.defineProperty(SuiCalendarYearView.prototype, "decadeStart", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return DateUtil
                 .startOf(DatePrecision.Decade, DateUtil.clone(this.service.currentDate))
                 .getFullYear();
@@ -6605,88 +4318,62 @@ var SuiCalendarYearView = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} year
-     * @return {?}
-     */
-    SuiCalendarYearView.prototype.pad = /**
-     * @param {?} year
-     * @return {?}
-     */
-    function (year) {
+    SuiCalendarYearView.prototype.pad = function (year) {
         return Util.String.padLeft(year.toString(), 4, "0");
     };
-    SuiCalendarYearView.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-calendar-year-view",
-                    template: "\n<table class=\"ui celled center aligned unstackable table three column year\">\n<thead>\n    <tr>\n        <th colspan=\"3\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ pad(decadeStart) }} - {{ pad(decadeStart + 10) }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiCalendarYearView.ctorParameters = function () { return [
         { type: Renderer2 }
     ]; };
+    SuiCalendarYearView = __decorate([
+        Component({
+            selector: "sui-calendar-year-view",
+            template: "\n<table class=\"ui celled center aligned unstackable table three column year\">\n<thead>\n    <tr>\n        <th colspan=\"3\">\n            <sui-calendar-view-title [ranges]=\"ranges\" (zoomOut)=\"zoomOut()\">\n                {{ pad(decadeStart) }} - {{ pad(decadeStart + 10) }}\n            </sui-calendar-view-title>\n        </th>\n    </tr>\n</thead>\n<tbody>\n    <tr *ngFor=\"let group of ranges.current.groupedItems\">\n        <td class=\"link\"\n            *ngFor=\"let item of group\"\n            [calendarItem]=\"item\"\n            (click)=\"setDate(item)\">{{ item.humanReadable }}\n        </td>\n    </tr>\n</tbody>\n</table>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2])
+    ], SuiCalendarYearView);
     return SuiCalendarYearView;
 }(CalendarView));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDatepickerModule = /** @class */ (function () {
     function SuiDatepickerModule() {
     }
-    SuiDatepickerModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        FormsModule,
-                        SuiPopupModule,
-                        SuiLocalizationModule,
-                        SuiUtilityModule
-                    ],
-                    declarations: [
-                        SuiCalendarItem,
-                        SuiCalendarViewTitle,
-                        SuiCalendarYearView,
-                        SuiCalendarMonthView,
-                        SuiCalendarDateView,
-                        SuiCalendarHourView,
-                        SuiCalendarMinuteView,
-                        SuiDatepicker,
-                        SuiDatepickerDirective,
-                        SuiDatepickerDirectiveValueAccessor,
-                        SuiDatepickerDirectiveValidator,
-                        SuiDatepickerInputDirective
-                    ],
-                    exports: [
-                        SuiDatepickerDirective,
-                        SuiDatepickerDirectiveValueAccessor,
-                        SuiDatepickerDirectiveValidator,
-                        SuiDatepickerInputDirective
-                    ],
-                    entryComponents: [
-                        SuiDatepicker
-                    ]
-                },] }
-    ];
+    SuiDatepickerModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                SuiPopupModule,
+                SuiLocalizationModule,
+                SuiUtilityModule
+            ],
+            declarations: [
+                SuiCalendarItem,
+                SuiCalendarViewTitle,
+                SuiCalendarYearView,
+                SuiCalendarMonthView,
+                SuiCalendarDateView,
+                SuiCalendarHourView,
+                SuiCalendarMinuteView,
+                SuiDatepicker,
+                SuiDatepickerDirective,
+                SuiDatepickerDirectiveValueAccessor,
+                SuiDatepickerDirectiveValidator,
+                SuiDatepickerInputDirective
+            ],
+            exports: [
+                SuiDatepickerDirective,
+                SuiDatepickerDirectiveValueAccessor,
+                SuiDatepickerDirectiveValidator,
+                SuiDatepickerInputDirective
+            ],
+            entryComponents: [
+                SuiDatepicker
+            ]
+        })
+    ], SuiDatepickerModule);
     return SuiDatepickerModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDimmer = /** @class */ (function (_super) {
     __extends(SuiDimmer, _super);
     function SuiDimmer(renderer, element, changeDetector) {
@@ -6699,18 +4386,11 @@ var SuiDimmer = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiDimmer.prototype, "isDimmed", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isDimmed;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
-            var /** @type {?} */ isDimmed = !!value;
+        set: function (value) {
+            var isDimmed = !!value;
             if (!this._transitionController) {
                 // Initialise transition functionality when first setting dimmed, to ensure initial state doesn't transition.
                 this._transitionController = new TransitionController(isDimmed, "block");
@@ -6726,102 +4406,87 @@ var SuiDimmer = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiDimmer.prototype.onClick = /**
-     * @return {?}
-     */
-    function () {
+    SuiDimmer.prototype.onClick = function () {
         if (this.isClickable) {
             this.isDimmed = false;
             this.isDimmedChange.emit(this.isDimmed);
         }
     };
-    SuiDimmer.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-dimmer",
-                    template: "\n<div [class.content]=\"wrapContent\">\n    <ng-content></ng-content>\n</div>\n",
-                    styles: ["\n:host.dimmer:not(.hidden) {\n    transition: none;\n    display: flex !important;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiDimmer.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: ChangeDetectorRef }
     ]; };
-    SuiDimmer.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.dimmer",] }],
-        isDimmed: [{ type: HostBinding, args: ["class.active",] }, { type: Input }],
-        isDimmedChange: [{ type: Output }],
-        isClickable: [{ type: Input }],
-        transition: [{ type: Input }],
-        transitionDuration: [{ type: Input }],
-        wrapContent: [{ type: Input }],
-        onClick: [{ type: HostListener, args: ["click",] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.dimmer"),
+        __metadata("design:type", Boolean)
+    ], SuiDimmer.prototype, "hasClasses", void 0);
+    __decorate([
+        HostBinding("class.active"),
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiDimmer.prototype, "isDimmed", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiDimmer.prototype, "isDimmedChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiDimmer.prototype, "isClickable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiDimmer.prototype, "transition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiDimmer.prototype, "transitionDuration", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiDimmer.prototype, "wrapContent", void 0);
+    __decorate([
+        HostListener("click"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiDimmer.prototype, "onClick", null);
+    SuiDimmer = __decorate([
+        Component({
+            selector: "sui-dimmer",
+            template: "\n<div [class.content]=\"wrapContent\">\n    <ng-content></ng-content>\n</div>\n",
+            styles: ["\n:host.dimmer:not(.hidden) {\n    transition: none;\n    display: flex !important;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef, ChangeDetectorRef])
+    ], SuiDimmer);
     return SuiDimmer;
 }(SuiTransition));
-function SuiDimmer_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDimmer.prototype.hasClasses;
-    /** @type {?} */
-    SuiDimmer.prototype._transitionController;
-    /** @type {?} */
-    SuiDimmer.prototype._isDimmed;
-    /** @type {?} */
-    SuiDimmer.prototype.isDimmedChange;
-    /** @type {?} */
-    SuiDimmer.prototype.isClickable;
-    /** @type {?} */
-    SuiDimmer.prototype.transition;
-    /** @type {?} */
-    SuiDimmer.prototype.transitionDuration;
-    /** @type {?} */
-    SuiDimmer.prototype.wrapContent;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDimmerModule = /** @class */ (function () {
     function SuiDimmerModule() {
     }
-    SuiDimmerModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        SuiTransitionModule
-                    ],
-                    declarations: [
-                        SuiDimmer
-                    ],
-                    exports: [
-                        SuiDimmer
-                    ]
-                },] }
-    ];
+    SuiDimmerModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                SuiTransitionModule
+            ],
+            declarations: [
+                SuiDimmer
+            ],
+            exports: [
+                SuiDimmer
+            ]
+        })
+    ], SuiDimmerModule);
     return SuiDimmerModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 // Creates essentially a 'string' enum.
-var /** @type {?} */ DropdownAutoCloseType = {
+var DropdownAutoCloseType = {
     ItemClick: "itemClick",
     OutsideClick: "outsideClick",
     Disabled: "disabled"
@@ -6836,26 +4501,13 @@ var DropdownService = /** @class */ (function () {
         this.children = [];
     }
     Object.defineProperty(DropdownService.prototype, "isNested", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return !!this.parent;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} isOpen
-     * @param {?=} reflectInParent
-     * @return {?}
-     */
-    DropdownService.prototype.setOpenState = /**
-     * @param {?} isOpen
-     * @param {?=} reflectInParent
-     * @return {?}
-     */
-    function (isOpen, reflectInParent) {
+    DropdownService.prototype.setOpenState = function (isOpen, reflectInParent) {
         var _this = this;
         if (reflectInParent === void 0) { reflectInParent = false; }
         if (this.isOpen !== isOpen && !this.isDisabled) {
@@ -6878,15 +4530,7 @@ var DropdownService = /** @class */ (function () {
             this.delay(function () { return _this.isOpenChange.emit(_this.isOpen); });
         }
     };
-    /**
-     * @param {?} isDisabled
-     * @return {?}
-     */
-    DropdownService.prototype.setDisabledState = /**
-     * @param {?} isDisabled
-     * @return {?}
-     */
-    function (isDisabled) {
+    DropdownService.prototype.setDisabledState = function (isDisabled) {
         if (this.isDisabled !== isDisabled) {
             if (!!isDisabled) {
                 // Close the dropdown as it is now disabled
@@ -6895,88 +4539,36 @@ var DropdownService = /** @class */ (function () {
             this.isDisabled = !!isDisabled;
         }
     };
-    /**
-     * @return {?}
-     */
-    DropdownService.prototype.toggleOpenState = /**
-     * @return {?}
-     */
-    function () {
+    DropdownService.prototype.toggleOpenState = function () {
         this.setOpenState(!this.isOpen);
     };
-    /**
-     * @param {?} child
-     * @return {?}
-     */
-    DropdownService.prototype.registerChild = /**
-     * @param {?} child
-     * @return {?}
-     */
-    function (child) {
+    // Registers a dropdown service as a child of this service.
+    DropdownService.prototype.registerChild = function (child) {
         if (!this.isChildRegistered(child)) {
             this.children.push(child);
             child.parent = this;
         }
     };
-    /**
-     * @param {?} child
-     * @return {?}
-     */
-    DropdownService.prototype.isChildRegistered = /**
-     * @param {?} child
-     * @return {?}
-     */
-    function (child) {
+    // Recursive method to check if the provided dropdown is already registered as a child, or is a descendant of a child.
+    DropdownService.prototype.isChildRegistered = function (child) {
         return this === child || !!this.children
             .find(function (c) { return !!c.children
             .find(function (cChild) { return cChild.isChildRegistered(child); }); });
     };
-    /**
-     * @return {?}
-     */
-    DropdownService.prototype.clearChildren = /**
-     * @return {?}
-     */
-    function () {
+    // Wipes any nested data, so all services can be cleanly reattached.
+    DropdownService.prototype.clearChildren = function () {
         this.children.forEach(function (c) {
             c.parent = undefined;
         });
         this.children = [];
     };
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
-    DropdownService.prototype.delay = /**
-     * @param {?} callback
-     * @return {?}
-     */
-    function (callback) {
+    // Method for delaying an event into the next tick, to avoid Angular "changed after checked" error.
+    DropdownService.prototype.delay = function (callback) {
         setTimeout(function () { return callback(); });
     };
     return DropdownService;
 }());
-function DropdownService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    DropdownService.prototype.isOpen;
-    /** @type {?} */
-    DropdownService.prototype.isAnimating;
-    /** @type {?} */
-    DropdownService.prototype.isOpenChange;
-    /** @type {?} */
-    DropdownService.prototype.isDisabled;
-    /** @type {?} */
-    DropdownService.prototype.autoCloseMode;
-    /** @type {?} */
-    DropdownService.prototype.parent;
-    /** @type {?} */
-    DropdownService.prototype.children;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDropdownMenuItem = /** @class */ (function () {
     function SuiDropdownMenuItem(_renderer, element) {
         this._renderer = _renderer;
@@ -6985,29 +4577,19 @@ var SuiDropdownMenuItem = /** @class */ (function () {
         this.selectedClass = "selected";
     }
     Object.defineProperty(SuiDropdownMenuItem.prototype, "isDisabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             // We must use nativeElement as Angular doesn't have a way of reading class information.
-            var /** @type {?} */ element = this.element.nativeElement;
+            var element = this.element.nativeElement;
             return element.classList.contains("disabled");
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDropdownMenuItem.prototype, "isSelected", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isSelected;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             // Renderer is used to enable a dynamic class name.
             if (value) {
                 this._renderer.addClass(this.element.nativeElement, this.selectedClass);
@@ -7020,53 +4602,33 @@ var SuiDropdownMenuItem = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDropdownMenuItem.prototype, "hasChildDropdown", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return !!this.childDropdownMenu;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiDropdownMenuItem.prototype.performClick = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdownMenuItem.prototype.performClick = function () {
         // Using directly because Renderer2 doesn't have invokeElementMethod method anymore.
         this.element.nativeElement.click();
     };
-    SuiDropdownMenuItem.decorators = [
-        { type: Directive, args: [{
-                    // We must attach to every '.item' as Angular doesn't support > selectors.
-                    selector: ".item"
-                },] }
-    ];
-    /** @nocollapse */
     SuiDropdownMenuItem.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef }
     ]; };
-    SuiDropdownMenuItem.propDecorators = {
-        childDropdownMenu: [{ type: ContentChild, args: [forwardRef(function () { return SuiDropdownMenu; }), { static: false },] }]
-    };
+    __decorate([
+        ContentChild(forwardRef(function () { return SuiDropdownMenu; })),
+        __metadata("design:type", SuiDropdownMenu)
+    ], SuiDropdownMenuItem.prototype, "childDropdownMenu", void 0);
+    SuiDropdownMenuItem = __decorate([
+        Directive({
+            // We must attach to every '.item' as Angular doesn't support > selectors.
+            selector: ".item"
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], SuiDropdownMenuItem);
     return SuiDropdownMenuItem;
 }());
-function SuiDropdownMenuItem_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDropdownMenuItem.prototype._isSelected;
-    /** @type {?} */
-    SuiDropdownMenuItem.prototype.selectedClass;
-    /** @type {?} */
-    SuiDropdownMenuItem.prototype.childDropdownMenu;
-    /** @type {?} */
-    SuiDropdownMenuItem.prototype._renderer;
-    /** @type {?} */
-    SuiDropdownMenuItem.prototype.element;
-}
 var SuiDropdownMenu = /** @class */ (function (_super) {
     __extends(SuiDropdownMenu, _super);
     function SuiDropdownMenu(renderer, element, changeDetector) {
@@ -7083,20 +4645,13 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiDropdownMenu.prototype, "service", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._service;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             var _this = this;
             this._service = value;
-            var /** @type {?} */ previousIsOpen = this._service.isOpen;
+            var previousIsOpen = this._service.isOpen;
             this._service.isOpenChange.subscribe(function (isOpen) {
                 if (isOpen !== previousIsOpen) {
                     // Only run transitions if the open state has changed.
@@ -7116,11 +4671,7 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(SuiDropdownMenu.prototype, "parentElement", {
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             var _this = this;
             this._parentKeyDownListener = this._renderer
                 .listen(value.nativeElement, "keydown", function (e) {
@@ -7131,49 +4682,32 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(SuiDropdownMenu.prototype, "items", {
-        set: /**
-         * @param {?} items
-         * @return {?}
-         */
-        function (items) {
+        set: function (items) {
             this._itemsQueryOverride = items;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDropdownMenu.prototype, "_itemsQuery", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._itemsQueryOverride || this._itemsQueryInternal;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDropdownMenu.prototype, "_items", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Get the list of items, ignoring those that are disabled.
+        get: function () {
             return this._itemsQuery.filter(function (i) { return !i.isDisabled; });
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDropdownMenu.prototype.onClick = function (e) {
         if (!e.eventHandled) {
             e.eventHandled = true;
             if (this._service.autoCloseMode === DropdownAutoCloseType.ItemClick) {
-                var /** @type {?} */ target = e.target;
+                var target = e.target;
                 if (this._element.nativeElement.contains(target.closest(".item")) && !/input|textarea/i.test(target.tagName)) {
                     // Once an item is selected, we can close the entire dropdown.
                     this._service.setOpenState(false, true);
@@ -7181,19 +4715,11 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
             }
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.onParentKeyDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDropdownMenu.prototype.onParentKeyDown = function (e) {
         // Only the root dropdown (i.e. not nested dropdowns) is responsible for keeping track of the currently selected item.
         if (this._service && this._service.isOpen && !this._service.isNested) {
             // Stop document events like scrolling while open.
-            var /** @type {?} */ target = e.target;
+            var target = e.target;
             if (!/input/i.test(target.tagName) &&
                 [KeyCode.Escape, KeyCode.Enter, KeyCode.Up, KeyCode.Down, KeyCode.Left, KeyCode.Right].find(function (kC) { return kC === e.keyCode; })) {
                 e.preventDefault();
@@ -7201,7 +4727,7 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
             // Gets the top selected item from the stack.
             var _a = __read(this.selectedItems.slice(-1), 1), selected = _a[0];
             // Keeping track of the menu containing the currently selected element allows us to easily determine its siblings.
-            var /** @type {?} */ selectedContainer = this;
+            var selectedContainer = this;
             if (this.selectedItems.length >= 2) {
                 var _b = __read(this.selectedItems.slice(-2), 1), selectedParent = _b[0];
                 selectedContainer = selectedParent.childDropdownMenu;
@@ -7251,13 +4777,7 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
             }
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.resetSelection = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdownMenu.prototype.resetSelection = function () {
         var _this = this;
         this.selectedItems = [];
         this._items.forEach(function (i) {
@@ -7271,24 +4791,15 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
             this.selectedItems.push(this._itemsQuery.first);
         }
     };
-    /**
-     * @param {?} selectedItem
-     * @param {?} keyCode
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.updateSelection = /**
-     * @param {?} selectedItem
-     * @param {?} keyCode
-     * @return {?}
-     */
-    function (selectedItem, keyCode) {
+    // Determines the item to next be selected, based on the keyboard input & the currently selected item.
+    SuiDropdownMenu.prototype.updateSelection = function (selectedItem, keyCode) {
         if (selectedItem) {
             // Remove the selected status on the previously selected item.
             selectedItem.isSelected = false;
         }
-        var /** @type {?} */ selectedIndex = this._items
+        var selectedIndex = this._items
             .findIndex(function (i) { return i === selectedItem; });
-        var /** @type {?} */ newSelection;
+        var newSelection;
         switch (keyCode) {
             case KeyCode.Enter:
             case KeyCode.Right:
@@ -7314,19 +4825,11 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
         }
         return newSelection;
     };
-    /**
-     * @param {?} item
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.scrollToItem = /**
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
-        var /** @type {?} */ menu = this._element.nativeElement;
-        var /** @type {?} */ selectedRect = item.element.nativeElement.getBoundingClientRect();
-        var /** @type {?} */ menuRect = menu.getBoundingClientRect();
-        var /** @type {?} */ scrollAmount = 0;
+    SuiDropdownMenu.prototype.scrollToItem = function (item) {
+        var menu = this._element.nativeElement;
+        var selectedRect = item.element.nativeElement.getBoundingClientRect();
+        var menuRect = menu.getBoundingClientRect();
+        var scrollAmount = 0;
         if (selectedRect.bottom > menuRect.bottom) {
             scrollAmount = selectedRect.bottom - menuRect.bottom;
         }
@@ -7335,84 +4838,58 @@ var SuiDropdownMenu = /** @class */ (function (_super) {
         }
         menu.scrollTop += Math.round(scrollAmount);
     };
-    /**
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdownMenu.prototype.ngAfterContentInit = function () {
         var _this = this;
         this.onItemsChanged();
         this._itemsQuery.changes.subscribe(function () { return _this.onItemsChanged(); });
     };
-    /**
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.onItemsChanged = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdownMenu.prototype.onItemsChanged = function () {
         // We use `_items` rather than `items` in case one or more have become disabled.
         this.resetSelection();
     };
-    /**
-     * @return {?}
-     */
-    SuiDropdownMenu.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdownMenu.prototype.ngOnDestroy = function () {
         this._parentKeyDownListener();
     };
-    SuiDropdownMenu.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiDropdownMenu]"
-                },] }
-    ];
-    /** @nocollapse */
     SuiDropdownMenu.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: ChangeDetectorRef }
     ]; };
-    SuiDropdownMenu.propDecorators = {
-        menuTransition: [{ type: Input }],
-        menuTransitionDuration: [{ type: Input }],
-        _itemsQueryInternal: [{ type: ContentChildren, args: [SuiDropdownMenuItem,] }],
-        menuAutoSelectFirst: [{ type: Input }],
-        menuSelectedItemClass: [{ type: Input }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiDropdownMenu.prototype, "menuTransition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiDropdownMenu.prototype, "menuTransitionDuration", void 0);
+    __decorate([
+        ContentChildren(SuiDropdownMenuItem),
+        __metadata("design:type", QueryList)
+    ], SuiDropdownMenu.prototype, "_itemsQueryInternal", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiDropdownMenu.prototype, "menuAutoSelectFirst", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiDropdownMenu.prototype, "menuSelectedItemClass", void 0);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiDropdownMenu.prototype, "onClick", null);
+    SuiDropdownMenu = __decorate([
+        Directive({
+            selector: "[suiDropdownMenu]"
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef, ChangeDetectorRef])
+    ], SuiDropdownMenu);
     return SuiDropdownMenu;
 }(SuiTransition));
-function SuiDropdownMenu_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDropdownMenu.prototype._service;
-    /** @type {?} */
-    SuiDropdownMenu.prototype._transitionController;
-    /** @type {?} */
-    SuiDropdownMenu.prototype.menuTransition;
-    /** @type {?} */
-    SuiDropdownMenu.prototype.menuTransitionDuration;
-    /** @type {?} */
-    SuiDropdownMenu.prototype._itemsQueryInternal;
-    /** @type {?} */
-    SuiDropdownMenu.prototype._itemsQueryOverride;
-    /** @type {?} */
-    SuiDropdownMenu.prototype.selectedItems;
-    /** @type {?} */
-    SuiDropdownMenu.prototype.menuAutoSelectFirst;
-    /** @type {?} */
-    SuiDropdownMenu.prototype.menuSelectedItemClass;
-    /** @type {?} */
-    SuiDropdownMenu.prototype._parentKeyDownListener;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDropdown = /** @class */ (function () {
     function SuiDropdown(_element) {
         var _this = this;
@@ -7424,11 +4901,9 @@ var SuiDropdown = /** @class */ (function () {
             }
         });
     }
+    SuiDropdown_1 = SuiDropdown;
     Object.defineProperty(SuiDropdown.prototype, "children", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
             // @ContentChildren includes the current element by default.
             return this._children.filter(function (c) { return c !== _this; });
@@ -7437,20 +4912,14 @@ var SuiDropdown = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDropdown.prototype, "isOpenChange", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.isOpenChange;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDropdown.prototype, "isActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             // This is to ensure nested dropdowns don't get made bold.
             return this.service.isOpen && !this.service.isNested;
         },
@@ -7458,17 +4927,10 @@ var SuiDropdown = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDropdown.prototype, "isOpen", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.isOpen;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             // If we are opening the dropdown, we want to always open its parents.
             this.service.setOpenState(value, !!value);
         },
@@ -7476,27 +4938,17 @@ var SuiDropdown = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDropdown.prototype, "isDisabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.isDisabled;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this.service.setDisabledState(value);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiDropdown.prototype, "tabIndex", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.isDisabled || this.service.isNested) {
                 // If disabled, remove from tabindex.
                 return undefined;
@@ -7512,29 +4964,16 @@ var SuiDropdown = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiDropdown.prototype, "autoClose", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.autoCloseMode;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this.service.autoCloseMode = value;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiDropdown.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdown.prototype.ngAfterContentInit = function () {
         var _this = this;
         if (!this._menu) {
             throw new Error("You must set [suiDropdownMenu] on the menu element.");
@@ -7545,55 +4984,25 @@ var SuiDropdown = /** @class */ (function () {
         this._children.changes
             .subscribe(function () { return _this.childrenUpdated(); });
     };
-    /**
-     * @return {?}
-     */
-    SuiDropdown.prototype.childrenUpdated = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdown.prototype.childrenUpdated = function () {
         var _this = this;
         // Reregister child dropdowns each time the menu content changes.
         this.children
             .map(function (c) { return c.service; })
             .forEach(function (s) { return _this.service.registerChild(s); });
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDropdown.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDropdown.prototype.onClick = function (e) {
         if (!e.eventHandled) {
             e.eventHandled = true;
             this.service.toggleOpenState();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDropdown.prototype.onFocusOut = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDropdown.prototype.onFocusOut = function (e) {
         if (!this._element.nativeElement.contains(e.relatedTarget)) {
             this.externallyClose();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiDropdown.prototype.onKeypress = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiDropdown.prototype.onKeypress = function (e) {
         // Block the keyboard event from being fired on parent dropdowns.
         if (!e.eventHandled) {
             if (e.keyCode === KeyCode.Enter) {
@@ -7602,106 +5011,113 @@ var SuiDropdown = /** @class */ (function () {
             }
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiDropdown.prototype.externallyClose = /**
-     * @return {?}
-     */
-    function () {
+    SuiDropdown.prototype.externallyClose = function () {
         if (this.service.autoCloseMode === DropdownAutoCloseType.ItemClick ||
             this.service.autoCloseMode === DropdownAutoCloseType.OutsideClick) {
             // No need to reflect in parent since they are also bound to document.
             this.service.setOpenState(false);
         }
     };
-    SuiDropdown.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiDropdown]"
-                },] }
-    ];
-    /** @nocollapse */
+    var SuiDropdown_1;
     SuiDropdown.ctorParameters = function () { return [
         { type: ElementRef }
     ]; };
-    SuiDropdown.propDecorators = {
-        _menu: [{ type: ContentChild, args: [SuiDropdownMenu, { static: false },] }],
-        _children: [{ type: ContentChildren, args: [SuiDropdown, { descendants: true },] }],
-        isOpenChange: [{ type: Output }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }],
-        isOpen: [{ type: Input }],
-        isDisabled: [{ type: HostBinding, args: ["class.disabled",] }, { type: Input }],
-        _tabIndex: [{ type: Input, args: ["tabindex",] }],
-        tabIndex: [{ type: HostBinding, args: ["attr.tabindex",] }],
-        autoClose: [{ type: Input }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout", ["$event"],] }],
-        onKeypress: [{ type: HostListener, args: ["keypress", ["$event"],] }]
-    };
+    __decorate([
+        ContentChild(SuiDropdownMenu),
+        __metadata("design:type", SuiDropdownMenu)
+    ], SuiDropdown.prototype, "_menu", void 0);
+    __decorate([
+        ContentChildren(SuiDropdown_1, { descendants: true }),
+        __metadata("design:type", QueryList)
+    ], SuiDropdown.prototype, "_children", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter),
+        __metadata("design:paramtypes", [])
+    ], SuiDropdown.prototype, "isOpenChange", null);
+    __decorate([
+        HostBinding("class.active"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiDropdown.prototype, "isActive", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiDropdown.prototype, "isOpen", null);
+    __decorate([
+        HostBinding("class.disabled"),
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiDropdown.prototype, "isDisabled", null);
+    __decorate([
+        Input("tabindex"),
+        __metadata("design:type", Number)
+    ], SuiDropdown.prototype, "_tabIndex", void 0);
+    __decorate([
+        HostBinding("attr.tabindex"),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [])
+    ], SuiDropdown.prototype, "tabIndex", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiDropdown.prototype, "autoClose", null);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [HandledEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiDropdown.prototype, "onClick", null);
+    __decorate([
+        HostListener("focusout", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiDropdown.prototype, "onFocusOut", null);
+    __decorate([
+        HostListener("keypress", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiDropdown.prototype, "onKeypress", null);
+    SuiDropdown = SuiDropdown_1 = __decorate([
+        Directive({
+            selector: "[suiDropdown]"
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], SuiDropdown);
     return SuiDropdown;
 }());
-function SuiDropdown_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiDropdown.prototype.service;
-    /** @type {?} */
-    SuiDropdown.prototype._menu;
-    /** @type {?} */
-    SuiDropdown.prototype._children;
-    /** @type {?} */
-    SuiDropdown.prototype._tabIndex;
-    /** @type {?} */
-    SuiDropdown.prototype._element;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiDropdownModule = /** @class */ (function () {
     function SuiDropdownModule() {
     }
-    SuiDropdownModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        SuiTransitionModule
-                    ],
-                    declarations: [
-                        SuiDropdown,
-                        SuiDropdownMenu,
-                        SuiDropdownMenuItem
-                    ],
-                    exports: [
-                        SuiDropdown,
-                        SuiDropdownMenu,
-                        SuiDropdownMenuItem
-                    ]
-                },] }
-    ];
+    SuiDropdownModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                SuiTransitionModule
+            ],
+            declarations: [
+                SuiDropdown,
+                SuiDropdownMenu,
+                SuiDropdownMenuItem
+            ],
+            exports: [
+                SuiDropdown,
+                SuiDropdownMenu,
+                SuiDropdownMenuItem
+            ]
+        })
+    ], SuiDropdownModule);
     return SuiDropdownModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T, U, V
- */
-var  /**
- * @template T, U, V
- */
-ActiveModal = /** @class */ (function () {
+// Helper class to support method chaining when calling `SuiModalService.open(...)`.
+var ActiveModal = /** @class */ (function () {
     function ActiveModal(instance, componentRef) {
         var _this = this;
         this._config = instance;
@@ -7710,97 +5126,47 @@ ActiveModal = /** @class */ (function () {
         this.component.onDismiss.subscribe(function () { return _this._componentRef.destroy(); });
     }
     Object.defineProperty(ActiveModal.prototype, "component", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Shorthand for direct access to the `SuiModal` instance.
+        get: function () {
             return this._componentRef.instance;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
-    ActiveModal.prototype.onApprove = /**
-     * @param {?} callback
-     * @return {?}
-     */
-    function (callback) {
+    // Registers a callback for when `onApprove` is fired.
+    ActiveModal.prototype.onApprove = function (callback) {
         this.component.onApprove.subscribe(function (res) { return callback(res); });
         return this;
     };
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
-    ActiveModal.prototype.onDeny = /**
-     * @param {?} callback
-     * @return {?}
-     */
-    function (callback) {
+    // Registers a callback for when `onDeny` is fired.
+    ActiveModal.prototype.onDeny = function (callback) {
         this.component.onDeny.subscribe(function (res) { return callback(res); });
         return this;
     };
-    /**
-     * @param {?} result
-     * @return {?}
-     */
-    ActiveModal.prototype.approve = /**
-     * @param {?} result
-     * @return {?}
-     */
-    function (result) {
+    // Fires the approve event of the modal manually.
+    ActiveModal.prototype.approve = function (result) {
         this.component.approve(result);
     };
-    /**
-     * @param {?} result
-     * @return {?}
-     */
-    ActiveModal.prototype.deny = /**
-     * @param {?} result
-     * @return {?}
-     */
-    function (result) {
+    // Fires the deny event of the modal manually.
+    ActiveModal.prototype.deny = function (result) {
         this.component.deny(result);
     };
-    /**
-     * @return {?}
-     */
-    ActiveModal.prototype.destroy = /**
-     * @return {?}
-     */
-    function () {
+    // Removes the modal component instantly, without transitions or firing any events.
+    ActiveModal.prototype.destroy = function () {
         this._componentRef.destroy();
     };
     return ActiveModal;
 }());
-function ActiveModal_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ActiveModal.prototype._config;
-    /** @type {?} */
-    ActiveModal.prototype._componentRef;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ ModalSize = {
+var ModalSize = {
     Mini: "mini",
     Tiny: "tiny",
     Small: "small",
     Normal: "normal",
     Large: "large"
 };
-/**
- * @template T, U, V
- */
-var  /**
- * @template T, U, V
- */
-ModalConfig = /** @class */ (function () {
+// Stores a basic set of configuration options for a modal.
+var ModalConfig = /** @class */ (function () {
     function ModalConfig(context, isClosable) {
         if (context === void 0) { context = undefined; }
         if (isClosable === void 0) { isClosable = true; }
@@ -7818,37 +5184,8 @@ ModalConfig = /** @class */ (function () {
     }
     return ModalConfig;
 }());
-function ModalConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ModalConfig.prototype.isClosable;
-    /** @type {?} */
-    ModalConfig.prototype.closeResult;
-    /** @type {?} */
-    ModalConfig.prototype.context;
-    /** @type {?} */
-    ModalConfig.prototype.size;
-    /** @type {?} */
-    ModalConfig.prototype.isFullScreen;
-    /** @type {?} */
-    ModalConfig.prototype.isBasic;
-    /** @type {?} */
-    ModalConfig.prototype.isInverted;
-    /** @type {?} */
-    ModalConfig.prototype.isCentered;
-    /** @type {?} */
-    ModalConfig.prototype.mustScroll;
-    /** @type {?} */
-    ModalConfig.prototype.transition;
-    /** @type {?} */
-    ModalConfig.prototype.transitionDuration;
-}
-/**
- * @template T, U, V
- */
-var  /**
- * @template T, U, V
- */
-TemplateModalConfig = /** @class */ (function (_super) {
+// Used when creating a modal from a `TemplateRef`.
+var TemplateModalConfig = /** @class */ (function (_super) {
     __extends(TemplateModalConfig, _super);
     function TemplateModalConfig(template, context, isClosable) {
         if (context === void 0) { context = undefined; }
@@ -7859,17 +5196,8 @@ TemplateModalConfig = /** @class */ (function (_super) {
     }
     return TemplateModalConfig;
 }(ModalConfig));
-function TemplateModalConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    TemplateModalConfig.prototype.template;
-}
-/**
- * @template T, U, V
- */
-var  /**
- * @template T, U, V
- */
-ComponentModalConfig = /** @class */ (function (_super) {
+// Used when creating a modal from an existing component.
+var ComponentModalConfig = /** @class */ (function (_super) {
     __extends(ComponentModalConfig, _super);
     function ComponentModalConfig(component, context, isClosable) {
         if (context === void 0) { context = undefined; }
@@ -7880,53 +5208,20 @@ ComponentModalConfig = /** @class */ (function (_super) {
     }
     return ComponentModalConfig;
 }(ModalConfig));
-function ComponentModalConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ComponentModalConfig.prototype.component;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T, U
- */
-var  /**
- * @template T, U
- */
-ModalControls = /** @class */ (function () {
+// Used to pass ability to control a modal to a component.
+var ModalControls = /** @class */ (function () {
     function ModalControls(approve, deny) {
         this.approve = approve;
         this.deny = deny;
     }
-    /**
-     * @param {?} result
-     * @return {?}
-     */
-    ModalControls.prototype.approve = /**
-     * @param {?} result
-     * @return {?}
-     */
-    function (result) { };
-    /**
-     * @param {?} result
-     * @return {?}
-     */
-    ModalControls.prototype.deny = /**
-     * @param {?} result
-     * @return {?}
-     */
-    function (result) { };
+    // Use method here rather than arrow variables to make intellisense show they're methods.
+    ModalControls.prototype.approve = function (result) { };
+    ModalControls.prototype.deny = function (result) { };
     return ModalControls;
 }());
-/**
- * @template T, U, V
- */
-var  /**
- * @template T, U, V
- */
-Modal = /** @class */ (function (_super) {
+// Injected into custom modal components, to allow control of the modal, and access to a context object.
+var Modal = /** @class */ (function (_super) {
     __extends(Modal, _super);
     function Modal(controls, context) {
         var _this = 
@@ -7938,24 +5233,10 @@ Modal = /** @class */ (function (_super) {
     }
     return Modal;
 }(ModalControls));
-function Modal_tsickle_Closure_declarations() {
-    /** @type {?} */
-    Modal.prototype.context;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @abstract
- * @template T, U, V
- */
-var  /**
- * @abstract
- * @template T, U, V
- */
-ModalTemplate = /** @class */ (function (_super) {
+// Shorthand for a modal template. Sets up ability to write: `<ng-template let-context let-modal="modal">...</ng-template>`
+// We use an abstract class as ModalTemplate tends to be used within decorated properties, which means it needs to exist!
+var ModalTemplate = /** @class */ (function (_super) {
     __extends(ModalTemplate, _super);
     function ModalTemplate() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -7963,13 +5244,6 @@ ModalTemplate = /** @class */ (function (_super) {
     return ModalTemplate;
 }(TemplateRef));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T, U
- */
 var SuiModal = /** @class */ (function () {
     function SuiModal(_renderer, _element, _componentFactory) {
         var _this = this;
@@ -7977,7 +5251,7 @@ var SuiModal = /** @class */ (function () {
         this._element = _element;
         this._componentFactory = _componentFactory;
         // Initialise with default configuration from `ModalConfig` (to avoid writing defaults twice).
-        var /** @type {?} */ config = new ModalConfig();
+        var config = new ModalConfig();
         this.loadConfig(config);
         // Event emitters for each of the possible modal outcomes.
         this.onApprove = new EventEmitter();
@@ -7991,20 +5265,14 @@ var SuiModal = /** @class */ (function () {
         this.transitionController = new TransitionController(false);
     }
     Object.defineProperty(SuiModal.prototype, "approve", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.controls.approve;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiModal.prototype, "deny", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.controls.deny;
         },
         enumerable: true,
@@ -8012,34 +5280,20 @@ var SuiModal = /** @class */ (function () {
     });
     Object.defineProperty(SuiModal.prototype, "isFullScreen", {
         // Value to deny with when closing via `isClosable`.
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isFullScreen;
         },
-        set: /**
-         * @param {?} fullScreen
-         * @return {?}
-         */
-        function (fullScreen) {
+        set: function (fullScreen) {
             this._isFullScreen = Util.DOM.parseBooleanAttribute(fullScreen);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiModal.prototype, "mustScroll", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._mustScroll;
         },
-        set: /**
-         * @param {?} mustScroll
-         * @return {?}
-         */
-        function (mustScroll) {
+        set: function (mustScroll) {
             this._mustScroll = mustScroll;
             // 'Cache' value in _mustAlwaysScroll so that if `true`, _mustScroll isn't ever auto-updated.
             this._mustAlwaysScroll = mustScroll;
@@ -8049,28 +5303,18 @@ var SuiModal = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiModal.prototype, "isInverted", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isInverted;
         },
-        set: /**
-         * @param {?} inverted
-         * @return {?}
-         */
-        function (inverted) {
+        set: function (inverted) {
             this._isInverted = Util.DOM.parseBooleanAttribute(inverted);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiModal.prototype, "dynamicClasses", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            var /** @type {?} */ classes = {};
+        get: function () {
+            var classes = {};
             if (this.size) {
                 classes[this.size] = true;
             }
@@ -8079,38 +5323,26 @@ var SuiModal = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiModal.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiModal.prototype.ngOnInit = function () {
         var _this = this;
         // Transition the modal to be visible.
         this.transitionController.animate(new Transition(this.transition, this.transitionDuration, TransitionDirection.In));
         setTimeout(function () { return _this.dimBackground = true; });
     };
-    /**
-     * @return {?}
-     */
-    SuiModal.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiModal.prototype.ngAfterViewInit = function () {
         var _this = this;
         // Move the modal to the document body to ensure correct scrolling.
-        this._originalContainer = this._element.nativeElement.parentNode; /** @type {?} */
-        ((document.querySelector("body"))).appendChild(this._element.nativeElement);
+        this._originalContainer = this._element.nativeElement.parentNode;
+        document.querySelector("body").appendChild(this._element.nativeElement);
         // Remove the #templateSibling element from the DOM to fix bottom border styles.
-        var /** @type {?} */ templateElement = this.templateSibling.element.nativeElement;
+        var templateElement = this.templateSibling.element.nativeElement;
         if (templateElement.parentNode) {
             templateElement.parentNode.removeChild(templateElement);
         }
-        var /** @type {?} */ element = this._modalElement.nativeElement;
+        var element = this._modalElement.nativeElement;
         setTimeout(function () { return _this.updateScroll(); });
         // Focus any element with [autofocus] attribute.
-        var /** @type {?} */ autoFocus = element.querySelector("[autofocus]");
+        var autoFocus = element.querySelector("[autofocus]");
         if (autoFocus) {
             // Autofocus after the browser has had time to process other event handlers.
             setTimeout(function () { return autoFocus.focus(); }, 10);
@@ -8118,17 +5350,8 @@ var SuiModal = /** @class */ (function () {
             setTimeout(function () { return autoFocus.focus(); }, this.transitionDuration);
         }
     };
-    /**
-     * @template V
-     * @param {?} config
-     * @return {?}
-     */
-    SuiModal.prototype.loadConfig = /**
-     * @template V
-     * @param {?} config
-     * @return {?}
-     */
-    function (config) {
+    // Updates the modal with the specified configuration.
+    SuiModal.prototype.loadConfig = function (config) {
         this.isClosable = config.isClosable;
         this.closeResult = config.closeResult;
         this.size = config.size;
@@ -8140,15 +5363,8 @@ var SuiModal = /** @class */ (function () {
         this.transition = config.transition;
         this.transitionDuration = config.transitionDuration;
     };
-    /**
-     * @param {?=} callback
-     * @return {?}
-     */
-    SuiModal.prototype.dismiss = /**
-     * @param {?=} callback
-     * @return {?}
-     */
-    function (callback) {
+    // Dismisses the modal with a transition, firing the callback after the modal has finished transitioning.
+    SuiModal.prototype.dismiss = function (callback) {
         var _this = this;
         if (callback === void 0) { callback = function () { }; }
         // If we aren't currently closing,
@@ -8167,179 +5383,139 @@ var SuiModal = /** @class */ (function () {
             }));
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiModal.prototype.close = /**
-     * @return {?}
-     */
-    function () {
+    // Closes the modal with a 'deny' outcome, using the specified default reason.
+    SuiModal.prototype.close = function () {
         if (this.isClosable) {
             // If we are allowed to close, fire the deny result with the default value.
             this.deny(this.closeResult);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiModal.prototype.updateScroll = /**
-     * @return {?}
-     */
-    function () {
+    // Decides whether the modal needs to reposition to allow scrolling.
+    SuiModal.prototype.updateScroll = function () {
         // _mustAlwaysScroll works by stopping _mustScroll from being automatically updated, so it stays `true`.
         if (!this._mustAlwaysScroll && this._modalElement) {
             // Semantic UI modal margin and dimmer padding are 1rem, which is relative to the global font size, so for compatibility:
-            var /** @type {?} */ fontSize = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue("font-size"));
-            var /** @type {?} */ margin = fontSize * 2;
-            var /** @type {?} */ element = this._modalElement.nativeElement;
+            var fontSize = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue("font-size"));
+            var margin = fontSize * 2;
+            var element = this._modalElement.nativeElement;
             // The modal must scroll if the window height is smaller than the modal height + both margins.
             this._mustScroll = window.innerHeight < element.clientHeight + margin * 2;
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiModal.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiModal.prototype.onClick = function (e) {
         // Makes sense here, as the modal shouldn't be attached to any DOM element.
         e.stopPropagation();
     };
     // Document listener is fine here because nobody will have enough modals open.
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiModal.prototype.onDocumentKeyUp = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiModal.prototype.onDocumentKeyUp = function (e) {
         if (e.keyCode === KeyCode.Escape) {
             // Close automatically covers case of `!isClosable`, so check not needed.
             this.close();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiModal.prototype.onDocumentResize = /**
-     * @return {?}
-     */
-    function () {
+    SuiModal.prototype.onDocumentResize = function () {
         this.updateScroll();
     };
-    SuiModal.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-modal",
-                    template: "\n<!-- Page dimmer for modal background. -->\n<sui-modal-dimmer [ngClass]=\"{'top aligned': !isCentered}\" \n                  [class.inverted]=\"isInverted\"\n                  [(isDimmed)]=\"dimBackground\"\n                  [transitionDuration]=\"transitionDuration\"\n                  (click)=\"close()\">\n\n    <!-- Modal component, with transition component attached -->\n    <div class=\"ui modal\"\n         [suiTransition]=\"transitionController\"\n         [class.active]=\"transitionController?.isVisible\"\n         [class.fullscreen]=\"isFullScreen\"\n         [class.basic]=\"isBasic\"\n         [class.scrolling]=\"mustScroll\"\n         [class.inverted]=\"isInverted\"\n         [ngClass]=\"dynamicClasses\"\n         (click)=\"onClick($event)\"\n         #modal>\n\n        <!-- Configurable close icon -->\n        <i class=\"close icon\" *ngIf=\"isClosable\" (click)=\"close()\"></i>\n        <!-- <ng-content> so that <sui-modal> can be used as a normal component. -->\n        <ng-content></ng-content>\n        <!-- @ViewChild reference so we can insert elements beside this div. -->\n        <div #templateSibling></div>\n    </div>\n</sui-modal-dimmer>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
     SuiModal.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: SuiComponentFactory }
     ]; };
-    SuiModal.propDecorators = {
-        isClosable: [{ type: Input }],
-        closeResult: [{ type: Input }],
-        onApprove: [{ type: Output, args: ["approved",] }],
-        onDeny: [{ type: Output, args: ["denied",] }],
-        onDismiss: [{ type: Output, args: ["dismissed",] }],
-        _modalElement: [{ type: ViewChild, args: ["modal", { static: true },] }],
-        size: [{ type: Input }],
-        isCentered: [{ type: Input }],
-        isFullScreen: [{ type: Input }],
-        isBasic: [{ type: Input }],
-        mustScroll: [{ type: Input }],
-        isInverted: [{ type: Input }],
-        transition: [{ type: Input }],
-        transitionDuration: [{ type: Input }],
-        templateSibling: [{ type: ViewChild, args: ["templateSibling", { read: ViewContainerRef, static: true },] }],
-        onDocumentKeyUp: [{ type: HostListener, args: ["document:keyup", ["$event"],] }],
-        onDocumentResize: [{ type: HostListener, args: ["window:resize",] }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiModal.prototype, "isClosable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SuiModal.prototype, "closeResult", void 0);
+    __decorate([
+        Output("approved"),
+        __metadata("design:type", EventEmitter)
+    ], SuiModal.prototype, "onApprove", void 0);
+    __decorate([
+        Output("denied"),
+        __metadata("design:type", EventEmitter)
+    ], SuiModal.prototype, "onDeny", void 0);
+    __decorate([
+        Output("dismissed"),
+        __metadata("design:type", EventEmitter)
+    ], SuiModal.prototype, "onDismiss", void 0);
+    __decorate([
+        ViewChild("modal", { static: true }),
+        __metadata("design:type", ElementRef)
+    ], SuiModal.prototype, "_modalElement", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiModal.prototype, "size", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiModal.prototype, "isCentered", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiModal.prototype, "isFullScreen", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiModal.prototype, "isBasic", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiModal.prototype, "mustScroll", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiModal.prototype, "isInverted", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiModal.prototype, "transition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiModal.prototype, "transitionDuration", void 0);
+    __decorate([
+        ViewChild("templateSibling", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiModal.prototype, "templateSibling", void 0);
+    __decorate([
+        HostListener("document:keyup", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiModal.prototype, "onDocumentKeyUp", null);
+    __decorate([
+        HostListener("window:resize"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiModal.prototype, "onDocumentResize", null);
+    SuiModal = __decorate([
+        Component({
+            selector: "sui-modal",
+            template: "\n<!-- Page dimmer for modal background. -->\n<sui-modal-dimmer [ngClass]=\"{'top aligned': !isCentered}\" \n                  [class.inverted]=\"isInverted\"\n                  [(isDimmed)]=\"dimBackground\"\n                  [transitionDuration]=\"transitionDuration\"\n                  (click)=\"close()\">\n\n    <!-- Modal component, with transition component attached -->\n    <div class=\"ui modal\"\n         [suiTransition]=\"transitionController\"\n         [class.active]=\"transitionController?.isVisible\"\n         [class.fullscreen]=\"isFullScreen\"\n         [class.basic]=\"isBasic\"\n         [class.scrolling]=\"mustScroll\"\n         [class.inverted]=\"isInverted\"\n         [ngClass]=\"dynamicClasses\"\n         (click)=\"onClick($event)\"\n         #modal>\n\n        <!-- Configurable close icon -->\n        <i class=\"close icon\" *ngIf=\"isClosable\" (click)=\"close()\"></i>\n        <!-- <ng-content> so that <sui-modal> can be used as a normal component. -->\n        <ng-content></ng-content>\n        <!-- @ViewChild reference so we can insert elements beside this div. -->\n        <div #templateSibling></div>\n    </div>\n</sui-modal-dimmer>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef, SuiComponentFactory])
+    ], SuiModal);
     return SuiModal;
 }());
-function SuiModal_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiModal.prototype.isClosable;
-    /** @type {?} */
-    SuiModal.prototype.closeResult;
-    /** @type {?} */
-    SuiModal.prototype.controls;
-    /** @type {?} */
-    SuiModal.prototype.onApprove;
-    /** @type {?} */
-    SuiModal.prototype.onDeny;
-    /** @type {?} */
-    SuiModal.prototype.onDismiss;
-    /** @type {?} */
-    SuiModal.prototype._modalElement;
-    /** @type {?} */
-    SuiModal.prototype.size;
-    /** @type {?} */
-    SuiModal.prototype.isCentered;
-    /** @type {?} */
-    SuiModal.prototype._isFullScreen;
-    /** @type {?} */
-    SuiModal.prototype.isBasic;
-    /** @type {?} */
-    SuiModal.prototype._mustScroll;
-    /** @type {?} */
-    SuiModal.prototype._mustAlwaysScroll;
-    /** @type {?} */
-    SuiModal.prototype._isInverted;
-    /** @type {?} */
-    SuiModal.prototype.transitionController;
-    /** @type {?} */
-    SuiModal.prototype.transition;
-    /** @type {?} */
-    SuiModal.prototype.transitionDuration;
-    /** @type {?} */
-    SuiModal.prototype.dimBackground;
-    /** @type {?} */
-    SuiModal.prototype._isClosing;
-    /** @type {?} */
-    SuiModal.prototype.templateSibling;
-    /** @type {?} */
-    SuiModal.prototype._originalContainer;
-    /** @type {?} */
-    SuiModal.prototype._renderer;
-    /** @type {?} */
-    SuiModal.prototype._element;
-    /** @type {?} */
-    SuiModal.prototype._componentFactory;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiModalService = /** @class */ (function () {
     function SuiModalService(_componentFactory) {
         this._componentFactory = _componentFactory;
     }
-    /**
-     * @template T, U, V
-     * @param {?} modal
-     * @return {?}
-     */
-    SuiModalService.prototype.open = /**
-     * @template T, U, V
-     * @param {?} modal
-     * @return {?}
-     */
-    function (modal) {
+    SuiModalService.prototype.open = function (modal) {
         // Generate the modal component to be shown.
-        var /** @type {?} */ componentRef = this._componentFactory.createComponent(SuiModal);
+        var componentRef = this._componentFactory.createComponent(SuiModal);
         // Shorthand for the created modal component instance.
-        var /** @type {?} */ modalComponent = componentRef.instance;
+        var modalComponent = componentRef.instance;
         if (modal instanceof TemplateModalConfig) {
             // Inject the template into the view.
             this._componentFactory.createView(modalComponent.templateSibling, modal.template, {
@@ -8352,7 +5528,7 @@ var SuiModalService = /** @class */ (function () {
         else if (modal instanceof ComponentModalConfig) {
             // Generate the component to be used as the modal content,
             // injecting an instance of `Modal` to be used in the component constructor.
-            var /** @type {?} */ contentComponentRef = this._componentFactory.createComponent(modal.component, [
+            var contentComponentRef = this._componentFactory.createComponent(modal.component, [
                 {
                     provide: Modal,
                     useValue: new Modal(modalComponent.controls, modal.context)
@@ -8361,7 +5537,7 @@ var SuiModalService = /** @class */ (function () {
             // Insert the new component into the content of the modal.
             this._componentFactory.attachToView(contentComponentRef, modalComponent.templateSibling);
             // Shorthand for access to the content component's DOM element.
-            var /** @type {?} */ contentElement = contentComponentRef.location.nativeElement;
+            var contentElement = contentComponentRef.location.nativeElement;
             // Move all of the DOM elements inside the component to the main modal element.
             // This is done so that CSS classes apply correctly. It does stop any custom styles from working however,
             // so other ways may have to be investigated.
@@ -8379,24 +5555,16 @@ var SuiModalService = /** @class */ (function () {
         // Return an instance of an `ActiveModal`, so the user can control the new modal.
         return new ActiveModal(modal, componentRef);
     };
-    SuiModalService.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
     SuiModalService.ctorParameters = function () { return [
         { type: SuiComponentFactory }
     ]; };
+    SuiModalService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [SuiComponentFactory])
+    ], SuiModalService);
     return SuiModalService;
 }());
-function SuiModalService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiModalService.prototype._componentFactory;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiModalDimmer = /** @class */ (function (_super) {
     __extends(SuiModalDimmer, _super);
     function SuiModalDimmer(renderer, element, changeDetector) {
@@ -8405,81 +5573,56 @@ var SuiModalDimmer = /** @class */ (function (_super) {
         _this.isClickable = false;
         return _this;
     }
-    SuiModalDimmer.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-modal-dimmer",
-                    template: "<ng-content></ng-content>",
-                    styles: ["\n        :host.ui.dimmer:not(.hidden) {\n            transition: none;\n            overflow-y: auto;\n            display: flex !important; \n        }\n    "]
-                }] }
-    ];
-    /** @nocollapse */
     SuiModalDimmer.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: ChangeDetectorRef }
     ]; };
-    SuiModalDimmer.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.page",] }, { type: HostBinding, args: ["class.modals",] }]
-    };
+    __decorate([
+        HostBinding("class.page"),
+        HostBinding("class.modals"),
+        __metadata("design:type", Boolean)
+    ], SuiModalDimmer.prototype, "hasClasses", void 0);
+    SuiModalDimmer = __decorate([
+        Component({
+            selector: "sui-modal-dimmer",
+            template: "<ng-content></ng-content>",
+            styles: ["\n        :host.ui.dimmer:not(.hidden) {\n            transition: none;\n            overflow-y: auto;\n            display: flex !important; \n        }\n    "]
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef, ChangeDetectorRef])
+    ], SuiModalDimmer);
     return SuiModalDimmer;
 }(SuiDimmer));
-function SuiModalDimmer_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiModalDimmer.prototype.hasClasses;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiModalModule = /** @class */ (function () {
     function SuiModalModule() {
     }
-    SuiModalModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        SuiDimmerModule,
-                        SuiTransitionModule,
-                        SuiUtilityModule
-                    ],
-                    declarations: [
-                        SuiModal,
-                        SuiModalDimmer
-                    ],
-                    exports: [
-                        SuiModal
-                    ],
-                    providers: [
-                        SuiModalService
-                    ],
-                    entryComponents: [
-                        SuiModal
-                    ]
-                },] }
-    ];
+    SuiModalModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                SuiDimmerModule,
+                SuiTransitionModule,
+                SuiUtilityModule
+            ],
+            declarations: [
+                SuiModal,
+                SuiModalDimmer
+            ],
+            exports: [
+                SuiModal
+            ],
+            providers: [
+                SuiModalService
+            ],
+            entryComponents: [
+                SuiModal
+            ]
+        })
+    ], SuiModalModule);
     return SuiModalModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiProgress = /** @class */ (function () {
     function SuiProgress() {
         this.value = 0;
@@ -8491,19 +5634,12 @@ var SuiProgress = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiProgress.prototype, "value", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._value;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             // Convert value from string to number where necessary.
-            var /** @type {?} */ converted = +value;
+            var converted = +value;
             if (Number.isNaN(converted)) {
                 return;
             }
@@ -8513,19 +5649,12 @@ var SuiProgress = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiProgress.prototype, "maximum", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._maximum;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             // Convert value from string to number where necessary.
-            var /** @type {?} */ converted = +value;
+            var converted = +value;
             if (Number.isNaN(converted)) {
                 return;
             }
@@ -8535,19 +5664,12 @@ var SuiProgress = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiProgress.prototype, "precision", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._precision;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             // Convert value from string to number where necessary.
-            var /** @type {?} */ converted = +value;
+            var converted = +value;
             if (Number.isNaN(converted)) {
                 return;
             }
@@ -8557,33 +5679,23 @@ var SuiProgress = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiProgress.prototype, "reachedMaximum", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._overrideSuccess || ((this.value >= this.maximum) && this.autoSuccess);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiProgress.prototype, "percentage", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            var /** @type {?} */ boundedValue = Math.min(Math.max(this.value, 0), this.maximum);
-            var /** @type {?} */ percentage = (boundedValue / this.maximum) * 100;
+        get: function () {
+            var boundedValue = Math.min(Math.max(this.value, 0), this.maximum);
+            var percentage = (boundedValue / this.maximum) * 100;
             return percentage.toFixed(this.precision);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiProgress.prototype, "classValue", {
-        set: /**
-         * @param {?} classes
-         * @return {?}
-         */
-        function (classes) {
+        set: function (classes) {
             if (classes.includes("attached") || classes.includes("tiny")) {
                 this.showProgress = false;
             }
@@ -8594,82 +5706,79 @@ var SuiProgress = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    SuiProgress.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-progress",
-                    template: "\n<div class=\"bar\" [style.width.%]=\"percentage\">\n    <div class=\"progress\" *ngIf=\"showProgress\">{{ percentage }}%</div>\n</div>\n<div class=\"label\">\n    <ng-content></ng-content>\n</div>\n",
-                    styles: ["\n.bar {\n    transition-duration: 300ms !important;\n    z-index: 1;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiProgress.ctorParameters = function () { return []; };
-    SuiProgress.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.progress",] }],
-        autoSuccess: [{ type: Input }],
-        showProgress: [{ type: Input }],
-        value: [{ type: Input }],
-        maximum: [{ type: Input }],
-        precision: [{ type: Input }],
-        reachedMaximum: [{ type: HostBinding, args: ["class.success",] }],
-        percentage: [{ type: HostBinding, args: ["attr.data-percent",] }],
-        classValue: [{ type: Input, args: ["class",] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.progress"),
+        __metadata("design:type", Boolean)
+    ], SuiProgress.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiProgress.prototype, "autoSuccess", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiProgress.prototype, "showProgress", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiProgress.prototype, "value", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiProgress.prototype, "maximum", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiProgress.prototype, "precision", null);
+    __decorate([
+        HostBinding("class.success"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiProgress.prototype, "reachedMaximum", null);
+    __decorate([
+        HostBinding("attr.data-percent"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], SuiProgress.prototype, "percentage", null);
+    __decorate([
+        Input("class"),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiProgress.prototype, "classValue", null);
+    SuiProgress = __decorate([
+        Component({
+            selector: "sui-progress",
+            template: "\n<div class=\"bar\" [style.width.%]=\"percentage\">\n    <div class=\"progress\" *ngIf=\"showProgress\">{{ percentage }}%</div>\n</div>\n<div class=\"label\">\n    <ng-content></ng-content>\n</div>\n",
+            styles: ["\n.bar {\n    transition-duration: 300ms !important;\n    z-index: 1;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiProgress);
     return SuiProgress;
 }());
-function SuiProgress_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiProgress.prototype.hasClasses;
-    /** @type {?} */
-    SuiProgress.prototype._value;
-    /** @type {?} */
-    SuiProgress.prototype._maximum;
-    /** @type {?} */
-    SuiProgress.prototype._precision;
-    /** @type {?} */
-    SuiProgress.prototype._overrideSuccess;
-    /** @type {?} */
-    SuiProgress.prototype.autoSuccess;
-    /** @type {?} */
-    SuiProgress.prototype.showProgress;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiProgressModule = /** @class */ (function () {
     function SuiProgressModule() {
     }
-    SuiProgressModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule
-                    ],
-                    declarations: [
-                        SuiProgress
-                    ],
-                    exports: [
-                        SuiProgress
-                    ]
-                },] }
-    ];
+    SuiProgressModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule
+            ],
+            declarations: [
+                SuiProgress
+            ],
+            exports: [
+                SuiProgress
+            ]
+        })
+    ], SuiProgressModule);
     return SuiProgressModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiRating = /** @class */ (function () {
     function SuiRating() {
         this.hoveredIndex = -1;
@@ -8680,174 +5789,118 @@ var SuiRating = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiRating.prototype, "maximum", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._maximum;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this._maximum = +value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiRating.prototype, "icons", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             // tslint:disable-next-line:prefer-literal
             return new Array(this.maximum);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} i
-     * @return {?}
-     */
-    SuiRating.prototype.onClick = /**
-     * @param {?} i
-     * @return {?}
-     */
-    function (i) {
+    SuiRating.prototype.onClick = function (i) {
         if (!this.isReadonly) {
             this.value = i + 1;
             this.valueChange.emit(this.value);
         }
     };
-    /**
-     * @param {?} i
-     * @return {?}
-     */
-    SuiRating.prototype.onMouseover = /**
-     * @param {?} i
-     * @return {?}
-     */
-    function (i) {
+    SuiRating.prototype.onMouseover = function (i) {
         this.hoveredIndex = i;
     };
-    /**
-     * @return {?}
-     */
-    SuiRating.prototype.onMouseout = /**
-     * @return {?}
-     */
-    function () {
+    SuiRating.prototype.onMouseout = function () {
         this.hoveredIndex = -1;
     };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiRating.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiRating.prototype.writeValue = function (value) {
         this.value = value;
     };
-    SuiRating.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-rating",
-                    template: "\n<i class=\"icon\"\n   *ngFor=\"let icon of icons; let i = index\"\n   (mouseover)=\"onMouseover(i)\"\n   (click)=\"onClick(i)\"\n   [class.selected]=\"hoveredIndex >= i && !isReadonly\"\n   [class.active]=\"value > i\">\n</i>\n",
-                    styles: ["\n:host.read-only .icon {\n    cursor: auto\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiRating.ctorParameters = function () { return []; };
-    SuiRating.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.rating",] }],
-        valueChange: [{ type: Output }],
-        maximum: [{ type: Input }],
-        isReadonly: [{ type: HostBinding, args: ["class.read-only",] }, { type: Input }],
-        onMouseout: [{ type: HostListener, args: ["mouseout",] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.rating"),
+        __metadata("design:type", Boolean)
+    ], SuiRating.prototype, "hasClasses", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiRating.prototype, "valueChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiRating.prototype, "maximum", null);
+    __decorate([
+        HostBinding("class.read-only"),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiRating.prototype, "isReadonly", void 0);
+    __decorate([
+        HostListener("mouseout"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiRating.prototype, "onMouseout", null);
+    SuiRating = __decorate([
+        Component({
+            selector: "sui-rating",
+            template: "\n<i class=\"icon\"\n   *ngFor=\"let icon of icons; let i = index\"\n   (mouseover)=\"onMouseover(i)\"\n   (click)=\"onClick(i)\"\n   [class.selected]=\"hoveredIndex >= i && !isReadonly\"\n   [class.active]=\"value > i\">\n</i>\n",
+            styles: ["\n:host.read-only .icon {\n    cursor: auto\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiRating);
     return SuiRating;
 }());
-function SuiRating_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiRating.prototype.hasClasses;
-    /** @type {?} */
-    SuiRating.prototype.value;
-    /** @type {?} */
-    SuiRating.prototype.valueChange;
-    /** @type {?} */
-    SuiRating.prototype._maximum;
-    /** @type {?} */
-    SuiRating.prototype.isReadonly;
-    /** @type {?} */
-    SuiRating.prototype.hoveredIndex;
-}
 var SuiRatingValueAccessor = /** @class */ (function (_super) {
     __extends(SuiRatingValueAccessor, _super);
     function SuiRatingValueAccessor(host) {
         return _super.call(this, host) || this;
     }
-    SuiRatingValueAccessor.decorators = [
-        { type: Directive, args: [{
-                    selector: "sui-rating",
-                    host: { "(valueChange)": "onChange($event)" },
-                    providers: [customValueAccessorFactory(SuiRatingValueAccessor)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiRatingValueAccessor_1 = SuiRatingValueAccessor;
+    var SuiRatingValueAccessor_1;
     SuiRatingValueAccessor.ctorParameters = function () { return [
         { type: SuiRating }
     ]; };
+    SuiRatingValueAccessor = SuiRatingValueAccessor_1 = __decorate([
+        Directive({
+            selector: "sui-rating",
+            host: { "(valueChange)": "onChange($event)" },
+            providers: [customValueAccessorFactory(SuiRatingValueAccessor_1)]
+        }),
+        __metadata("design:paramtypes", [SuiRating])
+    ], SuiRatingValueAccessor);
     return SuiRatingValueAccessor;
 }(CustomValueAccessor));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiRatingModule = /** @class */ (function () {
     function SuiRatingModule() {
     }
-    SuiRatingModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        FormsModule,
-                        CommonModule
-                    ],
-                    declarations: [
-                        SuiRating,
-                        SuiRatingValueAccessor
-                    ],
-                    exports: [
-                        SuiRating,
-                        SuiRatingValueAccessor
-                    ]
-                },] }
-    ];
+    SuiRatingModule = __decorate([
+        NgModule({
+            imports: [
+                FormsModule,
+                CommonModule
+            ],
+            declarations: [
+                SuiRating,
+                SuiRatingValueAccessor
+            ],
+            exports: [
+                SuiRating,
+                SuiRatingValueAccessor
+            ]
+        })
+    ], SuiRatingModule);
     return SuiRatingModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 // See https://github.com/Microsoft/TypeScript/issues/13449.
-var /** @type {?} */ templateRef$2 = TemplateRef;
-/**
- * @template T
- */
+var templateRef$2 = TemplateRef;
 var SuiSearchResult = /** @class */ (function () {
     function SuiSearchResult(componentFactory) {
         this.componentFactory = componentFactory;
@@ -8856,17 +5909,10 @@ var SuiSearchResult = /** @class */ (function () {
         this.formatter = function (value) { return ""; };
     }
     Object.defineProperty(SuiSearchResult.prototype, "template", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._template;
         },
-        set: /**
-         * @param {?} template
-         * @return {?}
-         */
-        function (template) {
+        set: function (template) {
             this._template = template;
             if (this.template) {
                 this.componentFactory.createView(this.templateSibling, this.template, {
@@ -8878,71 +5924,52 @@ var SuiSearchResult = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    SuiSearchResult.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-search-result",
-                    template: "\n<span #templateSibling></span>\n<span *ngIf=\"!template\" [innerHTML]=\"formatter(value, query)\"></span>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiSearchResult.ctorParameters = function () { return [
         { type: SuiComponentFactory }
     ]; };
-    SuiSearchResult.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.result",] }],
-        value: [{ type: Input }],
-        query: [{ type: Input }],
-        formatter: [{ type: Input }],
-        template: [{ type: Input }],
-        templateSibling: [{ type: ViewChild, args: ["templateSibling", { read: ViewContainerRef, static: true },] }]
-    };
+    __decorate([
+        HostBinding("class.result"),
+        __metadata("design:type", Boolean)
+    ], SuiSearchResult.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SuiSearchResult.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiSearchResult.prototype, "query", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function)
+    ], SuiSearchResult.prototype, "formatter", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef),
+        __metadata("design:paramtypes", [TemplateRef])
+    ], SuiSearchResult.prototype, "template", null);
+    __decorate([
+        ViewChild("templateSibling", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiSearchResult.prototype, "templateSibling", void 0);
+    SuiSearchResult = __decorate([
+        Component({
+            selector: "sui-search-result",
+            template: "\n<span #templateSibling></span>\n<span *ngIf=\"!template\" [innerHTML]=\"formatter(value, query)\"></span>\n"
+        }),
+        __metadata("design:paramtypes", [SuiComponentFactory])
+    ], SuiSearchResult);
     return SuiSearchResult;
 }());
-function SuiSearchResult_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSearchResult.prototype.hasClasses;
-    /** @type {?} */
-    SuiSearchResult.prototype.value;
-    /** @type {?} */
-    SuiSearchResult.prototype.query;
-    /** @type {?} */
-    SuiSearchResult.prototype.formatter;
-    /** @type {?} */
-    SuiSearchResult.prototype._template;
-    /** @type {?} */
-    SuiSearchResult.prototype.templateSibling;
-    /** @type {?} */
-    SuiSearchResult.prototype.componentFactory;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- * @template T
- */
-function ICachedArray() { }
-function ICachedArray_tsickle_Closure_declarations() {
-    /* TODO: handle strange member:
-    [query:string]:T[];
-    */
-}
-/**
- * @template T, U
- */
-var  /**
- * @template T, U
- */
-SearchService = /** @class */ (function () {
+var SearchService = /** @class */ (function () {
     function SearchService(allowEmptyQuery) {
         var _this = this;
         if (allowEmptyQuery === void 0) { allowEmptyQuery = false; }
         this._options = [];
         this.optionsFilter = function (os, q) {
             // Convert the query string to a RegExp.
-            var /** @type {?} */ regex = _this.toRegex(_this._query);
+            var regex = _this.toRegex(_this._query);
             if (regex instanceof RegExp) {
                 // Only update the results if the query was valid regex.
                 // This avoids the results suddenly becoming empty if an invalid regex string is inputted.
@@ -8961,17 +5988,10 @@ SearchService = /** @class */ (function () {
         this.reset();
     }
     Object.defineProperty(SearchService.prototype, "options", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._options;
         },
-        set: /**
-         * @param {?} options
-         * @return {?}
-         */
-        function (options) {
+        set: function (options) {
             this._options = options || [];
             // We cannot use both local & remote options simultaneously.
             this._optionsLookup = undefined;
@@ -8982,17 +6002,10 @@ SearchService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SearchService.prototype, "optionsLookup", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._optionsLookup;
         },
-        set: /**
-         * @param {?} lookupFn
-         * @return {?}
-         */
-        function (lookupFn) {
+        set: function (lookupFn) {
             this._optionsLookup = lookupFn;
             // As before, cannot use local & remote options simultaneously.
             this._options = [];
@@ -9002,27 +6015,17 @@ SearchService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SearchService.prototype, "hasItemLookup", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return !!this.optionsLookup && this.optionsLookup.length === 2;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SearchService.prototype, "optionsField", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._optionsField;
         },
-        set: /**
-         * @param {?} field
-         * @return {?}
-         */
-        function (field) {
+        set: function (field) {
             this._optionsField = field;
             // We need to reset otherwise we would now be showing invalid search results.
             this.reset();
@@ -9031,46 +6034,28 @@ SearchService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SearchService.prototype, "results", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._results;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SearchService.prototype, "query", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._query;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SearchService.prototype, "isSearching", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isSearching;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} query
-     * @param {?=} callback
-     * @return {?}
-     */
-    SearchService.prototype.updateQueryDelayed = /**
-     * @param {?} query
-     * @param {?=} callback
-     * @return {?}
-     */
-    function (query, callback) {
+    // Updates the query after the specified search delay.
+    SearchService.prototype.updateQueryDelayed = function (query, callback) {
         var _this = this;
         if (callback === void 0) { callback = function () { }; }
         this._query = query;
@@ -9079,17 +6064,8 @@ SearchService = /** @class */ (function () {
             _this.updateQuery(query, callback);
         }, this.searchDelay);
     };
-    /**
-     * @param {?} query
-     * @param {?=} callback
-     * @return {?}
-     */
-    SearchService.prototype.updateQuery = /**
-     * @param {?} query
-     * @param {?=} callback
-     * @return {?}
-     */
-    function (query, callback) {
+    // Updates the current search query.
+    SearchService.prototype.updateQuery = function (query, callback) {
         var _this = this;
         if (callback === void 0) { callback = function () { }; }
         this._query = query;
@@ -9106,7 +6082,7 @@ SearchService = /** @class */ (function () {
         if (this._optionsLookup) {
             this._isSearching = true;
             // Call the options lookup without a this context.
-            var /** @type {?} */ queryLookup = this._optionsLookup.call(undefined, this._query);
+            var queryLookup = this._optionsLookup.call(undefined, this._query);
             queryLookup
                 .then(function (results) {
                 _this._isSearching = false;
@@ -9120,78 +6096,43 @@ SearchService = /** @class */ (function () {
             });
             return;
         }
-        var /** @type {?} */ filtered = this.optionsFilter.call(undefined, this._options, this._query);
+        var filtered = this.optionsFilter.call(undefined, this._options, this._query);
         if (filtered) {
             this.updateResults(filtered);
         }
         return callback();
     };
-    /**
-     * @param {?} results
-     * @return {?}
-     */
-    SearchService.prototype.updateResults = /**
-     * @param {?} results
-     * @return {?}
-     */
-    function (results) {
+    // Updates & caches the new set of results.
+    SearchService.prototype.updateResults = function (results) {
         this._resultsCache[this._query] = results;
         this._results = results;
     };
-    /**
-     * @param {?} initial
-     * @return {?}
-     */
-    SearchService.prototype.initialLookup = /**
-     * @param {?} initial
-     * @return {?}
-     */
-    function (initial) {
+    // tslint:disable-next-line:promise-function-async
+    SearchService.prototype.initialLookup = function (initial) {
         if (initial instanceof Array) {
             return (this._optionsLookup)(undefined, initial);
         }
         return this._optionsLookup(undefined, initial);
     };
-    /**
-     * @param {?} query
-     * @return {?}
-     */
-    SearchService.prototype.toRegex = /**
-     * @param {?} query
-     * @return {?}
-     */
-    function (query) {
+    // Converts a query string to regex without throwing an error.
+    SearchService.prototype.toRegex = function (query) {
         try {
             return new RegExp(query, "i");
         }
-        catch (/** @type {?} */ e) {
+        catch (e) {
             return query;
         }
     };
-    /**
-     * @param {?} text
-     * @param {?} query
-     * @return {?}
-     */
-    SearchService.prototype.highlightMatches = /**
-     * @param {?} text
-     * @param {?} query
-     * @return {?}
-     */
-    function (text, query) {
-        var /** @type {?} */ regex = this.toRegex(query);
+    // Generates HTML for highlighted match text.
+    SearchService.prototype.highlightMatches = function (text, query) {
+        var regex = this.toRegex(query);
         if (regex instanceof RegExp) {
             return text.replace(regex, function (match) { return "<b>" + match + "</b>"; });
         }
         return text;
     };
-    /**
-     * @return {?}
-     */
-    SearchService.prototype.reset = /**
-     * @return {?}
-     */
-    function () {
+    // Resets the search back to a pristine state.
+    SearchService.prototype.reset = function () {
         this._results = [];
         this._resultsCache = {};
         this._isSearching = false;
@@ -9199,47 +6140,7 @@ SearchService = /** @class */ (function () {
     };
     return SearchService;
 }());
-function SearchService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SearchService.prototype._options;
-    /** @type {?} */
-    SearchService.prototype._optionsLookup;
-    /** @type {?} */
-    SearchService.prototype._optionsField;
-    /** @type {?} */
-    SearchService.prototype.optionsFilter;
-    /** @type {?} */
-    SearchService.prototype._results;
-    /** @type {?} */
-    SearchService.prototype._resultsCache;
-    /** @type {?} */
-    SearchService.prototype._query;
-    /** @type {?} */
-    SearchService.prototype.allowEmptyQuery;
-    /** @type {?} */
-    SearchService.prototype.searchDelay;
-    /** @type {?} */
-    SearchService.prototype._searchDelayTimeout;
-    /** @type {?} */
-    SearchService.prototype._isSearching;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- * @template T
- */
-function IResultContext() { }
-function IResultContext_tsickle_Closure_declarations() {
-    /** @type {?} */
-    IResultContext.prototype.query;
-}
-/**
- * @template T
- */
 var SuiSearch = /** @class */ (function () {
     function SuiSearch(_element, renderer, _localizationService) {
         var _this = this;
@@ -9260,10 +6161,7 @@ var SuiSearch = /** @class */ (function () {
         this.transitionDuration = 200;
     }
     Object.defineProperty(SuiSearch.prototype, "isActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.dropdownService.isOpen;
         },
         enumerable: true,
@@ -9271,44 +6169,27 @@ var SuiSearch = /** @class */ (function () {
     });
     Object.defineProperty(SuiSearch.prototype, "placeholder", {
         // Gets & sets the placeholder text displayed inside the text input.
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._placeholder || this.localeValues.placeholder;
         },
-        set: /**
-         * @param {?} placeholder
-         * @return {?}
-         */
-        function (placeholder) {
+        set: function (placeholder) {
             this._placeholder = placeholder;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "localeValues", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._localizationService.override(this._localeValues, this.localeOverrides);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "query", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.searchService.query;
         },
-        set: /**
-         * @param {?} query
-         * @return {?}
-         */
-        function (query) {
+        set: function (query) {
             var _this = this;
             this.selectedResult = undefined;
             // Initialise a delayed search.
@@ -9321,11 +6202,7 @@ var SuiSearch = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "options", {
-        set: /**
-         * @param {?} options
-         * @return {?}
-         */
-        function (options) {
+        set: function (options) {
             if (options) {
                 this.searchService.options = options;
             }
@@ -9334,11 +6211,7 @@ var SuiSearch = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "optionsFilter", {
-        set: /**
-         * @param {?} filter
-         * @return {?}
-         */
-        function (filter) {
+        set: function (filter) {
             if (filter) {
                 this.searchService.optionsFilter = filter;
             }
@@ -9347,32 +6220,21 @@ var SuiSearch = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "optionsLookup", {
-        set: /**
-         * @param {?} lookupFn
-         * @return {?}
-         */
-        function (lookupFn) {
+        set: function (lookupFn) {
             this.searchService.optionsLookup = lookupFn;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "optionsField", {
-        set: /**
-         * @param {?} field
-         * @return {?}
-         */
-        function (field) {
+        set: function (field) {
             this.searchService.optionsField = field;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "resultFormatter", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
             if (this._resultFormatter) {
                 return this._resultFormatter;
@@ -9384,74 +6246,41 @@ var SuiSearch = /** @class */ (function () {
                 return function (r, q) { return _this.searchService.highlightMatches(_this.readValue(r), q); };
             }
         },
-        set: /**
-         * @param {?} formatter
-         * @return {?}
-         */
-        function (formatter) {
+        set: function (formatter) {
             this._resultFormatter = formatter;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "searchDelay", {
-        set: /**
-         * @param {?} delay
-         * @return {?}
-         */
-        function (delay) {
+        set: function (delay) {
             this.searchService.searchDelay = delay;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "isSearching", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.searchService.isSearching;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSearch.prototype, "results", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.searchService.results.slice(0, this.maxResults);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiSearch.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiSearch.prototype.ngAfterViewInit = function () {
         this._menu.service = this.dropdownService;
     };
-    /**
-     * @return {?}
-     */
-    SuiSearch.prototype.onLocaleUpdate = /**
-     * @return {?}
-     */
-    function () {
+    SuiSearch.prototype.onLocaleUpdate = function () {
         this._localeValues = this._localizationService.get().search;
     };
-    /**
-     * @param {?} result
-     * @return {?}
-     */
-    SuiSearch.prototype.select = /**
-     * @param {?} result
-     * @return {?}
-     */
-    function (result) {
+    // Selects a result.
+    SuiSearch.prototype.select = function (result) {
         this.onResultSelected.emit(result);
         this.dropdownService.setOpenState(false);
         if (this.retainSelectedResult) {
@@ -9462,189 +6291,168 @@ var SuiSearch = /** @class */ (function () {
             this.searchService.updateQuery("");
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSearch.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSearch.prototype.onClick = function (e) {
         this.open();
     };
-    /**
-     * @return {?}
-     */
-    SuiSearch.prototype.onFocusIn = /**
-     * @return {?}
-     */
-    function () {
+    SuiSearch.prototype.onFocusIn = function () {
         if (!this.dropdownService.isAnimating) {
             this.open();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiSearch.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    SuiSearch.prototype.open = function () {
         if (this.searchService.query.length > 0) {
             // Only open on click when there is a query entered.
             this.dropdownService.setOpenState(true);
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSearch.prototype.onFocusOut = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSearch.prototype.onFocusOut = function (e) {
         console.log(e);
         if (!this._element.nativeElement.contains(e.relatedTarget)) {
             this.dropdownService.setOpenState(false);
         }
     };
-    /**
-     * @param {?} object
-     * @return {?}
-     */
-    SuiSearch.prototype.readValue = /**
-     * @param {?} object
-     * @return {?}
-     */
-    function (object) {
+    // Reads the specified field from an item.
+    SuiSearch.prototype.readValue = function (object) {
         return Util.Object.readValue(object, this.searchService.optionsField);
     };
-    SuiSearch.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-search",
-                    template: "\n<div class=\"ui input\" [class.icon]=\"hasIcon\" (click)=\"onClick($event)\">\n    <input class=\"prompt\" type=\"text\" [attr.placeholder]=\"placeholder\" autocomplete=\"off\" [(ngModel)]=\"query\">\n    <i *ngIf=\"hasIcon\" class=\"search icon\"></i>\n</div>\n<div class=\"results\"\n     suiDropdownMenu\n     [menuTransition]=\"transition\"\n     [menuTransitionDuration]=\"transitionDuration\"\n     menuSelectedItemClass=\"active\">\n\n    <sui-search-result *ngFor=\"let r of results\"\n                       class=\"item\"\n                       [value]=\"r\"\n                       [query]=\"query\"\n                       [formatter]=\"resultFormatter\"\n                       [template]=\"resultTemplate\"\n                       (click)=\"select(r)\"></sui-search-result>\n\n    <div *ngIf=\"results.length == 0\" class=\"message empty\">\n        <div class=\"header\">{{ localeValues.noResults.header }}</div>\n        <div class=\"description\">{{ localeValues.noResults.message }}</div>\n    </div>\n</div>\n",
-                    styles: ["\n/* Ensures results div has margin. */\n:host {\n    display: inline-block;\n    outline: 0;\n}\n\n/* Fixes positioning when results are pushed above the search. */\n.results {\n    margin-bottom: .5em;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiSearch.ctorParameters = function () { return [
         { type: ElementRef },
         { type: Renderer2 },
         { type: SuiLocalizationService }
     ]; };
-    SuiSearch.propDecorators = {
-        _menu: [{ type: ViewChild, args: [SuiDropdownMenu, { static: true },] }],
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.search",] }],
-        tabindex: [{ type: HostBinding, args: ["attr.tabindex",] }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }],
-        hasIcon: [{ type: Input }],
-        placeholder: [{ type: Input }],
-        options: [{ type: Input }],
-        optionsFilter: [{ type: Input }],
-        optionsLookup: [{ type: Input }],
-        optionsField: [{ type: Input }],
-        resultFormatter: [{ type: Input }],
-        resultTemplate: [{ type: Input }],
-        retainSelectedResult: [{ type: Input }],
-        searchDelay: [{ type: Input }],
-        isSearching: [{ type: HostBinding, args: ["class.loading",] }],
-        maxResults: [{ type: Input }],
-        onResultSelected: [{ type: Output, args: ["resultSelected",] }],
-        transition: [{ type: Input }],
-        transitionDuration: [{ type: Input }],
-        onFocusIn: [{ type: HostListener, args: ["focusin",] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout", ["$event"],] }]
-    };
+    __decorate([
+        ViewChild(SuiDropdownMenu, { static: true }),
+        __metadata("design:type", SuiDropdownMenu)
+    ], SuiSearch.prototype, "_menu", void 0);
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.search"),
+        __metadata("design:type", Boolean)
+    ], SuiSearch.prototype, "hasClasses", void 0);
+    __decorate([
+        HostBinding("attr.tabindex"),
+        __metadata("design:type", Number)
+    ], SuiSearch.prototype, "tabindex", void 0);
+    __decorate([
+        HostBinding("class.active"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSearch.prototype, "isActive", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiSearch.prototype, "hasIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiSearch.prototype, "placeholder", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], SuiSearch.prototype, "options", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], SuiSearch.prototype, "optionsFilter", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], SuiSearch.prototype, "optionsLookup", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiSearch.prototype, "optionsField", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], SuiSearch.prototype, "resultFormatter", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef)
+    ], SuiSearch.prototype, "resultTemplate", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiSearch.prototype, "retainSelectedResult", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiSearch.prototype, "searchDelay", null);
+    __decorate([
+        HostBinding("class.loading"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSearch.prototype, "isSearching", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiSearch.prototype, "maxResults", void 0);
+    __decorate([
+        Output("resultSelected"),
+        __metadata("design:type", EventEmitter)
+    ], SuiSearch.prototype, "onResultSelected", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiSearch.prototype, "transition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiSearch.prototype, "transitionDuration", void 0);
+    __decorate([
+        HostListener("focusin"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiSearch.prototype, "onFocusIn", null);
+    __decorate([
+        HostListener("focusout", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiSearch.prototype, "onFocusOut", null);
+    SuiSearch = __decorate([
+        Component({
+            selector: "sui-search",
+            template: "\n<div class=\"ui input\" [class.icon]=\"hasIcon\" (click)=\"onClick($event)\">\n    <input class=\"prompt\" type=\"text\" [attr.placeholder]=\"placeholder\" autocomplete=\"off\" [(ngModel)]=\"query\">\n    <i *ngIf=\"hasIcon\" class=\"search icon\"></i>\n</div>\n<div class=\"results\"\n     suiDropdownMenu\n     [menuTransition]=\"transition\"\n     [menuTransitionDuration]=\"transitionDuration\"\n     menuSelectedItemClass=\"active\">\n\n    <sui-search-result *ngFor=\"let r of results\"\n                       class=\"item\"\n                       [value]=\"r\"\n                       [query]=\"query\"\n                       [formatter]=\"resultFormatter\"\n                       [template]=\"resultTemplate\"\n                       (click)=\"select(r)\"></sui-search-result>\n\n    <div *ngIf=\"results.length == 0\" class=\"message empty\">\n        <div class=\"header\">{{ localeValues.noResults.header }}</div>\n        <div class=\"description\">{{ localeValues.noResults.message }}</div>\n    </div>\n</div>\n",
+            styles: ["\n/* Ensures results div has margin. */\n:host {\n    display: inline-block;\n    outline: 0;\n}\n\n/* Fixes positioning when results are pushed above the search. */\n.results {\n    margin-bottom: .5em;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [ElementRef, Renderer2, SuiLocalizationService])
+    ], SuiSearch);
     return SuiSearch;
 }());
-function SuiSearch_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSearch.prototype.dropdownService;
-    /** @type {?} */
-    SuiSearch.prototype.searchService;
-    /** @type {?} */
-    SuiSearch.prototype._menu;
-    /** @type {?} */
-    SuiSearch.prototype.hasClasses;
-    /** @type {?} */
-    SuiSearch.prototype.tabindex;
-    /** @type {?} */
-    SuiSearch.prototype.hasIcon;
-    /** @type {?} */
-    SuiSearch.prototype._placeholder;
-    /** @type {?} */
-    SuiSearch.prototype._localeValues;
-    /** @type {?} */
-    SuiSearch.prototype.localeOverrides;
-    /** @type {?} */
-    SuiSearch.prototype._resultFormatter;
-    /** @type {?} */
-    SuiSearch.prototype.resultTemplate;
-    /** @type {?} */
-    SuiSearch.prototype.retainSelectedResult;
-    /** @type {?} */
-    SuiSearch.prototype.maxResults;
-    /** @type {?} */
-    SuiSearch.prototype.selectedResult;
-    /** @type {?} */
-    SuiSearch.prototype.onResultSelected;
-    /** @type {?} */
-    SuiSearch.prototype.transition;
-    /** @type {?} */
-    SuiSearch.prototype.transitionDuration;
-    /** @type {?} */
-    SuiSearch.prototype._element;
-    /** @type {?} */
-    SuiSearch.prototype._localizationService;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSearchModule = /** @class */ (function () {
     function SuiSearchModule() {
     }
-    SuiSearchModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        FormsModule,
-                        SuiDropdownModule,
-                        SuiLocalizationModule,
-                        SuiUtilityModule
-                    ],
-                    declarations: [
-                        SuiSearch,
-                        SuiSearchResult
-                    ],
-                    exports: [
-                        SuiSearch
-                    ]
-                },] }
-    ];
+    SuiSearchModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                SuiDropdownModule,
+                SuiLocalizationModule,
+                SuiUtilityModule
+            ],
+            declarations: [
+                SuiSearch,
+                SuiSearchResult
+            ],
+            exports: [
+                SuiSearch
+            ]
+        })
+    ], SuiSearchModule);
     return SuiSearchModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T
- */
 var SuiSelectOption = /** @class */ (function (_super) {
     __extends(SuiSelectOption, _super);
     function SuiSelectOption(renderer, element, changeDetector) {
@@ -9662,11 +6470,7 @@ var SuiSelectOption = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiSelectOption.prototype, "formatter", {
-        set: /**
-         * @param {?} formatter
-         * @return {?}
-         */
-        function (formatter) {
+        set: function (formatter) {
             if (!this.usesTemplate) {
                 this.renderedText = formatter(this.value);
             }
@@ -9677,64 +6481,52 @@ var SuiSelectOption = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectOption.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectOption.prototype.onClick = function (e) {
         var _this = this;
         e.eventHandled = true;
         setTimeout(function () { return _this.onSelected.emit(_this.value); });
     };
-    SuiSelectOption.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-select-option",
-                    template: "\n<span #templateSibling></span>\n<span [innerHTML]=\"renderedText\"></span>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiSelectOption.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: ChangeDetectorRef }
     ]; };
-    SuiSelectOption.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.item",] }],
-        value: [{ type: Input }],
-        onSelected: [{ type: Output }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }],
-        templateSibling: [{ type: ViewChild, args: ["templateSibling", { read: ViewContainerRef, static: true },] }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }]
-    };
+    __decorate([
+        HostBinding("class.item"),
+        __metadata("design:type", Boolean)
+    ], SuiSelectOption.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SuiSelectOption.prototype, "value", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiSelectOption.prototype, "onSelected", void 0);
+    __decorate([
+        HostBinding("class.active"),
+        __metadata("design:type", Boolean)
+    ], SuiSelectOption.prototype, "isActive", void 0);
+    __decorate([
+        ViewChild("templateSibling", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiSelectOption.prototype, "templateSibling", void 0);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [HandledEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectOption.prototype, "onClick", null);
+    SuiSelectOption = __decorate([
+        Component({
+            selector: "sui-select-option",
+            template: "\n<span #templateSibling></span>\n<span [innerHTML]=\"renderedText\"></span>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef, ChangeDetectorRef])
+    ], SuiSelectOption);
     return SuiSelectOption;
 }(SuiDropdownMenuItem));
-function SuiSelectOption_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSelectOption.prototype.hasClasses;
-    /** @type {?} */
-    SuiSelectOption.prototype.value;
-    /** @type {?} */
-    SuiSelectOption.prototype.onSelected;
-    /** @type {?} */
-    SuiSelectOption.prototype.isActive;
-    /** @type {?} */
-    SuiSelectOption.prototype.renderedText;
-    /** @type {?} */
-    SuiSelectOption.prototype.usesTemplate;
-    /** @type {?} */
-    SuiSelectOption.prototype.templateSibling;
-    /** @type {?} */
-    SuiSelectOption.prototype.changeDetector;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSelectSearch = /** @class */ (function () {
     function SuiSelectSearch(_renderer, _element) {
         this._renderer = _renderer;
@@ -9745,100 +6537,59 @@ var SuiSelectSearch = /** @class */ (function () {
         this.autoComplete = "off";
     }
     Object.defineProperty(SuiSelectSearch.prototype, "query", {
-        set: /**
-         * @param {?} query
-         * @return {?}
-         */
-        function (query) {
+        set: function (query) {
             this._renderer.setProperty(this._element.nativeElement, "value", query);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} query
-     * @return {?}
-     */
-    SuiSelectSearch.prototype.updateQuery = /**
-     * @param {?} query
-     * @return {?}
-     */
-    function (query) {
+    SuiSelectSearch.prototype.updateQuery = function (query) {
         this.onQueryUpdated.emit(query);
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectSearch.prototype.onKeyDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectSearch.prototype.onKeyDown = function (e) {
         this.onQueryKeyDown.emit(e);
     };
-    /**
-     * @return {?}
-     */
-    SuiSelectSearch.prototype.focus = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectSearch.prototype.focus = function () {
         var _this = this;
         // Slightly delay to support in menu search.
         this._element.nativeElement.focus();
         setTimeout(function () { return _this._element.nativeElement.focus(); });
     };
-    SuiSelectSearch.decorators = [
-        { type: Directive, args: [{
-                    selector: "input[suiSelectSearch]"
-                },] }
-    ];
-    /** @nocollapse */
     SuiSelectSearch.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef }
     ]; };
-    SuiSelectSearch.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.search",] }],
-        autoComplete: [{ type: HostBinding, args: ["attr.autocomplete",] }],
-        updateQuery: [{ type: HostListener, args: ["input", ["$event.target.value"],] }],
-        onKeyDown: [{ type: HostListener, args: ["keydown", ["$event"],] }]
-    };
+    __decorate([
+        HostBinding("class.search"),
+        __metadata("design:type", Boolean)
+    ], SuiSelectSearch.prototype, "hasClasses", void 0);
+    __decorate([
+        HostBinding("attr.autocomplete"),
+        __metadata("design:type", String)
+    ], SuiSelectSearch.prototype, "autoComplete", void 0);
+    __decorate([
+        HostListener("input", ["$event.target.value"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectSearch.prototype, "updateQuery", null);
+    __decorate([
+        HostListener("keydown", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectSearch.prototype, "onKeyDown", null);
+    SuiSelectSearch = __decorate([
+        Directive({
+            selector: "input[suiSelectSearch]"
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], SuiSelectSearch);
     return SuiSelectSearch;
 }());
-function SuiSelectSearch_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSelectSearch.prototype.hasClasses;
-    /** @type {?} */
-    SuiSelectSearch.prototype.autoComplete;
-    /** @type {?} */
-    SuiSelectSearch.prototype.onQueryUpdated;
-    /** @type {?} */
-    SuiSelectSearch.prototype.onQueryKeyDown;
-    /** @type {?} */
-    SuiSelectSearch.prototype._renderer;
-    /** @type {?} */
-    SuiSelectSearch.prototype._element;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- * @template T
- */
-function IOptionContext() { }
-function IOptionContext_tsickle_Closure_declarations() {
-    /** @type {?|undefined} */
-    IOptionContext.prototype.query;
-}
-/**
- * @abstract
- * @template T, U
- */
+// We use generic type T to specify the type of the options we are working with,
+// and U to specify the type of the property of the option used as the value.
 var SuiSelectBase = /** @class */ (function () {
     function SuiSelectBase(_element, _localizationService) {
         var _this = this;
@@ -9858,60 +6609,42 @@ var SuiSelectBase = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiSelectBase.prototype, "isActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.dropdownService.isOpen;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "isVisible", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._menu.isVisible;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "hasSearchClass", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.isSearchable && !this.isSearchExternal;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "isSearching", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.searchService.isSearching;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "searchInput", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._manualSearch || this._internalSearch;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "tabindex", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.isDisabled) {
                 // If disabled, remove from tabindex.
                 return -1;
@@ -9935,28 +6668,17 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "isDisabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.dropdownService.isDisabled;
         },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this.dropdownService.isDisabled = !!value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "options", {
-        set: /**
-         * @param {?} options
-         * @return {?}
-         */
-        function (options) {
+        set: function (options) {
             if (options) {
                 this.searchService.options = options;
                 this.optionsUpdateHook();
@@ -9966,11 +6688,7 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "optionsFilter", {
-        set: /**
-         * @param {?} filter
-         * @return {?}
-         */
-        function (filter) {
+        set: function (filter) {
             if (filter) {
                 this.searchService.optionsFilter = filter;
                 this.optionsUpdateHook();
@@ -9980,11 +6698,7 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "optionsLookup", {
-        set: /**
-         * @param {?} lookup
-         * @return {?}
-         */
-        function (lookup) {
+        set: function (lookup) {
             if (lookup) {
                 this.searchService.optionsLookup = lookup;
                 this.optionsUpdateHook();
@@ -9994,37 +6708,25 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "filteredOptions", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.searchService.results;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "availableOptions", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Deprecated
+        get: function () {
             return this.filteredOptions;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "query", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.isSearchable ? this.searchService.query : undefined;
         },
-        set: /**
-         * @param {?} query
-         * @return {?}
-         */
-        function (query) {
+        set: function (query) {
             var _this = this;
             if (query != undefined) {
                 this.queryUpdateHook();
@@ -10040,31 +6742,21 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "labelField", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.searchService.optionsField;
         },
-        set: /**
-         * @param {?} field
-         * @return {?}
-         */
-        function (field) {
+        set: function (field) {
             this.searchService.optionsField = field;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "labelGetter", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
             // Helper function to retrieve the label from an item.
             return function (obj) {
-                var /** @type {?} */ label = Util.Object.readValue(obj, _this.labelField);
+                var label = Util.Object.readValue(obj, _this.labelField);
                 if (label != undefined) {
                     return label.toString();
                 }
@@ -10075,10 +6767,7 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "valueGetter", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
             // Helper function to retrieve the value from an item.
             return function (obj) { return Util.Object.readValue(obj, _this.valueField); };
@@ -10087,13 +6776,10 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "configuredFormatter", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
             if (this._optionFormatter) {
-                return function (o) { return ((_this._optionFormatter))(o, _this.isSearchable ? _this.query : undefined); };
+                return function (o) { return _this._optionFormatter(o, _this.isSearchable ? _this.query : undefined); };
             }
             else if (this.searchService.optionsLookup) {
                 return function (o) { return _this.labelGetter(o); };
@@ -10106,33 +6792,20 @@ var SuiSelectBase = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "optionFormatter", {
-        set: /**
-         * @param {?} formatter
-         * @return {?}
-         */
-        function (formatter) {
+        set: function (formatter) {
             this._optionFormatter = formatter;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSelectBase.prototype, "localeValues", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._localizationService.override(this._localeValues, this.localeOverrides);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectBase.prototype.ngAfterContentInit = function () {
         var _this = this;
         this._menu.service = this.dropdownService;
         // We manually specify the menu items to the menu because the @ContentChildren doesn't pick up our dynamically rendered items.
@@ -10150,55 +6823,21 @@ var SuiSelectBase = /** @class */ (function () {
         this.onAvailableOptionsRendered();
         this._renderedOptions.changes.subscribe(function () { return _this.onAvailableOptionsRendered(); });
     };
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onLocaleUpdate = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectBase.prototype.onLocaleUpdate = function () {
         this._localeValues = this._localizationService.get().select;
     };
     // Hook is here since Typescript doesn't yet support overriding getters & setters while still calling the superclass.
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.optionsUpdateHook = /**
-     * @return {?}
-     */
-    function () { };
+    SuiSelectBase.prototype.optionsUpdateHook = function () { };
     // Hook is here since Typescript doesn't yet support overriding getters & setters while still calling the superclass.
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.queryUpdateHook = /**
-     * @return {?}
-     */
-    function () { };
-    /**
-     * @param {?} query
-     * @return {?}
-     */
-    SuiSelectBase.prototype.updateQuery = /**
-     * @param {?} query
-     * @return {?}
-     */
-    function (query) {
+    SuiSelectBase.prototype.queryUpdateHook = function () { };
+    SuiSelectBase.prototype.updateQuery = function (query) {
         var _this = this;
         // Update the query then open the dropdown, as after keyboard input it should always be open.
         this.searchService.updateQuery(query, function () {
             return _this.dropdownService.setOpenState(true);
         });
     };
-    /**
-     * @param {?=} delayed
-     * @return {?}
-     */
-    SuiSelectBase.prototype.resetQuery = /**
-     * @param {?=} delayed
-     * @return {?}
-     */
-    function (delayed) {
+    SuiSelectBase.prototype.resetQuery = function (delayed) {
         if (delayed === void 0) { delayed = true; }
         // The search delay is set to the transition duration to ensure results
         // aren't rendered as the select closes as that causes a sudden flash.
@@ -10213,13 +6852,7 @@ var SuiSelectBase = /** @class */ (function () {
             this.searchInput.query = "";
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onAvailableOptionsRendered = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectBase.prototype.onAvailableOptionsRendered = function () {
         var _this = this;
         // Unsubscribe from all previous subscriptions to avoid memory leaks on large selects.
         this._renderedSubscriptions.forEach(function (rs) { return rs.unsubscribe(); });
@@ -10234,15 +6867,7 @@ var SuiSelectBase = /** @class */ (function () {
             this.options = this._renderedOptions.map(function (ro) { return ro.value; });
         }
     };
-    /**
-     * @param {?} option
-     * @return {?}
-     */
-    SuiSelectBase.prototype.initialiseRenderedOption = /**
-     * @param {?} option
-     * @return {?}
-     */
-    function (option) {
+    SuiSelectBase.prototype.initialiseRenderedOption = function (option) {
         option.usesTemplate = !!this.optionTemplate;
         option.formatter = this.configuredFormatter;
         if (option.usesTemplate) {
@@ -10250,30 +6875,12 @@ var SuiSelectBase = /** @class */ (function () {
         }
         option.changeDetector.markForCheck();
     };
-    /**
-     * @param {?} options
-     * @param {?} value
-     * @return {?}
-     */
-    SuiSelectBase.prototype.findOption = /**
-     * @param {?} options
-     * @param {?} value
-     * @return {?}
-     */
-    function (options, value) {
+    SuiSelectBase.prototype.findOption = function (options, value) {
         var _this = this;
         // Tries to find an option in options array
         return options.find(function (o) { return value === _this.valueGetter(o); });
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onCaretClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectBase.prototype.onCaretClick = function (e) {
         if (!e.eventHandled) {
             e.eventHandled = true;
             if (!this.dropdownService.isAnimating) {
@@ -10282,15 +6889,7 @@ var SuiSelectBase = /** @class */ (function () {
             }
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectBase.prototype.onClick = function (e) {
         if (!e.eventHandled && !this.dropdownService.isAnimating) {
             e.eventHandled = true;
             // If the dropdown is searchable, clicking should keep it open, otherwise we toggle the open state.
@@ -10299,56 +6898,26 @@ var SuiSelectBase = /** @class */ (function () {
             this.focus();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onFocusIn = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectBase.prototype.onFocusIn = function () {
         if (!this.dropdownService.isOpen && !this.dropdownService.isAnimating) {
             this.dropdownService.setOpenState(true);
             this.focus();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onFocusOut = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectBase.prototype.onFocusOut = function (e) {
         if (!this._element.nativeElement.contains(e.relatedTarget)) {
             this.dropdownService.setOpenState(false);
             this.onTouched.emit();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onKeyPress = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectBase.prototype.onKeyPress = function (e) {
         if (e.keyCode === KeyCode.Enter) {
             // Enables support for focussing and opening with the keyboard alone.
             // Using directly because Renderer2 doesn't have invokeElementMethod method anymore.
             this._element.nativeElement.click();
         }
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onKeyDown = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiSelectBase.prototype.onKeyDown = function (e) {
         if (!this.dropdownService.isOpen && e.keyCode === KeyCode.Down) {
             // Enables support for focussing and opening with the keyboard alone.
             // Using directly because Renderer2 doesn't have invokeElementMethod method anymore.
@@ -10356,22 +6925,8 @@ var SuiSelectBase = /** @class */ (function () {
             e.preventDefault();
         }
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    SuiSelectBase.prototype.onQueryInputKeydown = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) { };
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.focus = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectBase.prototype.onQueryInputKeydown = function (event) { };
+    SuiSelectBase.prototype.focus = function () {
         if (this.isSearchable && this.searchInput) {
             // Focusses the search input only when searchable.
             // Using directly because Renderer2 doesn't have invokeElementMethod method anymore.
@@ -10382,17 +6937,7 @@ var SuiSelectBase = /** @class */ (function () {
         }
     };
     // Helper that draws the provided template beside the provided ViewContainerRef.
-    /**
-     * @param {?} siblingRef
-     * @param {?} value
-     * @return {?}
-     */
-    SuiSelectBase.prototype.drawTemplate = /**
-     * @param {?} siblingRef
-     * @param {?} value
-     * @return {?}
-     */
-    function (siblingRef, value) {
+    SuiSelectBase.prototype.drawTemplate = function (siblingRef, value) {
         siblingRef.clear();
         // Use of `$implicit` means use of <ng-template let-option> syntax is supported.
         siblingRef.createEmbeddedView(this.optionTemplate, {
@@ -10400,110 +6945,161 @@ var SuiSelectBase = /** @class */ (function () {
             query: this.query
         });
     };
-    /**
-     * @return {?}
-     */
-    SuiSelectBase.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelectBase.prototype.ngOnDestroy = function () {
         this._renderedSubscriptions.forEach(function (s) { return s.unsubscribe(); });
     };
-    SuiSelectBase.propDecorators = {
-        _menu: [{ type: ViewChild, args: [SuiDropdownMenu, { static: true },] }],
-        _renderedOptions: [{ type: ContentChildren, args: [SuiSelectOption, { descendants: true },] }],
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.dropdown",] }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }],
-        isVisible: [{ type: HostBinding, args: ["class.visible",] }],
-        isSearchable: [{ type: Input }],
-        hasSearchClass: [{ type: HostBinding, args: ["class.search",] }],
-        isSearching: [{ type: HostBinding, args: ["class.loading",] }],
-        _internalSearch: [{ type: ViewChild, args: [SuiSelectSearch, { static: true },] }],
-        _manualSearch: [{ type: ContentChild, args: [SuiSelectSearch, { static: false },] }],
-        _tabIndex: [{ type: Input, args: ["tabindex",] }],
-        tabindex: [{ type: HostBinding, args: ["attr.tabindex",] }],
-        isDisabled: [{ type: HostBinding, args: ["class.disabled",] }, { type: Input }],
-        options: [{ type: Input }],
-        optionsFilter: [{ type: Input }],
-        optionsLookup: [{ type: Input }],
-        labelField: [{ type: Input }],
-        valueField: [{ type: Input }],
-        optionTemplate: [{ type: Input }],
-        optionFormatter: [{ type: Input }],
-        icon: [{ type: Input }],
-        transition: [{ type: Input }],
-        transitionDuration: [{ type: Input }],
-        onTouched: [{ type: Output, args: ["touched",] }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }],
-        onFocusIn: [{ type: HostListener, args: ["focusin",] }],
-        onFocusOut: [{ type: HostListener, args: ["focusout", ["$event"],] }],
-        onKeyPress: [{ type: HostListener, args: ["keypress", ["$event"],] }],
-        onKeyDown: [{ type: HostListener, args: ["keydown", ["$event"],] }]
-    };
+    SuiSelectBase.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: SuiLocalizationService }
+    ]; };
+    __decorate([
+        ViewChild(SuiDropdownMenu, { static: true }),
+        __metadata("design:type", SuiDropdownMenu)
+    ], SuiSelectBase.prototype, "_menu", void 0);
+    __decorate([
+        ContentChildren(SuiSelectOption, { descendants: true }),
+        __metadata("design:type", QueryList)
+    ], SuiSelectBase.prototype, "_renderedOptions", void 0);
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.dropdown"),
+        __metadata("design:type", Boolean)
+    ], SuiSelectBase.prototype, "hasClasses", void 0);
+    __decorate([
+        HostBinding("class.active"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSelectBase.prototype, "isActive", null);
+    __decorate([
+        HostBinding("class.visible"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSelectBase.prototype, "isVisible", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiSelectBase.prototype, "isSearchable", void 0);
+    __decorate([
+        HostBinding("class.search"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSelectBase.prototype, "hasSearchClass", null);
+    __decorate([
+        HostBinding("class.loading"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSelectBase.prototype, "isSearching", null);
+    __decorate([
+        ViewChild(SuiSelectSearch, { static: true }),
+        __metadata("design:type", SuiSelectSearch)
+    ], SuiSelectBase.prototype, "_internalSearch", void 0);
+    __decorate([
+        ContentChild(SuiSelectSearch),
+        __metadata("design:type", SuiSelectSearch)
+    ], SuiSelectBase.prototype, "_manualSearch", void 0);
+    __decorate([
+        Input("tabindex"),
+        __metadata("design:type", Number)
+    ], SuiSelectBase.prototype, "_tabIndex", void 0);
+    __decorate([
+        HostBinding("attr.tabindex"),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [])
+    ], SuiSelectBase.prototype, "tabindex", null);
+    __decorate([
+        HostBinding("class.disabled"),
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiSelectBase.prototype, "isDisabled", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], SuiSelectBase.prototype, "options", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], SuiSelectBase.prototype, "optionsFilter", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], SuiSelectBase.prototype, "optionsLookup", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiSelectBase.prototype, "labelField", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiSelectBase.prototype, "valueField", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef)
+    ], SuiSelectBase.prototype, "optionTemplate", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], SuiSelectBase.prototype, "optionFormatter", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiSelectBase.prototype, "icon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiSelectBase.prototype, "transition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiSelectBase.prototype, "transitionDuration", void 0);
+    __decorate([
+        Output("touched"),
+        __metadata("design:type", EventEmitter)
+    ], SuiSelectBase.prototype, "onTouched", void 0);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [HandledEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectBase.prototype, "onClick", null);
+    __decorate([
+        HostListener("focusin"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectBase.prototype, "onFocusIn", null);
+    __decorate([
+        HostListener("focusout", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectBase.prototype, "onFocusOut", null);
+    __decorate([
+        HostListener("keypress", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectBase.prototype, "onKeyPress", null);
+    __decorate([
+        HostListener("keydown", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiSelectBase.prototype, "onKeyDown", null);
+    SuiSelectBase = __decorate([
+        Directive(),
+        __metadata("design:paramtypes", [ElementRef, SuiLocalizationService])
+    ], SuiSelectBase);
     return SuiSelectBase;
 }());
-function SuiSelectBase_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSelectBase.prototype.dropdownService;
-    /** @type {?} */
-    SuiSelectBase.prototype.searchService;
-    /** @type {?} */
-    SuiSelectBase.prototype._menu;
-    /** @type {?} */
-    SuiSelectBase.prototype._renderedOptions;
-    /** @type {?} */
-    SuiSelectBase.prototype._renderedSubscriptions;
-    /** @type {?} */
-    SuiSelectBase.prototype.hasClasses;
-    /** @type {?} */
-    SuiSelectBase.prototype.isSearchable;
-    /** @type {?} */
-    SuiSelectBase.prototype.isSearchExternal;
-    /** @type {?} */
-    SuiSelectBase.prototype._internalSearch;
-    /** @type {?} */
-    SuiSelectBase.prototype._manualSearch;
-    /** @type {?} */
-    SuiSelectBase.prototype._tabIndex;
-    /** @type {?} */
-    SuiSelectBase.prototype.valueField;
-    /** @type {?} */
-    SuiSelectBase.prototype.optionTemplate;
-    /** @type {?} */
-    SuiSelectBase.prototype._optionFormatter;
-    /** @type {?} */
-    SuiSelectBase.prototype._localeValues;
-    /** @type {?} */
-    SuiSelectBase.prototype.localeOverrides;
-    /** @type {?} */
-    SuiSelectBase.prototype.icon;
-    /** @type {?} */
-    SuiSelectBase.prototype.transition;
-    /** @type {?} */
-    SuiSelectBase.prototype.transitionDuration;
-    /** @type {?} */
-    SuiSelectBase.prototype.onTouched;
-    /** @type {?} */
-    SuiSelectBase.prototype._element;
-    /** @type {?} */
-    SuiSelectBase.prototype._localizationService;
-    /**
-     * @abstract
-     * @param {?} option
-     * @return {?}
-     */
-    SuiSelectBase.prototype.selectOption = function (option) { };
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 // See https://github.com/Microsoft/TypeScript/issues/13449.
-var /** @type {?} */ templateRef$3 = TemplateRef;
-/**
- * @template T
- */
+var templateRef$3 = TemplateRef;
 var SuiMultiSelectLabel = /** @class */ (function (_super) {
     __extends(SuiMultiSelectLabel, _super);
     function SuiMultiSelectLabel(renderer, element, changeDetector, componentFactory) {
@@ -10518,17 +7114,10 @@ var SuiMultiSelectLabel = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiMultiSelectLabel.prototype, "template", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._template;
         },
-        set: /**
-         * @param {?} template
-         * @return {?}
-         */
-        function (template) {
+        set: function (template) {
             this._template = template;
             if (this.template) {
                 this.componentFactory.createView(this.templateSibling, this.template, {
@@ -10540,85 +7129,71 @@ var SuiMultiSelectLabel = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiMultiSelectLabel.prototype.deselectOption = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiMultiSelectLabel.prototype.deselectOption = function (e) {
         var _this = this;
         e.eventHandled = true;
         this._transitionController.animate(new Transition("scale", 100, TransitionDirection.Out, function () {
             return _this.onDeselected.emit(_this.value);
         }));
     };
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    SuiMultiSelectLabel.prototype.onClick = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    SuiMultiSelectLabel.prototype.onClick = function (e) {
         e.eventHandled = true;
     };
-    SuiMultiSelectLabel.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-multi-select-label",
-                    template: "\n<span #templateSibling></span>\n<span *ngIf=\"!template\" [innerHTML]=\"formatter(value)\"></span>\n<i class=\"delete icon\" (click)=\"deselectOption($event)\"></i>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiMultiSelectLabel.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: ChangeDetectorRef },
         { type: SuiComponentFactory }
     ]; };
-    SuiMultiSelectLabel.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.label",] }],
-        value: [{ type: Input }],
-        query: [{ type: Input }],
-        onDeselected: [{ type: Output, args: ["deselected",] }],
-        formatter: [{ type: Input }],
-        template: [{ type: Input }],
-        templateSibling: [{ type: ViewChild, args: ["templateSibling", { read: ViewContainerRef, static: true },] }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.label"),
+        __metadata("design:type", Boolean)
+    ], SuiMultiSelectLabel.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SuiMultiSelectLabel.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SuiMultiSelectLabel.prototype, "query", void 0);
+    __decorate([
+        Output("deselected"),
+        __metadata("design:type", EventEmitter)
+    ], SuiMultiSelectLabel.prototype, "onDeselected", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function)
+    ], SuiMultiSelectLabel.prototype, "formatter", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef),
+        __metadata("design:paramtypes", [TemplateRef])
+    ], SuiMultiSelectLabel.prototype, "template", null);
+    __decorate([
+        ViewChild("templateSibling", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiMultiSelectLabel.prototype, "templateSibling", void 0);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [HandledEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiMultiSelectLabel.prototype, "onClick", null);
+    SuiMultiSelectLabel = __decorate([
+        Component({
+            selector: "sui-multi-select-label",
+            template: "\n<span #templateSibling></span>\n<span *ngIf=\"!template\" [innerHTML]=\"formatter(value)\"></span>\n<i class=\"delete icon\" (click)=\"deselectOption($event)\"></i>\n"
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            ChangeDetectorRef,
+            SuiComponentFactory])
+    ], SuiMultiSelectLabel);
     return SuiMultiSelectLabel;
 }(SuiTransition));
-function SuiMultiSelectLabel_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.hasClasses;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype._transitionController;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.value;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.query;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.onDeselected;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.formatter;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype._template;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.templateSibling;
-    /** @type {?} */
-    SuiMultiSelectLabel.prototype.componentFactory;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T, U
- */
 var SuiMultiSelect = /** @class */ (function (_super) {
     __extends(SuiMultiSelect, _super);
     function SuiMultiSelect(element, localizationService) {
@@ -10630,16 +7205,13 @@ var SuiMultiSelect = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiMultiSelect.prototype, "filteredOptions", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _this = this;
             if (this.maxSelectedReached) {
                 // If we have reached the maximum number of selections, then empty the results completely.
                 return [];
             }
-            var /** @type {?} */ searchResults = this.searchService.results;
+            var searchResults = this.searchService.results;
             if (!this.hasLabels) {
                 return searchResults;
             }
@@ -10653,88 +7225,54 @@ var SuiMultiSelect = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "availableOptions", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.filteredOptions;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "hasLabels", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._hasLabels;
         },
-        set: /**
-         * @param {?} hasLabels
-         * @return {?}
-         */
-        function (hasLabels) {
+        set: function (hasLabels) {
             this._hasLabels = hasLabels;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "placeholder", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._placeholder || this.localeValues.multi.placeholder;
         },
-        set: /**
-         * @param {?} placeholder
-         * @return {?}
-         */
-        function (placeholder) {
+        set: function (placeholder) {
             this._placeholder = placeholder;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "zeroSelectionText", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._zeroSelectionText;
         },
-        set: /**
-         * @param {?} zeroSelectionText
-         * @return {?}
-         */
-        function (zeroSelectionText) {
+        set: function (zeroSelectionText) {
             this._zeroSelectionText = zeroSelectionText;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "defaultSelectionText", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._defaultSelectionText || this.localeValues.multi.placeholder;
         },
-        set: /**
-         * @param {?} defaultSelectionText
-         * @return {?}
-         */
-        function (defaultSelectionText) {
+        set: function (defaultSelectionText) {
             this._defaultSelectionText = "#{count} " + defaultSelectionText;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "maxSelectedReached", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.maxSelected == undefined) {
                 // If there is no maximum then we can immediately return.
                 return false;
@@ -10745,20 +7283,14 @@ var SuiMultiSelect = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "maxSelectedMessage", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._localizationService.interpolate(this.localeValues.multi.maxSelectedMessage, [["max", this.maxSelected.toString()]]);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiMultiSelect.prototype, "selectedMessage", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.selectedOptions.length > 0) {
                 return this._localizationService.interpolate(this._defaultSelectionText ? this._defaultSelectionText : this.localeValues.multi.selectedMessage, [["count", this.selectedOptions.length.toString()]]);
             }
@@ -10769,13 +7301,7 @@ var SuiMultiSelect = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiMultiSelect.prototype.optionsUpdateHook = /**
-     * @return {?}
-     */
-    function () {
+    SuiMultiSelect.prototype.optionsUpdateHook = function () {
         var _this = this;
         if (!this._writtenOptions && this.selectedOptions.length > 0) {
             // We need to check the options still exist.
@@ -10785,35 +7311,19 @@ var SuiMultiSelect = /** @class */ (function (_super) {
             // If there were values written by ngModel before the options had been loaded, this runs to fix it.
             this.selectedOptions = this._writtenOptions
                 // non-null assertion added here because Typescript doesn't recognise the non-null filter.
-                .map(function (v) { return ((_this.findOption(_this.searchService.options, v))); })
+                .map(function (v) { return _this.findOption(_this.searchService.options, v); })
                 .filter(function (v) { return v != undefined; });
             if (this.selectedOptions.length === this._writtenOptions.length) {
                 this._writtenOptions = undefined;
             }
         }
     };
-    /**
-     * @param {?} option
-     * @return {?}
-     */
-    SuiMultiSelect.prototype.initialiseRenderedOption = /**
-     * @param {?} option
-     * @return {?}
-     */
-    function (option) {
+    SuiMultiSelect.prototype.initialiseRenderedOption = function (option) {
         _super.prototype.initialiseRenderedOption.call(this, option);
         // Boldens the item so it appears selected in the dropdown.
         option.isActive = !this.hasLabels && this.selectedOptions.indexOf(option.value) !== -1;
     };
-    /**
-     * @param {?} option
-     * @return {?}
-     */
-    SuiMultiSelect.prototype.selectOption = /**
-     * @param {?} option
-     * @return {?}
-     */
-    function (option) {
+    SuiMultiSelect.prototype.selectOption = function (option) {
         var _this = this;
         if (this.selectedOptions.indexOf(option) !== -1) {
             this.deselectOption(option);
@@ -10828,22 +7338,14 @@ var SuiMultiSelect = /** @class */ (function (_super) {
             this.onAvailableOptionsRendered();
         }
     };
-    /**
-     * @param {?} values
-     * @return {?}
-     */
-    SuiMultiSelect.prototype.writeValue = /**
-     * @param {?} values
-     * @return {?}
-     */
-    function (values) {
+    SuiMultiSelect.prototype.writeValue = function (values) {
         var _this = this;
         if (values instanceof Array) {
             if (this.searchService.options.length > 0) {
                 // If the options have already been loaded, we can immediately match the ngModel values to options.
                 this.selectedOptions = values
                     // non-null assertion added here because Typescript doesn't recognise the non-null filter.
-                    .map(function (v) { return ((_this.findOption(_this.searchService.options, v))); })
+                    .map(function (v) { return _this.findOption(_this.searchService.options, v); })
                     .filter(function (v) { return v != undefined; });
             }
             if (values.length > 0 && this.selectedOptions.length === 0) {
@@ -10866,15 +7368,7 @@ var SuiMultiSelect = /** @class */ (function (_super) {
             this.selectedOptions = [];
         }
     };
-    /**
-     * @param {?} option
-     * @return {?}
-     */
-    SuiMultiSelect.prototype.deselectOption = /**
-     * @param {?} option
-     * @return {?}
-     */
-    function (option) {
+    SuiMultiSelect.prototype.deselectOption = function (option) {
         var _this = this;
         // Update selected options to the previously selected options \ {option}.
         this.selectedOptions = this.selectedOptions.filter(function (so) { return so !== option; });
@@ -10885,95 +7379,83 @@ var SuiMultiSelect = /** @class */ (function (_super) {
             this.onAvailableOptionsRendered();
         }
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    SuiMultiSelect.prototype.onQueryInputKeydown = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    SuiMultiSelect.prototype.onQueryInputKeydown = function (event) {
         if (event.keyCode === KeyCode.Backspace && this.query === "" && this.selectedOptions.length > 0) {
             // Deselect the rightmost option when the user presses backspace in the search input.
             this.deselectOption(this.selectedOptions[this.selectedOptions.length - 1]);
         }
     };
-    SuiMultiSelect.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-multi-select",
-                    template: "\n<!-- Dropdown icon -->\n<i class=\"{{ icon }} icon\" (click)=\"onCaretClick($event)\"></i>\n\n<ng-container *ngIf=\"hasLabels\">\n<!-- Multi-select labels -->\n    <sui-multi-select-label *ngFor=\"let selected of selectedOptions;\"\n                            [value]=\"selected\"\n                            [query]=\"query\"\n                            [formatter]=\"configuredFormatter\"\n                            [template]=\"optionTemplate\"\n                            (deselected)=\"deselectOption($event)\"></sui-multi-select-label>\n</ng-container>\n\n<!-- Query input -->\n<input suiSelectSearch\n       type=\"text\"\n       [hidden]=\"!isSearchable || isSearchExternal\">\n\n<!-- Helper text -->\n<div class=\"text\"\n     [class.default]=\"hasLabels\"\n     [class.filtered]=\"!!query && !isSearchExternal\">\n    \n    <!-- Placeholder text -->\n    <ng-container *ngIf=\"hasLabels; else selectedBlock\">{{ placeholder }}</ng-container>\n    \n    <!-- Summary shown when labels are hidden -->\n    <ng-template #selectedBlock> {{ selectedMessage }}</ng-template>\n</div>\n\n<!-- Select dropdown menu -->\n<div class=\"menu\"\n     suiDropdownMenu\n     [menuTransition]=\"transition\"\n     [menuTransitionDuration]=\"transitionDuration\"\n     [menuAutoSelectFirst]=\"true\">\n\n    <ng-content></ng-content>\n    <ng-container *ngIf=\"availableOptions.length == 0 \">\n        <div *ngIf=\"!maxSelectedReached\" class=\"message\">{{ localeValues.noResultsMessage }}</div>\n        <div *ngIf=\"maxSelectedReached\" class=\"message\">{{ maxSelectedMessage }}</div>\n    </ng-container>\n</div>\n",
-                    styles: ["\n:host input.search {\n    width: 12em !important;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiMultiSelect.ctorParameters = function () { return [
         { type: ElementRef },
         { type: SuiLocalizationService }
     ]; };
-    SuiMultiSelect.propDecorators = {
-        selectedOptionsChange: [{ type: Output }],
-        hasLabels: [{ type: Input }],
-        placeholder: [{ type: Input }],
-        maxSelected: [{ type: Input }],
-        zeroSelectionText: [{ type: Input }],
-        defaultSelectionText: [{ type: Input }],
-        hasClasses: [{ type: HostBinding, args: ["class.multiple",] }]
-    };
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiMultiSelect.prototype, "selectedOptionsChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiMultiSelect.prototype, "hasLabels", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiMultiSelect.prototype, "placeholder", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SuiMultiSelect.prototype, "maxSelected", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiMultiSelect.prototype, "zeroSelectionText", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiMultiSelect.prototype, "defaultSelectionText", null);
+    __decorate([
+        HostBinding("class.multiple"),
+        __metadata("design:type", Boolean)
+    ], SuiMultiSelect.prototype, "hasClasses", void 0);
+    SuiMultiSelect = __decorate([
+        Component({
+            selector: "sui-multi-select",
+            template: "\n<!-- Dropdown icon -->\n<i class=\"{{ icon }} icon\" (click)=\"onCaretClick($event)\"></i>\n\n<ng-container *ngIf=\"hasLabels\">\n<!-- Multi-select labels -->\n    <sui-multi-select-label *ngFor=\"let selected of selectedOptions;\"\n                            [value]=\"selected\"\n                            [query]=\"query\"\n                            [formatter]=\"configuredFormatter\"\n                            [template]=\"optionTemplate\"\n                            (deselected)=\"deselectOption($event)\"></sui-multi-select-label>\n</ng-container>\n\n<!-- Query input -->\n<input suiSelectSearch\n       type=\"text\"\n       [hidden]=\"!isSearchable || isSearchExternal\">\n\n<!-- Helper text -->\n<div class=\"text\"\n     [class.default]=\"hasLabels\"\n     [class.filtered]=\"!!query && !isSearchExternal\">\n    \n    <!-- Placeholder text -->\n    <ng-container *ngIf=\"hasLabels; else selectedBlock\">{{ placeholder }}</ng-container>\n    \n    <!-- Summary shown when labels are hidden -->\n    <ng-template #selectedBlock> {{ selectedMessage }}</ng-template>\n</div>\n\n<!-- Select dropdown menu -->\n<div class=\"menu\"\n     suiDropdownMenu\n     [menuTransition]=\"transition\"\n     [menuTransitionDuration]=\"transitionDuration\"\n     [menuAutoSelectFirst]=\"true\">\n\n    <ng-content></ng-content>\n    <ng-container *ngIf=\"availableOptions.length == 0 \">\n        <div *ngIf=\"!maxSelectedReached\" class=\"message\">{{ localeValues.noResultsMessage }}</div>\n        <div *ngIf=\"maxSelectedReached\" class=\"message\">{{ maxSelectedMessage }}</div>\n    </ng-container>\n</div>\n",
+            styles: ["\n:host input.search {\n    width: 12em !important;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [ElementRef, SuiLocalizationService])
+    ], SuiMultiSelect);
     return SuiMultiSelect;
 }(SuiSelectBase));
-function SuiMultiSelect_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiMultiSelect.prototype.selectedOptions;
-    /** @type {?} */
-    SuiMultiSelect.prototype._writtenOptions;
-    /** @type {?} */
-    SuiMultiSelect.prototype.selectedOptionsChange;
-    /** @type {?} */
-    SuiMultiSelect.prototype._hasLabels;
-    /** @type {?} */
-    SuiMultiSelect.prototype._placeholder;
-    /** @type {?} */
-    SuiMultiSelect.prototype.maxSelected;
-    /** @type {?} */
-    SuiMultiSelect.prototype._zeroSelectionText;
-    /** @type {?} */
-    SuiMultiSelect.prototype._defaultSelectionText;
-    /** @type {?} */
-    SuiMultiSelect.prototype.hasClasses;
-}
-/**
- * @template T, U
- */
+// Value accessor directive for the select to support ngModel.
 var SuiMultiSelectValueAccessor = /** @class */ (function (_super) {
     __extends(SuiMultiSelectValueAccessor, _super);
     function SuiMultiSelectValueAccessor(host) {
         return _super.call(this, host) || this;
     }
-    SuiMultiSelectValueAccessor.decorators = [
-        { type: Directive, args: [{
-                    selector: "sui-multi-select",
-                    host: {
-                        "(selectedOptionsChange)": "onChange($event)",
-                        "(touched)": "onTouched()"
-                    },
-                    providers: [customValueAccessorFactory(SuiMultiSelectValueAccessor)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiMultiSelectValueAccessor_1 = SuiMultiSelectValueAccessor;
+    var SuiMultiSelectValueAccessor_1;
     SuiMultiSelectValueAccessor.ctorParameters = function () { return [
         { type: SuiMultiSelect }
     ]; };
+    SuiMultiSelectValueAccessor = SuiMultiSelectValueAccessor_1 = __decorate([
+        Directive({
+            selector: "sui-multi-select",
+            host: {
+                "(selectedOptionsChange)": "onChange($event)",
+                "(touched)": "onTouched()"
+            },
+            providers: [customValueAccessorFactory(SuiMultiSelectValueAccessor_1)]
+        }),
+        __metadata("design:paramtypes", [SuiMultiSelect])
+    ], SuiMultiSelectValueAccessor);
     return SuiMultiSelectValueAccessor;
 }(CustomValueAccessor));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @template T, U
- */
 var SuiSelect = /** @class */ (function (_super) {
     __extends(SuiSelect, _super);
     function SuiSelect(element, localizationService) {
@@ -10982,29 +7464,16 @@ var SuiSelect = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(SuiSelect.prototype, "placeholder", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._placeholder || this.localeValues.single.placeholder;
         },
-        set: /**
-         * @param {?} placeholder
-         * @return {?}
-         */
-        function (placeholder) {
+        set: function (placeholder) {
             this._placeholder = placeholder;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiSelect.prototype.optionsUpdateHook = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelect.prototype.optionsUpdateHook = function () {
         if (!this._writtenOption && this.selectedOption) {
             // We need to check the option still exists.
             this.writeValue(this.valueGetter(this.selectedOption));
@@ -11018,25 +7487,11 @@ var SuiSelect = /** @class */ (function (_super) {
             }
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiSelect.prototype.queryUpdateHook = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelect.prototype.queryUpdateHook = function () {
         // When the query is updated, we just abandon the current selection.
         this.selectedOption = undefined;
     };
-    /**
-     * @param {?} option
-     * @return {?}
-     */
-    SuiSelect.prototype.selectOption = /**
-     * @param {?} option
-     * @return {?}
-     */
-    function (option) {
+    SuiSelect.prototype.selectOption = function (option) {
         // Choose and emit the selected option.
         this.selectedOption = option;
         this.selectedOptionChange.emit(this.valueGetter(option));
@@ -11046,15 +7501,7 @@ var SuiSelect = /** @class */ (function (_super) {
         // Automatically refocus the search input for better keyboard accessibility.
         this.focus();
     };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    SuiSelect.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    SuiSelect.prototype.writeValue = function (value) {
         var _this = this;
         if (value != undefined) {
             if (this.searchService.options.length > 0) {
@@ -11083,26 +7530,12 @@ var SuiSelect = /** @class */ (function (_super) {
             this.drawSelectedOption();
         }
     };
-    /**
-     * @param {?} option
-     * @return {?}
-     */
-    SuiSelect.prototype.initialiseRenderedOption = /**
-     * @param {?} option
-     * @return {?}
-     */
-    function (option) {
+    SuiSelect.prototype.initialiseRenderedOption = function (option) {
         _super.prototype.initialiseRenderedOption.call(this, option);
         // Boldens the item so it appears selected in the dropdown.
         option.isActive = option.value === this.selectedOption;
     };
-    /**
-     * @return {?}
-     */
-    SuiSelect.prototype.drawSelectedOption = /**
-     * @return {?}
-     */
-    function () {
+    SuiSelect.prototype.drawSelectedOption = function () {
         // Updates the active class on the newly selected option.
         if (this._renderedOptions) {
             this.onAvailableOptionsRendered();
@@ -11111,114 +7544,92 @@ var SuiSelect = /** @class */ (function (_super) {
             this.drawTemplate(this._optionTemplateSibling, this.selectedOption);
         }
     };
-    SuiSelect.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-select",
-                    template: "\n<!-- Query input -->\n<input suiSelectSearch\n       type=\"text\"\n       [hidden]=\"!isSearchable || isSearchExternal\">\n\n<!-- Placeholder text -->\n<div *ngIf=\"selectedOption == undefined\" class=\"default text\" [class.filtered]=\"query\">{{ placeholder }}</div>\n<!-- Selected item -->\n<div class=\"text\" [class.filtered]=\"query || selectedOption == undefined\">\n    <span #optionTemplateSibling></span>\n    <span *ngIf=\"!optionTemplate && selectedOption != undefined\" [innerHTML]=\"configuredFormatter(selectedOption)\"></span>\n</div>\n<!-- Dropdown icon -->\n<i class=\"{{ icon }} icon\" (click)=\"onCaretClick($event)\"></i>\n<!-- Select dropdown menu -->\n<div class=\"menu\"\n     suiDropdownMenu\n     [menuTransition]=\"transition\"\n     [menuTransitionDuration]=\"transitionDuration\"\n     [menuAutoSelectFirst]=\"isSearchable\">\n\n    <ng-content></ng-content>\n    <div *ngIf=\"isSearchable && availableOptions.length === 0\" class=\"message\">\n        {{ localeValues.noResultsMessage }}\n    </div>\n</div>\n"
-                }] }
-    ];
-    /** @nocollapse */
     SuiSelect.ctorParameters = function () { return [
         { type: ElementRef },
         { type: SuiLocalizationService }
     ]; };
-    SuiSelect.propDecorators = {
-        _optionTemplateSibling: [{ type: ViewChild, args: ["optionTemplateSibling", { read: ViewContainerRef, static: true },] }],
-        selectedOptionChange: [{ type: Output }],
-        placeholder: [{ type: Input }]
-    };
+    __decorate([
+        ViewChild("optionTemplateSibling", { read: ViewContainerRef, static: true }),
+        __metadata("design:type", ViewContainerRef)
+    ], SuiSelect.prototype, "_optionTemplateSibling", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiSelect.prototype, "selectedOptionChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiSelect.prototype, "placeholder", null);
+    SuiSelect = __decorate([
+        Component({
+            selector: "sui-select",
+            template: "\n<!-- Query input -->\n<input suiSelectSearch\n       type=\"text\"\n       [hidden]=\"!isSearchable || isSearchExternal\">\n\n<!-- Placeholder text -->\n<div *ngIf=\"selectedOption == undefined\" class=\"default text\" [class.filtered]=\"query\">{{ placeholder }}</div>\n<!-- Selected item -->\n<div class=\"text\" [class.filtered]=\"query || selectedOption == undefined\">\n    <span #optionTemplateSibling></span>\n    <span *ngIf=\"!optionTemplate && selectedOption != undefined\" [innerHTML]=\"configuredFormatter(selectedOption)\"></span>\n</div>\n<!-- Dropdown icon -->\n<i class=\"{{ icon }} icon\" (click)=\"onCaretClick($event)\"></i>\n<!-- Select dropdown menu -->\n<div class=\"menu\"\n     suiDropdownMenu\n     [menuTransition]=\"transition\"\n     [menuTransitionDuration]=\"transitionDuration\"\n     [menuAutoSelectFirst]=\"isSearchable\">\n\n    <ng-content></ng-content>\n    <div *ngIf=\"isSearchable && availableOptions.length === 0\" class=\"message\">\n        {{ localeValues.noResultsMessage }}\n    </div>\n</div>\n"
+        }),
+        __metadata("design:paramtypes", [ElementRef, SuiLocalizationService])
+    ], SuiSelect);
     return SuiSelect;
 }(SuiSelectBase));
-function SuiSelect_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSelect.prototype.selectedOption;
-    /** @type {?} */
-    SuiSelect.prototype._writtenOption;
-    /** @type {?} */
-    SuiSelect.prototype._optionTemplateSibling;
-    /** @type {?} */
-    SuiSelect.prototype.selectedOptionChange;
-    /** @type {?} */
-    SuiSelect.prototype._placeholder;
-}
-/**
- * @template T, U
- */
+// Value accessor directive for the select to support ngModel.
 var SuiSelectValueAccessor = /** @class */ (function (_super) {
     __extends(SuiSelectValueAccessor, _super);
     function SuiSelectValueAccessor(host) {
         return _super.call(this, host) || this;
     }
-    SuiSelectValueAccessor.decorators = [
-        { type: Directive, args: [{
-                    selector: "sui-select",
-                    host: {
-                        "(selectedOptionChange)": "onChange($event)",
-                        "(touched)": "onTouched()"
-                    },
-                    providers: [customValueAccessorFactory(SuiSelectValueAccessor)]
-                },] }
-    ];
-    /** @nocollapse */
+    SuiSelectValueAccessor_1 = SuiSelectValueAccessor;
+    var SuiSelectValueAccessor_1;
     SuiSelectValueAccessor.ctorParameters = function () { return [
         { type: SuiSelect }
     ]; };
+    SuiSelectValueAccessor = SuiSelectValueAccessor_1 = __decorate([
+        Directive({
+            selector: "sui-select",
+            host: {
+                "(selectedOptionChange)": "onChange($event)",
+                "(touched)": "onTouched()"
+            },
+            providers: [customValueAccessorFactory(SuiSelectValueAccessor_1)]
+        }),
+        __metadata("design:paramtypes", [SuiSelect])
+    ], SuiSelectValueAccessor);
     return SuiSelectValueAccessor;
 }(CustomValueAccessor));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSelectModule = /** @class */ (function () {
     function SuiSelectModule() {
     }
-    SuiSelectModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        FormsModule,
-                        SuiDropdownModule,
-                        SuiUtilityModule,
-                        SuiLocalizationModule
-                    ],
-                    declarations: [
-                        SuiSelect,
-                        SuiSelectOption,
-                        SuiSelectSearch,
-                        SuiSelectValueAccessor,
-                        SuiMultiSelect,
-                        SuiMultiSelectLabel,
-                        SuiMultiSelectValueAccessor
-                    ],
-                    exports: [
-                        SuiSelect,
-                        SuiSelectOption,
-                        SuiSelectSearch,
-                        SuiSelectValueAccessor,
-                        SuiMultiSelect,
-                        SuiMultiSelectValueAccessor
-                    ]
-                },] }
-    ];
+    SuiSelectModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                SuiDropdownModule,
+                SuiUtilityModule,
+                SuiLocalizationModule
+            ],
+            declarations: [
+                SuiSelect,
+                SuiSelectOption,
+                SuiSelectSearch,
+                SuiSelectValueAccessor,
+                SuiMultiSelect,
+                SuiMultiSelectLabel,
+                SuiMultiSelectValueAccessor
+            ],
+            exports: [
+                SuiSelect,
+                SuiSelectOption,
+                SuiSelectSearch,
+                SuiSelectValueAccessor,
+                SuiMultiSelect,
+                SuiMultiSelectValueAccessor
+            ]
+        })
+    ], SuiSelectModule);
     return SuiSelectModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var /** @type {?} */ SidebarTransition = {
+var SidebarTransition = {
     Overlay: "overlay",
     Push: "push",
     ScaleDown: "scale down",
@@ -11226,7 +7637,7 @@ var /** @type {?} */ SidebarTransition = {
     SlideAlong: "slide along",
     SlideOut: "slide out"
 };
-var /** @type {?} */ SidebarDirection = {
+var SidebarDirection = {
     Left: "left",
     Right: "right",
     Top: "top",
@@ -11246,10 +7657,7 @@ var SidebarService = /** @class */ (function () {
         this.transition = SidebarTransition.Uncover;
     }
     Object.defineProperty(SidebarService.prototype, "width", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.direction === SidebarDirection.Left) {
                 return this._width;
             }
@@ -11258,11 +7666,7 @@ var SidebarService = /** @class */ (function () {
             }
             return 0;
         },
-        set: /**
-         * @param {?} width
-         * @return {?}
-         */
-        function (width) {
+        set: function (width) {
             this._width = width;
             this.widthChange.emit();
         },
@@ -11270,10 +7674,7 @@ var SidebarService = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SidebarService.prototype, "height", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.direction === SidebarDirection.Top) {
                 return this._height;
             }
@@ -11282,26 +7683,14 @@ var SidebarService = /** @class */ (function () {
             }
             return 0;
         },
-        set: /**
-         * @param {?} height
-         * @return {?}
-         */
-        function (height) {
+        set: function (height) {
             this._height = height;
             this.heightChange.emit();
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} isVisible
-     * @return {?}
-     */
-    SidebarService.prototype.setVisibleState = /**
-     * @param {?} isVisible
-     * @return {?}
-     */
-    function (isVisible) {
+    SidebarService.prototype.setVisibleState = function (isVisible) {
         var _this = this;
         if (this.isVisible !== isVisible) {
             this.isVisible = isVisible;
@@ -11313,46 +7702,12 @@ var SidebarService = /** @class */ (function () {
             this._isAnimatingTimeout = window.setTimeout(function () { return _this.isAnimating = false; }, 500);
         }
     };
-    /**
-     * @return {?}
-     */
-    SidebarService.prototype.toggleVisibleState = /**
-     * @return {?}
-     */
-    function () {
+    SidebarService.prototype.toggleVisibleState = function () {
         this.setVisibleState(!this.isVisible);
     };
     return SidebarService;
 }());
-function SidebarService_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SidebarService.prototype.isVisible;
-    /** @type {?} */
-    SidebarService.prototype.isAnimating;
-    /** @type {?} */
-    SidebarService.prototype.wasJustOpened;
-    /** @type {?} */
-    SidebarService.prototype.direction;
-    /** @type {?} */
-    SidebarService.prototype._width;
-    /** @type {?} */
-    SidebarService.prototype._height;
-    /** @type {?} */
-    SidebarService.prototype.isVisibleChange;
-    /** @type {?} */
-    SidebarService.prototype.widthChange;
-    /** @type {?} */
-    SidebarService.prototype.heightChange;
-    /** @type {?} */
-    SidebarService.prototype._isAnimatingTimeout;
-    /** @type {?} */
-    SidebarService.prototype.transition;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSidebar = /** @class */ (function () {
     function SuiSidebar(_renderer, _element) {
         var _this = this;
@@ -11367,17 +7722,10 @@ var SuiSidebar = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiSidebar.prototype, "transition", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.transition;
         },
-        set: /**
-         * @param {?} transition
-         * @return {?}
-         */
-        function (transition) {
+        set: function (transition) {
             var _this = this;
             this.service.transition.split(" ").forEach(function (c) { return _this.setClass(c, false); });
             this.service.transition = transition;
@@ -11387,17 +7735,10 @@ var SuiSidebar = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSidebar.prototype, "direction", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.direction;
         },
-        set: /**
-         * @param {?} direction
-         * @return {?}
-         */
-        function (direction) {
+        set: function (direction) {
             this.setClass(this.service.direction, false);
             this.service.direction = direction;
             this.setClass(this.service.direction, true);
@@ -11406,63 +7747,34 @@ var SuiSidebar = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSidebar.prototype, "isVisible", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.isVisible;
         },
-        set: /**
-         * @param {?} isVisible
-         * @return {?}
-         */
-        function (isVisible) {
+        set: function (isVisible) {
             this.service.setVisibleState(isVisible);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSidebar.prototype, "isVisibleChange", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.isVisibleChange;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiSidebar.prototype, "isAnimating", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.service.isAnimating;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiSidebar.prototype.updateDimensions = /**
-     * @return {?}
-     */
-    function () {
+    SuiSidebar.prototype.updateDimensions = function () {
         this.service.width = this._element.nativeElement.offsetWidth;
         this.service.height = this._element.nativeElement.offsetHeight;
     };
-    /**
-     * @param {?} className
-     * @param {?=} isAdd
-     * @return {?}
-     */
-    SuiSidebar.prototype.setClass = /**
-     * @param {?} className
-     * @param {?=} isAdd
-     * @return {?}
-     */
-    function (className, isAdd) {
+    SuiSidebar.prototype.setClass = function (className, isAdd) {
         if (isAdd === void 0) { isAdd = true; }
         if (isAdd) {
             this._renderer.addClass(this._element.nativeElement, className);
@@ -11471,69 +7783,61 @@ var SuiSidebar = /** @class */ (function () {
             this._renderer.removeClass(this._element.nativeElement, className);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiSidebar.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    SuiSidebar.prototype.open = function () {
         this.service.setVisibleState(true);
     };
-    /**
-     * @return {?}
-     */
-    SuiSidebar.prototype.close = /**
-     * @return {?}
-     */
-    function () {
+    SuiSidebar.prototype.close = function () {
         this.service.setVisibleState(false);
     };
-    /**
-     * @return {?}
-     */
-    SuiSidebar.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    SuiSidebar.prototype.toggle = function () {
         this.service.toggleVisibleState();
     };
-    SuiSidebar.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-sidebar",
-                    template: "<ng-content></ng-content>"
-                }] }
-    ];
-    /** @nocollapse */
     SuiSidebar.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef }
     ]; };
-    SuiSidebar.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.ui",] }, { type: HostBinding, args: ["class.sidebar",] }, { type: HostBinding, args: ["class.menu",] }],
-        transition: [{ type: Input }],
-        direction: [{ type: Input }],
-        isVisible: [{ type: HostBinding, args: ["class.visible",] }, { type: Input }],
-        isVisibleChange: [{ type: Output }],
-        isAnimating: [{ type: HostBinding, args: ["class.animating",] }]
-    };
+    __decorate([
+        HostBinding("class.ui"),
+        HostBinding("class.sidebar"),
+        HostBinding("class.menu"),
+        __metadata("design:type", Boolean)
+    ], SuiSidebar.prototype, "hasClasses", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiSidebar.prototype, "transition", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiSidebar.prototype, "direction", null);
+    __decorate([
+        HostBinding("class.visible"),
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiSidebar.prototype, "isVisible", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter),
+        __metadata("design:paramtypes", [])
+    ], SuiSidebar.prototype, "isVisibleChange", null);
+    __decorate([
+        HostBinding("class.animating"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSidebar.prototype, "isAnimating", null);
+    SuiSidebar = __decorate([
+        Component({
+            selector: "sui-sidebar",
+            template: "<ng-content></ng-content>"
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], SuiSidebar);
     return SuiSidebar;
 }());
-function SuiSidebar_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSidebar.prototype.service;
-    /** @type {?} */
-    SuiSidebar.prototype.hasClasses;
-    /** @type {?} */
-    SuiSidebar.prototype._renderer;
-    /** @type {?} */
-    SuiSidebar.prototype._element;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSidebarSibling = /** @class */ (function () {
     function SuiSidebarSibling(_renderer, _element) {
         this._renderer = _renderer;
@@ -11542,17 +7846,10 @@ var SuiSidebarSibling = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiSidebarSibling.prototype, "service", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._service;
         },
-        set: /**
-         * @param {?} service
-         * @return {?}
-         */
-        function (service) {
+        set: function (service) {
             var _this = this;
             this._service = service;
             setTimeout(function () { return _this.updateTransform(); });
@@ -11562,10 +7859,7 @@ var SuiSidebarSibling = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSidebarSibling.prototype, "isVisible", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (!this.service) {
                 return false;
             }
@@ -11575,10 +7869,7 @@ var SuiSidebarSibling = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiSidebarSibling.prototype, "isDimmed", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (!this.service) {
                 return false;
             }
@@ -11587,85 +7878,66 @@ var SuiSidebarSibling = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiSidebarSibling.prototype.updateTransform = /**
-     * @return {?}
-     */
-    function () {
+    SuiSidebarSibling.prototype.updateTransform = function () {
         this._renderer.removeStyle(this._element.nativeElement, "transform");
         this._renderer.removeStyle(this._element.nativeElement, "-webkit-transform");
         if (this.service.isVisible &&
             this.service.transition !== SidebarTransition.Overlay &&
             this.service.transition !== SidebarTransition.ScaleDown) {
-            var /** @type {?} */ translate = "translate3d(" + this.service.width + "px, " + this.service.height + "px, 0)";
+            var translate = "translate3d(" + this.service.width + "px, " + this.service.height + "px, 0)";
             this._renderer.setStyle(this._element.nativeElement, "transform", translate);
             this._renderer.setStyle(this._element.nativeElement, "-webkit-transform", translate);
         }
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    SuiSidebarSibling.prototype.onClick = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    SuiSidebarSibling.prototype.onClick = function (event) {
         if (this.service.isVisible && !this.service.wasJustOpened) {
             this.service.setVisibleState(false);
         }
     };
-    SuiSidebarSibling.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-sidebar-sibling",
-                    template: "<ng-content></ng-content>",
-                    styles: ["\n:host {\n    display: block;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
     SuiSidebarSibling.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef }
     ]; };
-    SuiSidebarSibling.propDecorators = {
-        isDimmedWhenVisible: [{ type: Input }],
-        isVisible: [{ type: HostBinding, args: ["class.visible",] }],
-        isDimmed: [{ type: HostBinding, args: ["class.dimmed",] }],
-        hasClasses: [{ type: HostBinding, args: ["class.pusher",] }],
-        onClick: [{ type: HostListener, args: ["click", ["$event"],] }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SuiSidebarSibling.prototype, "isDimmedWhenVisible", void 0);
+    __decorate([
+        HostBinding("class.visible"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSidebarSibling.prototype, "isVisible", null);
+    __decorate([
+        HostBinding("class.dimmed"),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], SuiSidebarSibling.prototype, "isDimmed", null);
+    __decorate([
+        HostBinding("class.pusher"),
+        __metadata("design:type", Boolean)
+    ], SuiSidebarSibling.prototype, "hasClasses", void 0);
+    __decorate([
+        HostListener("click", ["$event"]),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:returntype", void 0)
+    ], SuiSidebarSibling.prototype, "onClick", null);
+    SuiSidebarSibling = __decorate([
+        Component({
+            selector: "sui-sidebar-sibling",
+            template: "<ng-content></ng-content>",
+            styles: ["\n:host {\n    display: block;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], SuiSidebarSibling);
     return SuiSidebarSibling;
 }());
-function SuiSidebarSibling_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSidebarSibling.prototype._service;
-    /** @type {?} */
-    SuiSidebarSibling.prototype.isDimmedWhenVisible;
-    /** @type {?} */
-    SuiSidebarSibling.prototype.hasClasses;
-    /** @type {?} */
-    SuiSidebarSibling.prototype._renderer;
-    /** @type {?} */
-    SuiSidebarSibling.prototype._element;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSidebarContainer = /** @class */ (function () {
     function SuiSidebarContainer() {
         this.hasClasses = true;
     }
-    /**
-     * @return {?}
-     */
-    SuiSidebarContainer.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiSidebarContainer.prototype.ngAfterContentInit = function () {
         if (!this.sidebar) {
             throw new Error("You must include a <sui-sidebar> element within the container.");
         }
@@ -11675,74 +7947,52 @@ var SuiSidebarContainer = /** @class */ (function () {
         }
         this.sibling.service = this.service;
     };
-    SuiSidebarContainer.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-sidebar-container",
-                    template: "<ng-content></ng-content>",
-                    styles: ["\n:host {\n    display: block;\n}\n"]
-                }] }
-    ];
-    /** @nocollapse */
-    SuiSidebarContainer.ctorParameters = function () { return []; };
-    SuiSidebarContainer.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.pushable",] }],
-        sidebar: [{ type: ContentChild, args: [SuiSidebar, { static: false },] }],
-        sibling: [{ type: ContentChild, args: [SuiSidebarSibling, { static: false },] }]
-    };
+    __decorate([
+        HostBinding("class.pushable"),
+        __metadata("design:type", Boolean)
+    ], SuiSidebarContainer.prototype, "hasClasses", void 0);
+    __decorate([
+        ContentChild(SuiSidebar),
+        __metadata("design:type", SuiSidebar)
+    ], SuiSidebarContainer.prototype, "sidebar", void 0);
+    __decorate([
+        ContentChild(SuiSidebarSibling),
+        __metadata("design:type", SuiSidebarSibling)
+    ], SuiSidebarContainer.prototype, "sibling", void 0);
+    SuiSidebarContainer = __decorate([
+        Component({
+            selector: "sui-sidebar-container",
+            template: "<ng-content></ng-content>",
+            styles: ["\n:host {\n    display: block;\n}\n"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiSidebarContainer);
     return SuiSidebarContainer;
 }());
-function SuiSidebarContainer_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiSidebarContainer.prototype.service;
-    /** @type {?} */
-    SuiSidebarContainer.prototype.hasClasses;
-    /** @type {?} */
-    SuiSidebarContainer.prototype.sidebar;
-    /** @type {?} */
-    SuiSidebarContainer.prototype.sibling;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiSidebarModule = /** @class */ (function () {
     function SuiSidebarModule() {
     }
-    SuiSidebarModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule
-                    ],
-                    declarations: [
-                        SuiSidebar,
-                        SuiSidebarContainer,
-                        SuiSidebarSibling
-                    ],
-                    exports: [
-                        SuiSidebar,
-                        SuiSidebarContainer,
-                        SuiSidebarSibling
-                    ]
-                },] }
-    ];
+    SuiSidebarModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule
+            ],
+            declarations: [
+                SuiSidebar,
+                SuiSidebarContainer,
+                SuiSidebarSibling
+            ],
+            exports: [
+                SuiSidebar,
+                SuiSidebarContainer,
+                SuiSidebarSibling
+            ]
+        })
+    ], SuiSidebarModule);
     return SuiSidebarModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var Tab = /** @class */ (function () {
     function Tab(header, content) {
         var _this = this;
@@ -11754,17 +8004,11 @@ var Tab = /** @class */ (function () {
             .subscribe(function () { return _this.content.isActive = _this.isActive; });
     }
     Object.defineProperty(Tab.prototype, "isActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Saves accessing .header.isActive every time.
+        get: function () {
             return this.header.isActive;
         },
-        set: /**
-         * @param {?} active
-         * @return {?}
-         */
-        function (active) {
+        set: function (active) {
             // Use `setActiveState` so as not to fire 'external changes' event.
             this.header.setActiveState(active);
         },
@@ -11772,10 +8016,8 @@ var Tab = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(Tab.prototype, "isDisabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        // Saves accessing .header.isDisabled every time.
+        get: function () {
             return this.header.isDisabled;
         },
         enumerable: true,
@@ -11783,21 +8025,7 @@ var Tab = /** @class */ (function () {
     });
     return Tab;
 }());
-function Tab_tsickle_Closure_declarations() {
-    /** @type {?} */
-    Tab.prototype.id;
-    /** @type {?} */
-    Tab.prototype.header;
-    /** @type {?} */
-    Tab.prototype.content;
-    /** @type {?} */
-    Tab.prototype.index;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiTabHeader = /** @class */ (function () {
     function SuiTabHeader() {
         this._isActive = false;
@@ -11809,19 +8037,12 @@ var SuiTabHeader = /** @class */ (function () {
         this.hasClasses = true;
     }
     Object.defineProperty(SuiTabHeader.prototype, "isActive", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isActive;
         },
-        set: /**
-         * @param {?} active
-         * @return {?}
-         */
-        function (active) {
+        set: function (active) {
             var _this = this;
-            var /** @type {?} */ isActive = active;
+            var isActive = active;
             // Only used by @Input(), runs whenever user input changes `isActive`.
             // Run in timeout because `isDisabled` can prohibit user from changing `isActive`.
             // so update is delayed to avoid 'changed after checked' error.
@@ -11837,17 +8058,10 @@ var SuiTabHeader = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(SuiTabHeader.prototype, "isDisabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isDisabled;
         },
-        set: /**
-         * @param {?} disabled
-         * @return {?}
-         */
-        function (disabled) {
+        set: function (disabled) {
             // Only update if value provided is different to current one.
             if (this._isDisabled !== disabled) {
                 this._isDisabled = disabled;
@@ -11860,15 +8074,8 @@ var SuiTabHeader = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} active
-     * @return {?}
-     */
-    SuiTabHeader.prototype.setActiveState = /**
-     * @param {?} active
-     * @return {?}
-     */
-    function (active) {
+    // Internally update active state.
+    SuiTabHeader.prototype.setActiveState = function (active) {
         // If (cast) active value has changed:
         if (!!this._isActive !== active) {
             // Update to the new value.
@@ -11884,122 +8091,104 @@ var SuiTabHeader = /** @class */ (function () {
         // Regardless, emit a change to `isActive`, so [(isActive)] works correctly.
         this.isActiveChange.emit(active);
     };
-    /**
-     * @return {?}
-     */
-    SuiTabHeader.prototype.onClick = /**
-     * @return {?}
-     */
-    function () {
+    SuiTabHeader.prototype.onClick = function () {
         if (!this.isDisabled) {
             // Activate the tab when clicked, so long as it isn't disabled.
             this.isActive = true;
         }
     };
-    SuiTabHeader.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiTabHeader]"
-                },] }
-    ];
-    /** @nocollapse */
-    SuiTabHeader.ctorParameters = function () { return []; };
-    SuiTabHeader.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.item",] }],
-        id: [{ type: Input, args: ["suiTabHeader",] }],
-        isActiveChange: [{ type: Output }],
-        onActivate: [{ type: Output, args: ["activate",] }],
-        onDeactivate: [{ type: Output, args: ["deactivate",] }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }, { type: Input }],
-        isDisabled: [{ type: HostBinding, args: ["class.disabled",] }, { type: Input }],
-        onClick: [{ type: HostListener, args: ["click",] }]
-    };
+    __decorate([
+        HostBinding("class.item"),
+        __metadata("design:type", Boolean)
+    ], SuiTabHeader.prototype, "hasClasses", void 0);
+    __decorate([
+        Input("suiTabHeader"),
+        __metadata("design:type", String)
+    ], SuiTabHeader.prototype, "id", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SuiTabHeader.prototype, "isActiveChange", void 0);
+    __decorate([
+        Output("activate"),
+        __metadata("design:type", EventEmitter)
+    ], SuiTabHeader.prototype, "onActivate", void 0);
+    __decorate([
+        Output("deactivate"),
+        __metadata("design:type", EventEmitter)
+    ], SuiTabHeader.prototype, "onDeactivate", void 0);
+    __decorate([
+        HostBinding("class.active"),
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiTabHeader.prototype, "isActive", null);
+    __decorate([
+        HostBinding("class.disabled"),
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiTabHeader.prototype, "isDisabled", null);
+    __decorate([
+        HostListener("click"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SuiTabHeader.prototype, "onClick", null);
+    SuiTabHeader = __decorate([
+        Directive({
+            selector: "[suiTabHeader]"
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiTabHeader);
     return SuiTabHeader;
 }());
-function SuiTabHeader_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiTabHeader.prototype.hasClasses;
-    /** @type {?} */
-    SuiTabHeader.prototype.id;
-    /** @type {?} */
-    SuiTabHeader.prototype._isActive;
-    /** @type {?} */
-    SuiTabHeader.prototype.isActiveChange;
-    /** @type {?} */
-    SuiTabHeader.prototype.isActiveExternalChange;
-    /** @type {?} */
-    SuiTabHeader.prototype.onActivate;
-    /** @type {?} */
-    SuiTabHeader.prototype.onDeactivate;
-    /** @type {?} */
-    SuiTabHeader.prototype._isDisabled;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiTabContent = /** @class */ (function () {
     function SuiTabContent() {
         this.isActive = false;
         this.hasClasses = true;
     }
-    SuiTabContent.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiTabContent]"
-                },] }
-    ];
-    /** @nocollapse */
-    SuiTabContent.ctorParameters = function () { return []; };
-    SuiTabContent.propDecorators = {
-        hasClasses: [{ type: HostBinding, args: ["class.tab",] }],
-        id: [{ type: Input, args: ["suiTabContent",] }],
-        isActive: [{ type: HostBinding, args: ["class.active",] }]
-    };
+    __decorate([
+        HostBinding("class.tab"),
+        __metadata("design:type", Boolean)
+    ], SuiTabContent.prototype, "hasClasses", void 0);
+    __decorate([
+        Input("suiTabContent"),
+        __metadata("design:type", String)
+    ], SuiTabContent.prototype, "id", void 0);
+    __decorate([
+        HostBinding("class.active"),
+        __metadata("design:type", Boolean)
+    ], SuiTabContent.prototype, "isActive", void 0);
+    SuiTabContent = __decorate([
+        Directive({
+            selector: "[suiTabContent]"
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiTabContent);
     return SuiTabContent;
 }());
-function SuiTabContent_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiTabContent.prototype.hasClasses;
-    /** @type {?} */
-    SuiTabContent.prototype.id;
-    /** @type {?} */
-    SuiTabContent.prototype.isActive;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiTabset = /** @class */ (function () {
     function SuiTabset() {
         this.tabs = [];
         this._barrierCount = 0;
     }
     Object.defineProperty(SuiTabset.prototype, "activeTab", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._activeTab;
         },
-        set: /**
-         * @param {?} tab
-         * @return {?}
-         */
-        function (tab) {
+        // When setting a tab as the currently active tab, it automatically gains
+        // `isActive` status (saves littering `isActive = true` everywhere).
+        set: function (tab) {
             this._activeTab = tab;
             tab.isActive = true;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    SuiTabset.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    SuiTabset.prototype.ngAfterContentInit = function () {
         var _this = this;
         // Fire `internalComponentsUpdated` when the query lists change.
         this._tabHeaders.changes.subscribe(function () { return _this.internalComponentsUpdated(); });
@@ -12007,13 +8196,8 @@ var SuiTabset = /** @class */ (function () {
         // Initially load the tabs.
         this.loadTabs();
     };
-    /**
-     * @return {?}
-     */
-    SuiTabset.prototype.internalComponentsUpdated = /**
-     * @return {?}
-     */
-    function () {
+    // Fires whenever either the tab headers or tab contents query lists update.
+    SuiTabset.prototype.internalComponentsUpdated = function () {
         // We are using a 'counting barrier of n = 2', i.e. the code within only runs after the method is called twice.
         // This is so that both the headers and contents query lists can update before we run code that matches the two up.
         this._barrierCount++;
@@ -12024,13 +8208,8 @@ var SuiTabset = /** @class */ (function () {
             this.loadTabs();
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiTabset.prototype.loadTabs = /**
-     * @return {?}
-     */
-    function () {
+    // Connects tab headers to tab contents, and creates a tab instance for each pairing.
+    SuiTabset.prototype.loadTabs = function () {
         var _this = this;
         // Remove any tabs that no longer have an associated header.
         this.tabs = this.tabs.filter(function (t) { return !!_this._tabHeaders.find(function (tH) { return tH === t.header; }); });
@@ -12038,13 +8217,13 @@ var SuiTabset = /** @class */ (function () {
             // Filter out the loaded headers with attached tab instances.
             .filter(function (tH) { return !_this.tabs.find(function (t) { return t.header === tH; }); })
             .forEach(function (tH) {
-            var /** @type {?} */ content = _this._tabContents.find(function (tC) { return tC.id === tH.id; });
+            var content = _this._tabContents.find(function (tC) { return tC.id === tH.id; });
             if (!content) {
                 // Error if an associated tab content cannot be found for the given header.
                 throw new Error("A [suiTabHeader] must have a related [suiTabContent].");
             }
             // Create a new tab instance for this header & content combo.
-            var /** @type {?} */ tab = new Tab(tH, content);
+            var tab = new Tab(tH, content);
             // Subscribe to any external changes in the tab header's active state. External changes are triggered by user input.
             tab.header.isActiveExternalChange.subscribe(function () { return _this.onHeaderActiveChanged(tab); });
             // Add the new instance to the list of tabs.
@@ -12053,7 +8232,7 @@ var SuiTabset = /** @class */ (function () {
         // Assign each tab an index (which denotes the order they physically appear in).
         this._tabHeaders
             .forEach(function (tH, i) {
-            var /** @type {?} */ tab = _this.tabs.find(function (t) { return t.header === tH; });
+            var tab = _this.tabs.find(function (t) { return t.header === tH; });
             if (tab) {
                 tab.index = i;
             }
@@ -12061,12 +8240,10 @@ var SuiTabset = /** @class */ (function () {
         // Sort the tabs by their index.
         this.tabs.sort(function (a, b) { return a.index - b.index; });
         if (!this.activeTab) { // Check if there are no current existing active tabs.
-            // Check if there are no current existing active tabs.
             // If so, we must activate the first available tab.
             this.activateFirstTab();
         }
         else if (!this.tabs.find(function (t) { return t === _this.activeTab; })) { // O'wise check if current active tab has been deleted.
-            // O'wise check if current active tab has been deleted.
             // If so, we must find the closest.
             // Use `setTimeout` as this causes a 'changed after checked' error o'wise.
             setTimeout(function () { return _this.activateClosestTab(_this.activeTab); });
@@ -12076,15 +8253,8 @@ var SuiTabset = /** @class */ (function () {
             throw new Error("You cannot have no tabs!");
         }
     };
-    /**
-     * @param {?} tab
-     * @return {?}
-     */
-    SuiTabset.prototype.onHeaderActiveChanged = /**
-     * @param {?} tab
-     * @return {?}
-     */
-    function (tab) {
+    // Fires whenever a tab header's active state is externally changed.
+    SuiTabset.prototype.onHeaderActiveChanged = function (tab) {
         // If the tab has become activated, but was not previously the active tab:
         if (tab.isActive && this.activeTab !== tab) {
             // Deactivate all of the tabs.
@@ -12098,25 +8268,13 @@ var SuiTabset = /** @class */ (function () {
             this.activateClosestTab(tab);
         }
     };
-    /**
-     * @return {?}
-     */
-    SuiTabset.prototype.activateFirstTab = /**
-     * @return {?}
-     */
-    function () {
+    // Activate the first tab in the set.
+    SuiTabset.prototype.activateFirstTab = function () {
         this.activeTab = this.tabs[0];
     };
-    /**
-     * @param {?} tab
-     * @return {?}
-     */
-    SuiTabset.prototype.activateClosestTab = /**
-     * @param {?} tab
-     * @return {?}
-     */
-    function (tab) {
-        var /** @type {?} */ nextAvailable;
+    // Activates the closest available tab to a given one.
+    SuiTabset.prototype.activateClosestTab = function (tab) {
+        var nextAvailable;
         // When the exited tab's index is higher than all available tabs,
         if (tab.index >= this.tabs.length) {
             // Activate the last tab.
@@ -12125,12 +8283,10 @@ var SuiTabset = /** @class */ (function () {
         // If that didn't work, try the following cases:
         if (!nextAvailable) {
             if (!this.tabs.find(function (t) { return t === tab; })) { // When the exited tab no longer exists,
-                // When the exited tab no longer exists,
                 // Replace it with a tab at the same index.
                 nextAvailable = this.tabs[tab.index];
             }
             else { // Or if the exited tab still exists,
-                // Or if the exited tab still exists,
                 // Go to the tab immediately to the left.
                 nextAvailable = this.tabs[Math.max(tab.index - 1, 0)];
             }
@@ -12142,158 +8298,84 @@ var SuiTabset = /** @class */ (function () {
         }
         this.activeTab = nextAvailable;
     };
-    SuiTabset.decorators = [
-        { type: Component, args: [{
-                    selector: "sui-tabset",
-                    template: "<ng-content></ng-content>"
-                }] }
-    ];
-    /** @nocollapse */
-    SuiTabset.ctorParameters = function () { return []; };
-    SuiTabset.propDecorators = {
-        _tabHeaders: [{ type: ContentChildren, args: [SuiTabHeader,] }],
-        _tabContents: [{ type: ContentChildren, args: [SuiTabContent,] }]
-    };
+    __decorate([
+        ContentChildren(SuiTabHeader),
+        __metadata("design:type", QueryList)
+    ], SuiTabset.prototype, "_tabHeaders", void 0);
+    __decorate([
+        ContentChildren(SuiTabContent),
+        __metadata("design:type", QueryList)
+    ], SuiTabset.prototype, "_tabContents", void 0);
+    SuiTabset = __decorate([
+        Component({
+            selector: "sui-tabset",
+            template: "<ng-content></ng-content>"
+        }),
+        __metadata("design:paramtypes", [])
+    ], SuiTabset);
     return SuiTabset;
 }());
-function SuiTabset_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiTabset.prototype._tabHeaders;
-    /** @type {?} */
-    SuiTabset.prototype._tabContents;
-    /** @type {?} */
-    SuiTabset.prototype.tabs;
-    /** @type {?} */
-    SuiTabset.prototype._activeTab;
-    /** @type {?} */
-    SuiTabset.prototype._barrierCount;
-}
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiTabsModule = /** @class */ (function () {
     function SuiTabsModule() {
     }
-    SuiTabsModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule
-                    ],
-                    declarations: [
-                        SuiTabset,
-                        SuiTabHeader,
-                        SuiTabContent
-                    ],
-                    exports: [
-                        SuiTabset,
-                        SuiTabHeader,
-                        SuiTabContent
-                    ]
-                },] }
-    ];
+    SuiTabsModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule
+            ],
+            declarations: [
+                SuiTabset,
+                SuiTabHeader,
+                SuiTabContent
+            ],
+            exports: [
+                SuiTabset,
+                SuiTabHeader,
+                SuiTabContent
+            ]
+        })
+    ], SuiTabsModule);
     return SuiTabsModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 var SuiModule = /** @class */ (function () {
     function SuiModule() {
     }
-    SuiModule.decorators = [
-        { type: NgModule, args: [{
-                    exports: [
-                        SuiMessageModule,
-                        SuiPaginationModule,
-                        SuiAccordionModule,
-                        SuiCheckboxModule,
-                        SuiCollapseModule,
-                        SuiDatepickerModule,
-                        SuiDimmerModule,
-                        SuiDropdownModule,
-                        SuiModalModule,
-                        SuiPopupModule,
-                        SuiProgressModule,
-                        SuiRatingModule,
-                        SuiSearchModule,
-                        SuiSelectModule,
-                        SuiSidebarModule,
-                        SuiTabsModule,
-                        SuiTransitionModule,
-                        SuiLocalizationModule,
-                        SuiUtilityModule
-                    ]
-                },] }
-    ];
+    SuiModule = __decorate([
+        NgModule({
+            exports: [
+                // Collections
+                SuiMessageModule,
+                SuiPaginationModule,
+                // Modules
+                SuiAccordionModule,
+                SuiCheckboxModule,
+                SuiCollapseModule,
+                SuiDatepickerModule,
+                SuiDimmerModule,
+                SuiDropdownModule,
+                SuiModalModule,
+                SuiPopupModule,
+                SuiProgressModule,
+                SuiRatingModule,
+                SuiSearchModule,
+                SuiSelectModule,
+                SuiSidebarModule,
+                SuiTabsModule,
+                SuiTransitionModule,
+                // Behaviors
+                SuiLocalizationModule,
+                // Misc
+                SuiUtilityModule
+            ]
+        })
+    ], SuiModule);
     return SuiModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
 export { ComponentModalConfig, DatepickerMode, DropdownAutoCloseType, ModalConfig, ModalControls, ModalSize, ModalTemplate, PositioningPlacement as PopupPlacement, PopupTrigger, SearchService, SidebarDirection, SidebarTransition, SuiAccordionModule, ActiveModal as SuiActiveModal, SuiCheckboxModule, SuiCollapseModule, SuiDatepickerModule, SuiDimmerModule, SuiDropdownModule, SuiLocalizationModule, SuiLocalizationService, SuiMessageModule, Modal as SuiModal, SuiModalModule, SuiModalService, SuiModule, SuiPaginationModule, SuiPopupConfig, SuiPopupModule, SuiProgressModule, SuiRatingModule, SuiSearchModule, SuiSelectModule, SuiSidebarModule, SuiTabsModule, SuiTransition, SuiTransitionModule, SuiUtilityModule, TemplateModalConfig, Transition, TransitionController, TransitionDirection, SuiLocalizationService as ɵa, SuiLocalizationModule as ɵb, SuiCalendarDateView as ɵba, SuiCalendarHourView as ɵbb, SuiCalendarMinuteView as ɵbc, SuiCalendarMonthView as ɵbd, SuiCalendarYearView as ɵbe, SuiDatepickerModule as ɵbf, SuiDimmer as ɵbg, SuiDimmerModule as ɵbh, SuiDropdownMenuItem as ɵbi, SuiDropdownMenu as ɵbj, SuiDropdown as ɵbk, SuiDropdownModule as ɵbl, ModalConfig as ɵbm, ModalControls as ɵbn, ModalTemplate as ɵbo, SuiModal as ɵbp, SuiModalService as ɵbq, SuiModalModule as ɵbr, CustomValidator as ɵbs, customValidatorFactory as ɵbt, CustomValueAccessor as ɵbu, customValueAccessorFactory as ɵbv, DatePrecision as ɵbw, SuiComponentFactory as ɵbx, SuiUtilityModule as ɵby, SuiPopupComponentController as ɵbz, SuiMessage as ɵc, PopupConfig as ɵca, SuiPopupController as ɵcb, SuiPopupTemplateController as ɵcc, SuiPopupArrow as ɵcd, SuiPopup as ɵce, SuiPopupDirective as ɵcf, SuiPopupConfig as ɵcg, SuiPopupModule as ɵch, SuiProgress as ɵci, SuiProgressModule as ɵcj, SuiRating as ɵck, SuiRatingValueAccessor as ɵcl, SuiRatingModule as ɵcm, SuiSearchResult as ɵcn, SuiSearch as ɵco, SuiSearchModule as ɵcp, SuiSelectBase as ɵcq, SuiMultiSelectLabel as ɵcr, SuiMultiSelect as ɵcs, SuiMultiSelectValueAccessor as ɵct, SuiSelectOption as ɵcu, SuiSelect as ɵcv, SuiSelectValueAccessor as ɵcw, SuiSelectSearch as ɵcx, SuiSelectModule as ɵcy, SuiSidebarContainer as ɵcz, SuiMessageModule as ɵd, SuiSidebarSibling as ɵda, SuiSidebar as ɵdb, SuiSidebarModule as ɵdc, SuiTabset as ɵdd, SuiTabContent as ɵde, SuiTabHeader as ɵdf, SuiTabsModule as ɵdg, SuiTransition as ɵdh, SuiTransitionModule as ɵdi, SuiModalDimmer as ɵdj, SuiPagination as ɵe, SuiPaginationModule as ɵf, SuiAccordionPanel as ɵg, SuiAccordion as ɵh, SuiAccordionModule as ɵi, SuiCheckbox as ɵj, SuiCheckboxValueAccessor as ɵk, SuiRadio as ɵl, SuiRadioValueAccessor as ɵm, SuiRadioManager as ɵn, SuiCheckboxModule as ɵo, SuiCollapse as ɵp, SuiCollapseModule as ɵq, SuiCalendarViewTitle as ɵr, SuiDatepicker as ɵs, SuiCalendarItem as ɵt, SuiDatepickerDirective as ɵu, SuiDatepickerDirectiveValueAccessor as ɵv, SuiDatepickerDirectiveValidator as ɵw, SuiDatepickerInputDirective as ɵx, CalendarRangeService as ɵy, CalendarView as ɵz };

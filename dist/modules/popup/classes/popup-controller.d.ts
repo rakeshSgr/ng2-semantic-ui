@@ -12,7 +12,7 @@ export declare abstract class SuiPopupController implements IPopup, OnDestroy {
     protected _element: ElementRef;
     protected _componentFactory: SuiComponentFactory;
     private _componentRef;
-    readonly popup: SuiPopup;
+    get popup(): SuiPopup;
     private _openingTimeout;
     private _documentListener;
     constructor(_renderer: Renderer2, _element: ElementRef, _componentFactory: SuiComponentFactory, config: PopupConfig);

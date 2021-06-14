@@ -11,7 +11,8 @@ export declare class SuiMultiSelectLabel<T> extends SuiTransition {
     onDeselected: EventEmitter<T>;
     formatter: (obj: T) => string;
     private _template?;
-    template: TemplateRef<IOptionContext<T>> | undefined;
+    get template(): TemplateRef<IOptionContext<T>> | undefined;
+    set template(template: TemplateRef<IOptionContext<T>> | undefined);
     templateSibling: ViewContainerRef;
     constructor(renderer: Renderer2, element: ElementRef, changeDetector: ChangeDetectorRef, componentFactory: SuiComponentFactory);
     deselectOption(e: HandledEvent): void;

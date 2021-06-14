@@ -8,7 +8,8 @@ export declare class SuiSearchResult<T> {
     query: string;
     formatter: (obj: T, query: string) => string;
     private _template?;
-    template: TemplateRef<IResultContext<T>> | undefined;
+    get template(): TemplateRef<IResultContext<T>> | undefined;
+    set template(template: TemplateRef<IResultContext<T>> | undefined);
     templateSibling: ViewContainerRef;
     constructor(componentFactory: SuiComponentFactory);
 }

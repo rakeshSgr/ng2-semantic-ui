@@ -13,12 +13,12 @@ export declare class SuiPopup implements IPopup {
     closingTimeout: number;
     onOpen: EventEmitter<void>;
     onClose: EventEmitter<void>;
-    readonly isOpen: boolean;
+    get isOpen(): boolean;
     private _container;
-    anchor: ElementRef;
-    readonly direction: string | undefined;
-    readonly alignment: string | undefined;
-    readonly dynamicClasses: IDynamicClasses;
+    set anchor(anchor: ElementRef);
+    get direction(): string | undefined;
+    get alignment(): string | undefined;
+    get dynamicClasses(): IDynamicClasses;
     templateSibling: ViewContainerRef;
     readonly tabindex: number;
     constructor(elementRef: ElementRef);

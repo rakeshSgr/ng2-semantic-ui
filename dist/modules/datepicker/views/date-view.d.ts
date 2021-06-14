@@ -7,7 +7,7 @@ export declare class CalendarRangeDateService extends CalendarRangeService {
     configureItem(item: CalendarItem, baseDate: Date): void;
 }
 export declare class SuiCalendarDateView extends CalendarView {
-    readonly days: string[];
-    readonly date: string;
+    get days(): string[];
+    get date(): string;
     constructor(renderer: Renderer2);
 }

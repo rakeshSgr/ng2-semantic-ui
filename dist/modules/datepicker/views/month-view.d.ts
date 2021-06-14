@@ -6,6 +6,6 @@ export declare class CalendarRangeMonthService extends CalendarRangeService {
     configureItem(item: CalendarItem, baseDate: Date): void;
 }
 export declare class SuiCalendarMonthView extends CalendarView {
-    readonly year: string;
+    get year(): string;
     constructor(renderer: Renderer2);
 }

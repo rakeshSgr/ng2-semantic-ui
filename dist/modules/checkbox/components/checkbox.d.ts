@@ -8,8 +8,8 @@ export declare class SuiCheckbox implements ICustomValueAccessorHost<boolean> {
     onTouched: EventEmitter<void>;
     isDisabled: boolean;
     isReadonly: boolean;
-    readonly checkedAttribute: string | undefined;
-    readonly isDisabledAttribute: string | undefined;
+    get checkedAttribute(): string | undefined;
+    get isDisabledAttribute(): string | undefined;
     private _checkboxElement;
     constructor();
     onMouseDown(event: any): void;

@@ -7,9 +7,11 @@ export declare class SuiTabHeader {
     isActiveExternalChange: EventEmitter<boolean>;
     onActivate: EventEmitter<void>;
     onDeactivate: EventEmitter<void>;
-    isActive: boolean;
+    get isActive(): boolean;
+    set isActive(active: boolean);
     private _isDisabled;
-    isDisabled: boolean;
+    get isDisabled(): boolean;
+    set isDisabled(disabled: boolean);
     constructor();
     setActiveState(active: boolean): void;
     onClick(): void;

@@ -6,7 +6,7 @@ export declare class CalendarRange {
     start: Date;
     dates: Date[];
     items: CalendarItem[];
-    readonly inRange: CalendarItem[];
+    get inRange(): CalendarItem[];
     groupedItems: CalendarItem[][];
     private _comparer;
     constructor(start: Date, dates: Date[], items: CalendarItem[], grouped: CalendarItem[][], comparer: DateComparer);
@@ -23,10 +23,10 @@ export declare abstract class CalendarRangeService {
     marginal: DatePrecision;
     rows: number;
     columns: number;
-    readonly dateComparer: DateComparer;
-    readonly length: number;
-    readonly canMoveNext: boolean;
-    readonly canMovePrevious: boolean;
+    get dateComparer(): DateComparer;
+    get length(): number;
+    get canMoveNext(): boolean;
+    get canMovePrevious(): boolean;
     constructor(interval: DatePrecision, rows: number, columns: number);
     loadService(service: CalendarService): void;
     refresh(): void;

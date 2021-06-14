@@ -4,7 +4,8 @@ export declare class SuiDimmer extends SuiTransition {
     readonly hasClasses: boolean;
     private _transitionController;
     private _isDimmed;
-    isDimmed: boolean;
+    get isDimmed(): boolean;
+    set isDimmed(value: boolean);
     isDimmedChange: EventEmitter<boolean>;
     isClickable: boolean;
     transition: string;
