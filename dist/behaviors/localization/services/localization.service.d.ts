@@ -4,7 +4,7 @@ export declare class SuiLocalizationService {
     private _language;
     private _fallbackValues;
     private _values;
-    readonly language: string;
+    get language(): string;
     onLanguageUpdate: EventEmitter<void>;
     constructor();
     setLanguage(language: string): void;

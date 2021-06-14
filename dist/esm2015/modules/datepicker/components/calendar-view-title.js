@@ -1,18 +1,23 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
+import { __decorate, __metadata } from "tslib";
 import { Component, Input, EventEmitter, Output } from "@angular/core";
 import { CalendarRangeService } from "../services/calendar-range.service";
-export class SuiCalendarViewTitle {
+let SuiCalendarViewTitle = class SuiCalendarViewTitle {
     constructor() {
         this.onZoomOut = new EventEmitter();
     }
-}
-SuiCalendarViewTitle.decorators = [
-    { type: Component, args: [{
-                selector: "sui-calendar-view-title",
-                template: `
+};
+__decorate([
+    Input(),
+    __metadata("design:type", CalendarRangeService)
+], SuiCalendarViewTitle.prototype, "ranges", void 0);
+__decorate([
+    Output("zoomOut"),
+    __metadata("design:type", EventEmitter)
+], SuiCalendarViewTitle.prototype, "onZoomOut", void 0);
+SuiCalendarViewTitle = __decorate([
+    Component({
+        selector: "sui-calendar-view-title",
+        template: `
 <span class="title link" (click)="onZoomOut.emit()">
     <ng-content></ng-content>
 </span>
@@ -23,26 +28,15 @@ SuiCalendarViewTitle.decorators = [
     <i class="chevron right icon"></i>
 </span>
 `,
-                styles: [`
+        styles: [`
 .title.link {
     display: inline-block;
     margin-left: 2rem;
     margin-right: 2rem;
 }
 `]
-            }] }
-];
-/** @nocollapse */
-SuiCalendarViewTitle.ctorParameters = () => [];
-SuiCalendarViewTitle.propDecorators = {
-    ranges: [{ type: Input }],
-    onZoomOut: [{ type: Output, args: ["zoomOut",] }]
-};
-function SuiCalendarViewTitle_tsickle_Closure_declarations() {
-    /** @type {?} */
-    SuiCalendarViewTitle.prototype.ranges;
-    /** @type {?} */
-    SuiCalendarViewTitle.prototype.onZoomOut;
-}
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsZW5kYXItdmlldy10aXRsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL25nMi1zZW1hbnRpYy11aS8iLCJzb3VyY2VzIjpbIm1vZHVsZXMvZGF0ZXBpY2tlci9jb21wb25lbnRzL2NhbGVuZGFyLXZpZXctdGl0bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLFlBQVksRUFBRSxNQUFNLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDdkUsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0sb0NBQW9DLENBQUM7QUF1QjFFLE1BQU0sT0FBTyxvQkFBb0I7SUFRN0I7UUFDSSxJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksWUFBWSxFQUFRLENBQUM7S0FDN0M7OztZQS9CSixTQUFTLFNBQUM7Z0JBQ1AsUUFBUSxFQUFFLHlCQUF5QjtnQkFDbkMsUUFBUSxFQUFFOzs7Ozs7Ozs7O0NBVWI7eUJBQ1k7Ozs7OztDQU1aO2FBQ0E7Ozs7O3FCQUdJLEtBQUs7d0JBR0wsTUFBTSxTQUFDLFNBQVMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIElucHV0LCBFdmVudEVtaXR0ZXIsIE91dHB1dCB9IGZyb20gXCJAYW5ndWxhci9jb3JlXCI7XG5pbXBvcnQgeyBDYWxlbmRhclJhbmdlU2VydmljZSB9IGZyb20gXCIuLi9zZXJ2aWNlcy9jYWxlbmRhci1yYW5nZS5zZXJ2aWNlXCI7XG5cbkBDb21wb25lbnQoe1xuICAgIHNlbGVjdG9yOiBcInN1aS1jYWxlbmRhci12aWV3LXRpdGxlXCIsXG4gICAgdGVtcGxhdGU6IGBcbjxzcGFuIGNsYXNzPVwidGl0bGUgbGlua1wiIChjbGljayk9XCJvblpvb21PdXQuZW1pdCgpXCI+XG4gICAgPG5nLWNvbnRlbnQ+PC9uZy1jb250ZW50PlxuPC9zcGFuPlxuPHNwYW4gY2xhc3M9XCJwcmV2IGxpbmtcIiBbY2xhc3MuZGlzYWJsZWRdPVwiIXJhbmdlcz8uY2FuTW92ZVByZXZpb3VzXCIgKGNsaWNrKT1cInJhbmdlcz8ubW92ZVByZXZpb3VzKClcIj5cbiAgICA8aSBjbGFzcz1cImNoZXZyb24gbGVmdCBpY29uXCI+PC9pPlxuPC9zcGFuPlxuPHNwYW4gY2xhc3M9XCJuZXh0IGxpbmtcIiBbY2xhc3MuZGlzYWJsZWRdPVwiIXJhbmdlcz8uY2FuTW92ZU5leHRcIiAoY2xpY2spPVwicmFuZ2VzPy5tb3ZlTmV4dCgpXCI+XG4gICAgPGkgY2xhc3M9XCJjaGV2cm9uIHJpZ2h0IGljb25cIj48L2k+XG48L3NwYW4+XG5gLFxuICAgIHN0eWxlczogW2Bcbi50aXRsZS5saW5rIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgbWFyZ2luLWxlZnQ6IDJyZW07XG4gICAgbWFyZ2luLXJpZ2h0OiAycmVtO1xufVxuYF1cbn0pXG5leHBvcnQgY2xhc3MgU3VpQ2FsZW5kYXJWaWV3VGl0bGUge1xuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgcmFuZ2VzOkNhbGVuZGFyUmFuZ2VTZXJ2aWNlO1xuXG4gICAgQE91dHB1dChcInpvb21PdXRcIilcbiAgICBwdWJsaWMgb25ab29tT3V0OkV2ZW50RW1pdHRlcjx2b2lkPjtcblxuICAgIGNvbnN0cnVjdG9yKCkge1xuICAgICAgICB0aGlzLm9uWm9vbU91dCA9IG5ldyBFdmVudEVtaXR0ZXI8dm9pZD4oKTtcbiAgICB9XG59XG4iXX0=
+    }),
+    __metadata("design:paramtypes", [])
+], SuiCalendarViewTitle);
+export { SuiCalendarViewTitle };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsZW5kYXItdmlldy10aXRsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL25nMi1zZW1hbnRpYy11aS8iLCJzb3VyY2VzIjpbIm1vZHVsZXMvZGF0ZXBpY2tlci9jb21wb25lbnRzL2NhbGVuZGFyLXZpZXctdGl0bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLFlBQVksRUFBRSxNQUFNLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDdkUsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0sb0NBQW9DLENBQUM7QUF1QjFFLElBQWEsb0JBQW9CLEdBQWpDLE1BQWEsb0JBQW9CO0lBUTdCO1FBQ0ksSUFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLFlBQVksRUFBUSxDQUFDO0lBQzlDLENBQUM7Q0FDSixDQUFBO0FBUkc7SUFEQyxLQUFLLEVBQUU7OEJBQ00sb0JBQW9CO29EQUFDO0FBR25DO0lBREMsTUFBTSxDQUFDLFNBQVMsQ0FBQzs4QkFDRCxZQUFZO3VEQUFPO0FBTjNCLG9CQUFvQjtJQXJCaEMsU0FBUyxDQUFDO1FBQ1AsUUFBUSxFQUFFLHlCQUF5QjtRQUNuQyxRQUFRLEVBQUU7Ozs7Ozs7Ozs7Q0FVYjtpQkFDWTs7Ozs7O0NBTVo7S0FDQSxDQUFDOztHQUNXLG9CQUFvQixDQVdoQztTQVhZLG9CQUFvQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQsIEV2ZW50RW1pdHRlciwgT3V0cHV0IH0gZnJvbSBcIkBhbmd1bGFyL2NvcmVcIjtcbmltcG9ydCB7IENhbGVuZGFyUmFuZ2VTZXJ2aWNlIH0gZnJvbSBcIi4uL3NlcnZpY2VzL2NhbGVuZGFyLXJhbmdlLnNlcnZpY2VcIjtcblxuQENvbXBvbmVudCh7XG4gICAgc2VsZWN0b3I6IFwic3VpLWNhbGVuZGFyLXZpZXctdGl0bGVcIixcbiAgICB0ZW1wbGF0ZTogYFxuPHNwYW4gY2xhc3M9XCJ0aXRsZSBsaW5rXCIgKGNsaWNrKT1cIm9uWm9vbU91dC5lbWl0KClcIj5cbiAgICA8bmctY29udGVudD48L25nLWNvbnRlbnQ+XG48L3NwYW4+XG48c3BhbiBjbGFzcz1cInByZXYgbGlua1wiIFtjbGFzcy5kaXNhYmxlZF09XCIhcmFuZ2VzPy5jYW5Nb3ZlUHJldmlvdXNcIiAoY2xpY2spPVwicmFuZ2VzPy5tb3ZlUHJldmlvdXMoKVwiPlxuICAgIDxpIGNsYXNzPVwiY2hldnJvbiBsZWZ0IGljb25cIj48L2k+XG48L3NwYW4+XG48c3BhbiBjbGFzcz1cIm5leHQgbGlua1wiIFtjbGFzcy5kaXNhYmxlZF09XCIhcmFuZ2VzPy5jYW5Nb3ZlTmV4dFwiIChjbGljayk9XCJyYW5nZXM/Lm1vdmVOZXh0KClcIj5cbiAgICA8aSBjbGFzcz1cImNoZXZyb24gcmlnaHQgaWNvblwiPjwvaT5cbjwvc3Bhbj5cbmAsXG4gICAgc3R5bGVzOiBbYFxuLnRpdGxlLmxpbmsge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICBtYXJnaW4tbGVmdDogMnJlbTtcbiAgICBtYXJnaW4tcmlnaHQ6IDJyZW07XG59XG5gXVxufSlcbmV4cG9ydCBjbGFzcyBTdWlDYWxlbmRhclZpZXdUaXRsZSB7XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyByYW5nZXM6Q2FsZW5kYXJSYW5nZVNlcnZpY2U7XG5cbiAgICBAT3V0cHV0KFwiem9vbU91dFwiKVxuICAgIHB1YmxpYyBvblpvb21PdXQ6RXZlbnRFbWl0dGVyPHZvaWQ+O1xuXG4gICAgY29uc3RydWN0b3IoKSB7XG4gICAgICAgIHRoaXMub25ab29tT3V0ID0gbmV3IEV2ZW50RW1pdHRlcjx2b2lkPigpO1xuICAgIH1cbn1cbiJdfQ==

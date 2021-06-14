@@ -1,237 +1,227 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-import * as tslib_1 from "tslib";
+import { __decorate, __extends, __metadata } from "tslib";
 import { Directive, Input, ElementRef, TemplateRef, Renderer2 } from "@angular/core";
-import { Util, PositioningPlacement, SuiComponentFactory } from "../../../misc/util/internal";
+import { ITemplateRefContext, Util, PositioningPlacement, SuiComponentFactory } from "../../../misc/util/internal";
 import { PopupConfig, PopupTrigger } from "../classes/popup-config";
 import { SuiPopupConfig } from "../services/popup.service";
 import { SuiPopupTemplateController } from "../classes/popup-template-controller";
-var /** @type {?} */ templateRef = TemplateRef;
-/**
- * @template T
- */
+var templateRef = TemplateRef;
 var SuiPopupDirective = /** @class */ (function (_super) {
-    tslib_1.__extends(SuiPopupDirective, _super);
+    __extends(SuiPopupDirective, _super);
     function SuiPopupDirective(renderer, element, componentFactory, popupDefaults) {
         return _super.call(this, renderer, element, componentFactory, new PopupConfig(popupDefaults)) || this;
     }
     Object.defineProperty(SuiPopupDirective.prototype, "popupHeader", {
-        set: /**
-         * @param {?} header
-         * @return {?}
-         */
-        function (header) {
+        set: function (header) {
             this.popup.config.header = header;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupText", {
-        set: /**
-         * @param {?} text
-         * @return {?}
-         */
-        function (text) {
+        set: function (text) {
             this.popup.config.text = text;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupInverted", {
-        set: /**
-         * @param {?} inverted
-         * @return {?}
-         */
-        function (inverted) {
+        set: function (inverted) {
             this.popup.config.isInverted = Util.DOM.parseBooleanAttribute(inverted);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupBasic", {
-        set: /**
-         * @param {?} basic
-         * @return {?}
-         */
-        function (basic) {
+        set: function (basic) {
             this.popup.config.isBasic = Util.DOM.parseBooleanAttribute(basic);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupInline", {
-        set: /**
-         * @param {?} inline
-         * @return {?}
-         */
-        function (inline) {
+        set: function (inline) {
             this.popup.config.isInline = Util.DOM.parseBooleanAttribute(inline);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupFlowing", {
-        set: /**
-         * @param {?} flowing
-         * @return {?}
-         */
-        function (flowing) {
+        set: function (flowing) {
             this.popup.config.isFlowing = Util.DOM.parseBooleanAttribute(flowing);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTransition", {
-        set: /**
-         * @param {?} transition
-         * @return {?}
-         */
-        function (transition) {
+        set: function (transition) {
             this.popup.config.transition = transition;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTransitionDuration", {
-        set: /**
-         * @param {?} duration
-         * @return {?}
-         */
-        function (duration) {
+        set: function (duration) {
             this.popup.config.transitionDuration = duration;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupPlacement", {
-        set: /**
-         * @param {?} placement
-         * @return {?}
-         */
-        function (placement) {
+        set: function (placement) {
             this.popup.config.placement = placement;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupWidth", {
-        set: /**
-         * @param {?} width
-         * @return {?}
-         */
-        function (width) {
+        set: function (width) {
             this.popup.config.width = width;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupSize", {
-        set: /**
-         * @param {?} size
-         * @return {?}
-         */
-        function (size) {
+        set: function (size) {
             this.popup.config.size = size;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupDelay", {
-        set: /**
-         * @param {?} delay
-         * @return {?}
-         */
-        function (delay) {
+        set: function (delay) {
             this.popup.config.delay = delay;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTrigger", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.popup.config.trigger;
         },
-        set: /**
-         * @param {?} trigger
-         * @return {?}
-         */
-        function (trigger) {
+        set: function (trigger) {
             this.popup.config.trigger = trigger;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTemplate", {
-        set: /**
-         * @param {?} template
-         * @return {?}
-         */
-        function (template) {
+        set: function (template) {
             this.template = template;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupTemplateContext", {
-        set: /**
-         * @param {?} context
-         * @return {?}
-         */
-        function (context) {
+        set: function (context) {
             this.context = context;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SuiPopupDirective.prototype, "popupConfig", {
-        set: /**
-         * @param {?} config
-         * @return {?}
-         */
-        function (config) {
+        set: function (config) {
             this.configure(config);
         },
         enumerable: true,
         configurable: true
     });
-    SuiPopupDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: "[suiPopup]",
-                    exportAs: "suiPopup"
-                },] }
-    ];
-    /** @nocollapse */
     SuiPopupDirective.ctorParameters = function () { return [
         { type: Renderer2 },
         { type: ElementRef },
         { type: SuiComponentFactory },
         { type: SuiPopupConfig }
     ]; };
-    SuiPopupDirective.propDecorators = {
-        popupHeader: [{ type: Input }],
-        popupText: [{ type: Input }],
-        popupInverted: [{ type: Input }],
-        popupBasic: [{ type: Input }],
-        popupInline: [{ type: Input }],
-        popupFlowing: [{ type: Input }],
-        popupTransition: [{ type: Input }],
-        popupTransitionDuration: [{ type: Input }],
-        popupPlacement: [{ type: Input }],
-        popupWidth: [{ type: Input }],
-        popupSize: [{ type: Input }],
-        popupDelay: [{ type: Input }],
-        popupTrigger: [{ type: Input }],
-        popupTemplate: [{ type: Input }],
-        popupTemplateContext: [{ type: Input }],
-        popupConfig: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupHeader", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupText", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupInverted", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupBasic", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupInline", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], SuiPopupDirective.prototype, "popupFlowing", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupTransition", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPopupDirective.prototype, "popupTransitionDuration", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupPlacement", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupWidth", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupSize", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], SuiPopupDirective.prototype, "popupDelay", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SuiPopupDirective.prototype, "popupTrigger", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef),
+        __metadata("design:paramtypes", [TemplateRef])
+    ], SuiPopupDirective.prototype, "popupTemplate", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], SuiPopupDirective.prototype, "popupTemplateContext", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], SuiPopupDirective.prototype, "popupConfig", null);
+    SuiPopupDirective = __decorate([
+        Directive({
+            selector: "[suiPopup]",
+            exportAs: "suiPopup"
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            SuiComponentFactory,
+            SuiPopupConfig])
+    ], SuiPopupDirective);
     return SuiPopupDirective;
 }(SuiPopupTemplateController));
 export { SuiPopupDirective };
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicG9wdXAuZGlyZWN0aXZlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vbmcyLXNlbWFudGljLXVpLyIsInNvdXJjZXMiOlsibW9kdWxlcy9wb3B1cC9kaXJlY3RpdmVzL3BvcHVwLmRpcmVjdGl2ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLFVBQVUsRUFBRSxXQUFXLEVBQUUsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3JGLE9BQU8sRUFBdUIsSUFBSSxFQUFFLG9CQUFvQixFQUFFLG1CQUFtQixFQUFFLE1BQU0sNkJBQTZCLENBQUM7QUFFbkgsT0FBTyxFQUFFLFdBQVcsRUFBRSxZQUFZLEVBQXlCLE1BQU0seUJBQXlCLENBQUM7QUFDM0YsT0FBTyxFQUFFLGNBQWMsRUFBRSxNQUFNLDJCQUEyQixDQUFDO0FBRTNELE9BQU8sRUFBRSwwQkFBMEIsRUFBK0MsTUFBTSxzQ0FBc0MsQ0FBQztBQUUvSCxxQkFBTSxXQUFXLEdBQUcsV0FBVyxDQUFDOzs7OztJQU1VLDZDQUE2QjtJQXFGbkUsMkJBQVksUUFBa0IsRUFDbEIsT0FBa0IsRUFDbEIsZ0JBQW9DLEVBQ3BDLGFBQTRCO2VBRXBDLGtCQUFNLFFBQVEsRUFBRSxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsSUFBSSxXQUFXLENBQUMsYUFBYSxDQUFDLENBQUM7S0FDN0U7SUExRkQsc0JBQ1csMENBQVc7Ozs7O1FBRHRCLFVBQ3VCLE1BQWE7WUFDaEMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztTQUNyQzs7O09BQUE7SUFFRCxzQkFDVyx3Q0FBUzs7Ozs7UUFEcEIsVUFDcUIsSUFBVztZQUM1QixJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDO1NBQ2pDOzs7T0FBQTtJQUVELHNCQUNXLDRDQUFhOzs7OztRQUR4QixVQUN5QixRQUFnQjtZQUNyQyxJ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QUs7a0NBS0wsS0FBSzswQ0FLTCxLQUFLO2lDQUtMLEtBQUs7NkJBS0wsS0FBSzs0QkFLTCxLQUFLOzZCQUtMLEtBQUs7K0JBS0wsS0FBSztnQ0FTTCxLQUFLO3VDQUtMLEtBQUs7OEJBS0wsS0FBSzs7NEJBOUZWO0VBYzBDLDBCQUEwQjtTQUF2RCxpQkFBaUIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBEaXJlY3RpdmUsIElucHV0LCBFbGVtZW50UmVmLCBUZW1wbGF0ZVJlZiwgUmVuZGVyZXIyIH0gZnJvbSBcIkBhbmd1bGFyL2NvcmVcIjtcbmltcG9ydCB7IElUZW1wbGF0ZVJlZkNvbnRleHQsIFV0aWwsIFBvc2l0aW9uaW5nUGxhY2VtZW50LCBTdWlDb21wb25lbnRGYWN0b3J5IH0gZnJvbSBcIi4uLy4uLy4uL21pc2MvdXRpbC9pbnRlcm5hbFwiO1xuaW1wb3J0IHsgU3VpUG9wdXAgfSBmcm9tIFwiLi4vY29tcG9uZW50cy9wb3B1cFwiO1xuaW1wb3J0IHsgUG9wdXBDb25maWcsIFBvcHVwVHJpZ2dlciwgUG9wdXBTaXplLCBQb3B1cFdpZHRoIH0gZnJvbSBcIi4uL2NsYXNzZXMvcG9wdXAtY29uZmlnXCI7XG5pbXBvcnQgeyBTdWlQb3B1cENvbmZpZyB9IGZyb20gXCIuLi9zZXJ2aWNlcy9wb3B1cC5zZXJ2aWNlXCI7XG5pbXBvcnQgeyBTdWlQb3B1cENvbnRyb2xsZXIgfSBmcm9tIFwiLi4vY2xhc3Nlcy9wb3B1cC1jb250cm9sbGVyXCI7XG5pbXBvcnQgeyBTdWlQb3B1cFRlbXBsYXRlQ29udHJvbGxlciwgSVRlbXBsYXRlUG9wdXBDb250ZXh0LCBJVGVtcGxhdGVQb3B1cENvbmZpZyB9IGZyb20gXCIuLi9jbGFzc2VzL3BvcHVwLXRlbXBsYXRlLWNvbnRyb2xsZXJcIjtcblxuY29uc3QgdGVtcGxhdGVSZWYgPSBUZW1wbGF0ZVJlZjtcblxuQERpcmVjdGl2ZSh7XG4gICAgc2VsZWN0b3I6IFwiW3N1aVBvcHVwXVwiLFxuICAgIGV4cG9ydEFzOiBcInN1aVBvcHVwXCJcbn0pXG5leHBvcnQgY2xhc3MgU3VpUG9wdXBEaXJlY3RpdmU8VD4gZXh0ZW5kcyBTdWlQb3B1cFRlbXBsYXRlQ29udHJvbGxlcjxUPiB7XG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwSGVhZGVyKGhlYWRlcjpzdHJpbmcpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcuaGVhZGVyID0gaGVhZGVyO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cFRleHQodGV4dDpzdHJpbmcpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcudGV4dCA9IHRleHQ7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwSW52ZXJ0ZWQoaW52ZXJ0ZWQ6Ym9vbGVhbikge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy5pc0ludmVydGVkID0gVXRpbC5ET00ucGFyc2VCb29sZWFuQXR0cmlidXRlKGludmVydGVkKTtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBCYXNpYyhiYXNpYzpib29sZWFuKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLmlzQmFzaWMgPSBVdGlsLkRPTS5wYXJzZUJvb2xlYW5BdHRyaWJ1dGUoYmFzaWMpO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cElubGluZShpbmxpbmU6Ym9vbGVhbikge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy5pc0lubGluZSA9IFV0aWwuRE9NLnBhcnNlQm9vbGVhbkF0dHJpYnV0ZShpbmxpbmUpO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cEZsb3dpbmcoZmxvd2luZzpib29sZWFuKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLmlzRmxvd2luZyA9IFV0aWwuRE9NLnBhcnNlQm9vbGVhbkF0dHJpYnV0ZShmbG93aW5nKTtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBUcmFuc2l0aW9uKHRyYW5zaXRpb246c3RyaW5nKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLnRyYW5zaXRpb24gPSB0cmFuc2l0aW9uO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cFRyYW5zaXRpb25EdXJhdGlvbihkdXJhdGlvbjpudW1iZXIpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcudHJhbnNpdGlvbkR1cmF0aW9uID0gZHVyYXRpb247XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwUGxhY2VtZW50KHBsYWNlbWVudDpQb3NpdGlvbmluZ1BsYWNlbWVudCkge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy5wbGFjZW1lbnQgPSBwbGFjZW1lbnQ7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwV2lkdGgod2lkdGg6UG9wdXBXaWR0aCkge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy53aWR0aCA9IHdpZHRoO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cFNpemUoc2l6ZTpQb3B1cFNpemUpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcuc2l6ZSA9IHNpemU7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwRGVsYXkoZGVsYXk6bnVtYmVyKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLmRlbGF5ID0gZGVsYXk7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgZ2V0IHBvcHVwVHJpZ2dlcigpOlBvcHVwVHJpZ2dlciB7XG4gICAgICAgIHJldHVybiB0aGlzLnBvcHVwLmNvbmZpZy50cmlnZ2VyO1xuICAgIH1cblxuICAgIHB1YmxpYyBzZXQgcG9wdXBUcmlnZ2VyKHRyaWdnZXI6UG9wdXBUcmlnZ2VyKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLnRyaWdnZXIgPSB0cmlnZ2VyO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cFRlbXBsYXRlKHRlbXBsYXRlOlRlbXBsYXRlUmVmPElUZW1wbGF0ZVBvcHVwQ29udGV4dDxUPj4gfCB1bmRlZmluZWQpIHtcbiAgICAgICAgdGhpcy50ZW1wbGF0ZSA9IHRlbXBsYXRlO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cFRlbXBsYXRlQ29udGV4dChjb250ZXh0OlQgfCB1bmRlZmluZWQpIHtcbiAgICAgICAgdGhpcy5jb250ZXh0ID0gY29udGV4dDtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBDb25maWcoY29uZmlnOklUZW1wbGF0ZVBvcHVwQ29uZmlnPFQ+IHwgdW5kZWZpbmVkKSB7XG4gICAgICAgIHRoaXMuY29uZmlndXJlKGNvbmZpZyk7XG4gICAgfVxuXG4gICAgY29uc3RydWN0b3IocmVuZGVyZXI6UmVuZGVyZXIyLFxuICAgICAgICAgICAgICAgIGVsZW1lbnQ6RWxlbWVudFJlZixcbiAgICAgICAgICAgICAgICBjb21wb25lbnRGYWN0b3J5OlN1aUNvbXBvbmVudEZhY3RvcnksXG4gICAgICAgICAgICAgICAgcG9wdXBEZWZhdWx0czpTdWlQb3B1cENvbmZpZykge1xuXG4gICAgICAgIHN1cGVyKHJlbmRlcmVyLCBlbGVtZW50LCBjb21wb25lbnRGYWN0b3J5LCBuZXcgUG9wdXBDb25maWcocG9wdXBEZWZhdWx0cykpO1xuICAgIH1cbn1cbiJdfQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicG9wdXAuZGlyZWN0aXZlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vbmcyLXNlbWFudGljLXVpLyIsInNvdXJjZXMiOlsibW9kdWxlcy9wb3B1cC9kaXJlY3RpdmVzL3BvcHVwLmRpcmVjdGl2ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxLQUFLLEVBQUUsVUFBVSxFQUFFLFdBQVcsRUFBRSxTQUFTLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDckYsT0FBTyxFQUFFLG1CQUFtQixFQUFFLElBQUksRUFBRSxvQkFBb0IsRUFBRSxtQkFBbUIsRUFBRSxNQUFNLDZCQUE2QixDQUFDO0FBRW5ILE9BQU8sRUFBRSxXQUFXLEVBQUUsWUFBWSxFQUF5QixNQUFNLHlCQUF5QixDQUFDO0FBQzNGLE9BQU8sRUFBRSxjQUFjLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQztBQUUzRCxPQUFPLEVBQUUsMEJBQTBCLEVBQStDLE1BQU0sc0NBQXNDLENBQUM7QUFFL0gsSUFBTSxXQUFXLEdBQUcsV0FBVyxDQUFDO0FBTWhDO0lBQTBDLHFDQUE2QjtJQXFGbkUsMkJBQVksUUFBa0IsRUFDbEIsT0FBa0IsRUFDbEIsZ0JBQW9DLEVBQ3BDLGFBQTRCO2VBRXBDLGtCQUFNLFFBQVEsRUFBRSxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsSUFBSSxXQUFXLENBQUMsYUFBYSxDQUFDLENBQUM7SUFDOUUsQ0FBQztJQXpGRCxzQkFBVywwQ0FBVzthQUF0QixVQUF1QixNQUFhO1lBQ2hDLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUM7UUFDdEMsQ0FBQzs7O09BQUE7SUFHRCxzQkFBVyx3Q0FBUzthQUFwQixVQUFxQixJQUFXO1lBQzVCLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUM7UUFDbEMsQ0FBQzs7O09BQUE7SUFHRCxzQkFBVyw0Q0FBYTthQUF4QixVQUF5QixR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QUFLLEVBQUU7Ozt1REFHUDtJQUdEO1FBREMsS0FBSyxFQUFFOzs7d0RBR1A7SUFHRDtRQURDLEtBQUssRUFBRTs7O3lEQUdQO0lBR0Q7UUFEQyxLQUFLLEVBQUU7Ozs0REFHUDtJQUdEO1FBREMsS0FBSyxFQUFFOzs7b0VBR1A7SUFHRDtRQURDLEtBQUssRUFBRTs7OzJEQUdQO0lBR0Q7UUFEQyxLQUFLLEVBQUU7Ozt1REFHUDtJQUdEO1FBREMsS0FBSyxFQUFFOzs7c0RBR1A7SUFHRDtRQURDLEtBQUssRUFBRTs7O3VEQUdQO0lBR0Q7UUFEQyxLQUFLLEVBQUU7Ozt5REFHUDtJQU9EO1FBREMsS0FBSyxFQUFFO2tDQUMwQixXQUFXO3lDQUFYLFdBQVc7MERBRTVDO0lBR0Q7UUFEQyxLQUFLLEVBQUU7OztpRUFHUDtJQUdEO1FBREMsS0FBSyxFQUFFOzs7d0RBR1A7SUFuRlEsaUJBQWlCO1FBSjdCLFNBQVMsQ0FBQztZQUNQLFFBQVEsRUFBRSxZQUFZO1lBQ3RCLFFBQVEsRUFBRSxVQUFVO1NBQ3ZCLENBQUM7eUNBc0Z1QixTQUFTO1lBQ1YsVUFBVTtZQUNELG1CQUFtQjtZQUN0QixjQUFjO09BeEYvQixpQkFBaUIsQ0E0RjdCO0lBQUQsd0JBQUM7Q0FBQSxBQTVGRCxDQUEwQywwQkFBMEIsR0E0Rm5FO1NBNUZZLGlCQUFpQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IERpcmVjdGl2ZSwgSW5wdXQsIEVsZW1lbnRSZWYsIFRlbXBsYXRlUmVmLCBSZW5kZXJlcjIgfSBmcm9tIFwiQGFuZ3VsYXIvY29yZVwiO1xuaW1wb3J0IHsgSVRlbXBsYXRlUmVmQ29udGV4dCwgVXRpbCwgUG9zaXRpb25pbmdQbGFjZW1lbnQsIFN1aUNvbXBvbmVudEZhY3RvcnkgfSBmcm9tIFwiLi4vLi4vLi4vbWlzYy91dGlsL2ludGVybmFsXCI7XG5pbXBvcnQgeyBTdWlQb3B1cCB9IGZyb20gXCIuLi9jb21wb25lbnRzL3BvcHVwXCI7XG5pbXBvcnQgeyBQb3B1cENvbmZpZywgUG9wdXBUcmlnZ2VyLCBQb3B1cFNpemUsIFBvcHVwV2lkdGggfSBmcm9tIFwiLi4vY2xhc3Nlcy9wb3B1cC1jb25maWdcIjtcbmltcG9ydCB7IFN1aVBvcHVwQ29uZmlnIH0gZnJvbSBcIi4uL3NlcnZpY2VzL3BvcHVwLnNlcnZpY2VcIjtcbmltcG9ydCB7IFN1aVBvcHVwQ29udHJvbGxlciB9IGZyb20gXCIuLi9jbGFzc2VzL3BvcHVwLWNvbnRyb2xsZXJcIjtcbmltcG9ydCB7IFN1aVBvcHVwVGVtcGxhdGVDb250cm9sbGVyLCBJVGVtcGxhdGVQb3B1cENvbnRleHQsIElUZW1wbGF0ZVBvcHVwQ29uZmlnIH0gZnJvbSBcIi4uL2NsYXNzZXMvcG9wdXAtdGVtcGxhdGUtY29udHJvbGxlclwiO1xuXG5jb25zdCB0ZW1wbGF0ZVJlZiA9IFRlbXBsYXRlUmVmO1xuXG5ARGlyZWN0aXZlKHtcbiAgICBzZWxlY3RvcjogXCJbc3VpUG9wdXBdXCIsXG4gICAgZXhwb3J0QXM6IFwic3VpUG9wdXBcIlxufSlcbmV4cG9ydCBjbGFzcyBTdWlQb3B1cERpcmVjdGl2ZTxUPiBleHRlbmRzIFN1aVBvcHVwVGVtcGxhdGVDb250cm9sbGVyPFQ+IHtcbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBIZWFkZXIoaGVhZGVyOnN0cmluZykge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy5oZWFkZXIgPSBoZWFkZXI7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwVGV4dCh0ZXh0OnN0cmluZykge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy50ZXh0ID0gdGV4dDtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBJbnZlcnRlZChpbnZlcnRlZDpib29sZWFuKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLmlzSW52ZXJ0ZWQgPSBVdGlsLkRPTS5wYXJzZUJvb2xlYW5BdHRyaWJ1dGUoaW52ZXJ0ZWQpO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cEJhc2ljKGJhc2ljOmJvb2xlYW4pIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcuaXNCYXNpYyA9IFV0aWwuRE9NLnBhcnNlQm9vbGVhbkF0dHJpYnV0ZShiYXNpYyk7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwSW5saW5lKGlubGluZTpib29sZWFuKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLmlzSW5saW5lID0gVXRpbC5ET00ucGFyc2VCb29sZWFuQXR0cmlidXRlKGlubGluZSk7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwRmxvd2luZyhmbG93aW5nOmJvb2xlYW4pIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcuaXNGbG93aW5nID0gVXRpbC5ET00ucGFyc2VCb29sZWFuQXR0cmlidXRlKGZsb3dpbmcpO1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cFRyYW5zaXRpb24odHJhbnNpdGlvbjpzdHJpbmcpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcudHJhbnNpdGlvbiA9IHRyYW5zaXRpb247XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwVHJhbnNpdGlvbkR1cmF0aW9uKGR1cmF0aW9uOm51bWJlcikge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy50cmFuc2l0aW9uRHVyYXRpb24gPSBkdXJhdGlvbjtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBQbGFjZW1lbnQocGxhY2VtZW50OlBvc2l0aW9uaW5nUGxhY2VtZW50KSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLnBsYWNlbWVudCA9IHBsYWNlbWVudDtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBXaWR0aCh3aWR0aDpQb3B1cFdpZHRoKSB7XG4gICAgICAgIHRoaXMucG9wdXAuY29uZmlnLndpZHRoID0gd2lkdGg7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwU2l6ZShzaXplOlBvcHVwU2l6ZSkge1xuICAgICAgICB0aGlzLnBvcHVwLmNvbmZpZy5zaXplID0gc2l6ZTtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBzZXQgcG9wdXBEZWxheShkZWxheTpudW1iZXIpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcuZGVsYXkgPSBkZWxheTtcbiAgICB9XG5cbiAgICBASW5wdXQoKVxuICAgIHB1YmxpYyBnZXQgcG9wdXBUcmlnZ2VyKCk6UG9wdXBUcmlnZ2VyIHtcbiAgICAgICAgcmV0dXJuIHRoaXMucG9wdXAuY29uZmlnLnRyaWdnZXI7XG4gICAgfVxuXG4gICAgcHVibGljIHNldCBwb3B1cFRyaWdnZXIodHJpZ2dlcjpQb3B1cFRyaWdnZXIpIHtcbiAgICAgICAgdGhpcy5wb3B1cC5jb25maWcudHJpZ2dlciA9IHRyaWdnZXI7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwVGVtcGxhdGUodGVtcGxhdGU6VGVtcGxhdGVSZWY8SVRlbXBsYXRlUG9wdXBDb250ZXh0PFQ+PiB8IHVuZGVmaW5lZCkge1xuICAgICAgICB0aGlzLnRlbXBsYXRlID0gdGVtcGxhdGU7XG4gICAgfVxuXG4gICAgQElucHV0KClcbiAgICBwdWJsaWMgc2V0IHBvcHVwVGVtcGxhdGVDb250ZXh0KGNvbnRleHQ6VCB8IHVuZGVmaW5lZCkge1xuICAgICAgICB0aGlzLmNvbnRleHQgPSBjb250ZXh0O1xuICAgIH1cblxuICAgIEBJbnB1dCgpXG4gICAgcHVibGljIHNldCBwb3B1cENvbmZpZyhjb25maWc6SVRlbXBsYXRlUG9wdXBDb25maWc8VD4gfCB1bmRlZmluZWQpIHtcbiAgICAgICAgdGhpcy5jb25maWd1cmUoY29uZmlnKTtcbiAgICB9XG5cbiAgICBjb25zdHJ1Y3RvcihyZW5kZXJlcjpSZW5kZXJlcjIsXG4gICAgICAgICAgICAgICAgZWxlbWVudDpFbGVtZW50UmVmLFxuICAgICAgICAgICAgICAgIGNvbXBvbmVudEZhY3Rvcnk6U3VpQ29tcG9uZW50RmFjdG9yeSxcbiAgICAgICAgICAgICAgICBwb3B1cERlZmF1bHRzOlN1aVBvcHVwQ29uZmlnKSB7XG5cbiAgICAgICAgc3VwZXIocmVuZGVyZXIsIGVsZW1lbnQsIGNvbXBvbmVudEZhY3RvcnksIG5ldyBQb3B1cENvbmZpZyhwb3B1cERlZmF1bHRzKSk7XG4gICAgfVxufVxuIl19
