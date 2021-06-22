@@ -1,4 +1,4 @@
-import { Input, QueryList, ViewChildren, AfterViewInit, HostListener, Renderer2, OnDestroy } from "@angular/core";
+import { Input, QueryList, ViewChildren, AfterViewInit, HostListener, Renderer2, OnDestroy, Directive } from "@angular/core";
 import { KeyCode } from "../../../misc/util/internal";
 import { CalendarItem, SuiCalendarItem } from "../directives/calendar-item";
 import { CalendarService } from "../services/calendar.service";
