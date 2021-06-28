@@ -282,10 +282,13 @@ var SuiSelectBase = /** @class */ (function () {
         this._renderedSubscriptions.forEach(function (rs) { return rs.unsubscribe(); });
         this._renderedSubscriptions = [];
         this._renderedOptions.forEach(function (ro) {
-            // Slightly delay initialisation to avoid change after checked errors. TODO - look into avoiding this!
-            setTimeout(function () { return _this.initialiseRenderedOption(ro); });
+           
             _this._renderedSubscriptions.push(ro.onSelected.subscribe(function () { return _this.selectOption(ro.value); }));
         });
+        
+        // Slightly delay initialisation to avoid change after checked errors. TODO - look into avoiding this!
+	setTimeout(() => _this._renderedOptions.forEach(ro => _this.initialiseRenderedOption(ro)));
+	
         // If no options have been provided, autogenerate them from the rendered ones.
         if (this.searchService.options.length === 0 && !this.searchService.optionsLookup) {
             this.options = this._renderedOptions.map(function (ro) { return ro.value; });
